@@ -19,6 +19,7 @@ app.use('/', express.static(join(__dirname, '../public')))
 // app.use('/refreshtoken', tokenAPI) // need to implement auth API
 // app.get('/auth', (req, res) => res.json({ code: 'asfasbasf26xf5dfchudqwe06rRjl8dsd1v-' }))
 // app.get('/token', (req, res) => res.json({ access_token: 'asfasbasf26xf5dfchudqwe06rRjl8dsd1v.sjsdfksffjnfsffdfs.fdsfdsfjhlewqemoeasdksdha5+fsdfvxhcgf', expiresIn: 3600 }))
+// app.get('/.wellknown', (req, res) => res.json({}))
 
 app.use('*', (req, res) => res.status(404).sendFile(join(__dirname, './404page.html')))
 
