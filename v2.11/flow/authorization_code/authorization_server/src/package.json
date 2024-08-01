@@ -1,10 +1,11 @@
 {
   "name": "authorization_server",
   "version": "1.0.0",
-  "description": "",
+  "description": "OAuth 2.11 authorization code flow authorization server implementation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Jana Rangasamy <janagr7@gmail.com>",
@@ -13,5 +14,8 @@
     "axios": "^1.7.2",
     "express": "^4.19.2",
     "mongodb": "^6.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }
