@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "Jana Rangasamy <janagr7@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0"
+  }
 }
