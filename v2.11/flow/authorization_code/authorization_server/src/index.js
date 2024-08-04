@@ -1,27 +1,34 @@
 'use strict'
 
-import app from './server.js'
+import express from 'express'
+import cors from 'cors'
+import bodyparser from 'body-parser'
+import morgan from 'morgan'
 import dotenv from 'dotenv'
-import { MongoClient } from 'mongodb'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 
 dotenv.config()
 
-const mongodbURL = process.env.OAUTH_DB_URI
-const client = new MongoClient(mongodbURL)
+const app = express()
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const init = async () => {
-  try {
-    await client.connect()
-    // const accountCollection = client.db("oauth").collection("account")
-    // await accountCollection.insertOne({ email: "jdhff@gmail.com" })    
-  } catch (err) {
-    console.log(err.message)
-  } finally {
-    app.listen(process.env.PORT, () => {
-      console.log(`OAuth server is listening at ${process.env.PORT}`)
-    })
-    await client.close()
-  }
-}
+process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
-await init()
+// app.use(cors())
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({ extended: true }))
+
+app.use('/', express.static(join(__dirname, '../public')))
+app.use((err, req, res, next) => {
+  res.status(500).send("An unexpected error occured!!")
+})
+app.use('*', (req, res) => res.status(404).json({ error: 'Not Found!' }))
+
+
+app.listen(process.env.PORT, () => {
+  console.log(`OAuth server is listening at ${process.env.PORT}`)
+})
+
+
+
