@@ -2,11 +2,13 @@
 
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+
 import express from 'express'
 import cors from 'cors'
 import bodyparser from 'body-parser'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+
 import users from './api/v1/users.route'
 
 dotenv.config()
