@@ -25,32 +25,34 @@
 # Collections
 
   ```TS
-  interface User {
-    userId,
-    name,
+  interface User{
+    userID,
+    firstName,
+    lastName,
     email,
     password
   }
 
-  interface ClientApps{
+  interface ClientApp{
     name,
     clientID,
     clientSecret,
     redirectUri,
-    userId
+    userID
   }
 
-  interface Tokens{
-    authorizationCode,
+  interface Token{    
     codeChallange,
     challangeMethod,
+    authorizationCode,
+    state,
     codeVerifier,
     accessToken,
     clientID,
-    userId
+    userID
   }
 
-  interface Sessions{
+  interface Session{
     sessionId,
     
   }
