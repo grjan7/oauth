@@ -1,7 +1,7 @@
 'use strict'
 
 import { Router } from 'express'
-import clientsCtrl from './client.controller'
+import clientsCtrl from './client.controller.js'
 
 const router = new Router()
 
