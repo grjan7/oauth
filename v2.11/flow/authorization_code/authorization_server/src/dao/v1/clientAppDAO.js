@@ -1,15 +1,15 @@
 'use strict'
 
-let clients
+let clientApps
 
-export class Client {
+export class ClientApp {
 
 }
 
-export class ClientDAO {
+export class ClientAppDAO {
   static async injectDB(conn) {
-    if (!clients) {
-      clients = conn.db(process.env.AUTH_DB_NAME).collection("clients")
+    if (!clientApps) {
+      clientApps = conn.db(process.env.AUTH_DB_NAME).collection("clientApps")
     }
   }
 }
