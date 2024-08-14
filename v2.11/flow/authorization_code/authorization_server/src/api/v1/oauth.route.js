@@ -30,10 +30,15 @@ const router = new Router()
  * - on successful sign-in, prompt the permissions requested by the client app
  * - on successful authorization, `POST /permissions`
  *     - generate authorization_code
+ * 
+ *        tokenInfo = tokenID + clientID + userID + code_challange + state + now_in_ms
+ *        authorizationCode = createHash(tokenInfo)
+ * 
  *     - update the token with authorization_code and scopes authorized
  *  {
  *   clientID,
  *   authorizationCode
+ *   authorizationCodeGeneratedTime
  *   scopes
  *  }
  * 
@@ -42,6 +47,7 @@ const router = new Router()
  *  {
  *    tokenID
  *    authorizationCode,
+ *    authorizationCodeGeneratedTime,
  *    clientID,
  *    code_challange,
  *    challange_method
@@ -58,6 +64,43 @@ const router = new Router()
 router.route('/auth')
   .post()
 
+
+/**
+ * - post /token with
+ *  {
+ *    authorization_code,
+ *    code_verifier,
+ *    clientID,
+ *    clientSecret
+ *    redirectUri,
+ *    nonce
+ *  }
+ * 
+ * - validate request parameter
+ * - match clientID
+ * - match hashed clientSecret against the clientSecret in the clientStore
+ * - match hashed code_verifier with code_challange
+ * - validate nonce for number of attempts
+ * - on successful validation of token request, generate accessToken
+ * - store the access_token to the token where `authorization_code`, `client_id` and code_verifier matche
+ *  {
+ *    tokenID
+ *    authorizationCode,
+ *    clientID,
+ *    code_challange,
+ *    challenge_method,
+ *    code_verifier,
+ *    accessToken,
+ *    authorizationCodeGeneratedTime,
+ *    accessTokenGeneratedTime,
+ *    userID,
+ *    redirectUri,
+ *    state,
+ *    nonce,
+ *    scopes
+ *  }
+ * - respond with accessToken
+ */
 router.route('/token')
   .post() // code exchange for token
   .delete() // revoke token
