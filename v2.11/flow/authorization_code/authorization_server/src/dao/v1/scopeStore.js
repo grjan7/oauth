@@ -3,7 +3,12 @@
 let scopeStore
 
 export class Scope {
-
+  constructor(scope) {
+    this.id = scope.id
+    this.resource = scope.resource
+    this.action = scope.action
+    this.description = scope.description
+  }
 }
 
 export class ScopeStore {
