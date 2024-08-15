@@ -15,6 +15,31 @@ router
   .get()
   .post()
 
+/**
+ *  router
+ *    .route('/signin/identifier')
+ *    .post()
+ *  router
+ *    .route('/signin/challange')
+ *    .post()
+ * 
+ *  router
+ *    .route('/signin/challange/pwd')
+ *    .post()
+ * 
+ *  router
+ *    .route('/signin/identifier/dp')
+ *    .post()
+ * 
+ * *  router
+ *    .route('/signin/oauth/consent')
+ *    .post()
+ *
+ * *  router
+ *    .route('/signin/oauth/id')
+ *    .post()
+ * 
+ * */
 router
   .route('/signout')
   .get()
