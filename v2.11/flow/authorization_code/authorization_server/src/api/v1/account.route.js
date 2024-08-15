@@ -24,13 +24,8 @@ router.route('/lifecycle/steps/signup/password')
 
 router.route('/signin')
   .get()
-  .post()
 
 router.route('/signin/identifier')
-  .get()
-  .post()
-
-router.route('/signin/challange')
   .get()
   .post()
 
@@ -38,7 +33,7 @@ router.route('/signin/challange/pwd')
   .get()
   .post()
 
-router.route('/signin/identifier/dp')
+router.route('/signin/challange/dp')
   .get()
   .post()
 
