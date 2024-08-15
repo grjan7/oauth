@@ -5,43 +5,52 @@ import accountCtrl from './accountCtrl.controller.js'
 
 const router = new Router()
 
-router
-  .route('/register')
+router.route('/lifecycle/steps/signup/name')
   .get(accountCtrl.apiGetRegisterPage)
   .post()
 
-router
-  .route('/signin')
+router.route('/lifecycle/steps/signup/birthdaygender')
+  .get(accountCtrl.apiGetRegisterPage)
+  .post()
+
+router.route('/lifecycle/steps/signup/username')
+  .get(accountCtrl.apiGetRegisterPage)
+  .post()
+
+router.route('/lifecycle/steps/signup/password')
+  .get(accountCtrl.apiGetRegisterPage)
+  .post()
+
+
+router.route('/signin')
   .get()
   .post()
 
-/**
- *  router
- *    .route('/signin/identifier')
- *    .post()
- *  router
- *    .route('/signin/challange')
- *    .post()
- * 
- *  router
- *    .route('/signin/challange/pwd')
- *    .post()
- * 
- *  router
- *    .route('/signin/identifier/dp')
- *    .post()
- * 
- * *  router
- *    .route('/signin/oauth/consent')
- *    .post()
- *
- * *  router
- *    .route('/signin/oauth/id')
- *    .post()
- * 
- * */
-router
-  .route('/signout')
+router.route('/signin/identifier')
+  .get()
+  .post()
+
+router.route('/signin/challange')
+  .get()
+  .post()
+
+router.route('/signin/challange/pwd')
+  .get()
+  .post()
+
+router.route('/signin/identifier/dp')
+  .get()
+  .post()
+
+router.route('/signin/oauth/consent')
+  .get()
+  .post()
+
+router.route('/signin/oauth/id')
+  .get()
+  .post()
+
+router.route('/signout')
   .get()
   .post()
 
