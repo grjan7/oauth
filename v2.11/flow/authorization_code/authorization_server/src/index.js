@@ -1,7 +1,7 @@
 'use strict'
 
 import dotenv from 'dotenv'
-import { initDB } from './dao/v1/conn.js'
+import { initDB } from './dao/v1/dbConfig.js'
 import app from './server.js'
 
 dotenv.config()
