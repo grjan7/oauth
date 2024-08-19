@@ -6,6 +6,7 @@ import { SessionStore } from './sessionStore.js'
 import { ClientStore } from './clientStore.js'
 import { ScopeStore } from './scopeStore.js'
 import { TokenStore } from './tokenStore.js'
+import { LogStore } from './logStore.js'
 
 export const initDB = async () => {
   const mongodbURL = process.env.AUTH_DB_URI
@@ -14,12 +15,12 @@ export const initDB = async () => {
     const conn = await client.connect()
     const db = conn.db(process.env.AUTH_DB_NAME)
     // initialize collections
+    await LogStore.init(db)
     await UserStore.init(db)
     await SessionStore.init(db)
     await ClientStore.init(db)
     await ScopeStore.init(db)
     await TokenStore.init(db)
-
   } catch (err) {
     console.log(err.message)
   } finally {
