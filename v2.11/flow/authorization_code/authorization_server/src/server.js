@@ -8,7 +8,7 @@ import cors from 'cors'
 import bodyparser from 'body-parser'
 import morgan from 'morgan'
 
-import users from './api/v1/users.route.js'
+import accounts from './api/v1/account.route.js'
 
 const app = express()
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -19,7 +19,7 @@ app.use(bodyparser.urlencoded({ extended: true }))
 process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
 // routes
-app.use('/api/v1/user', users)
+app.use('/account', accounts)
 app.use('/', express.static(join(__dirname, '../public')))
 
 // handle errors 

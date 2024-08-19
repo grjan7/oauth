@@ -1,52 +1,53 @@
 'use strict'
 
 import { Router } from 'express'
-import accountCtrl from './accountCtrl.controller.js'
+import accountCtrl from './account.controller.js'
 
 const router = new Router()
 
 router.route('/lifecycle/steps/signup/name')
-  .get(accountCtrl.apiGetRegisterPage)
-  .post()
+  .get(accountCtrl.getSignUpName)
+  .post(accountCtrl.postSignUpName)
 
 router.route('/lifecycle/steps/signup/birthdaygender')
-  .get(accountCtrl.apiGetRegisterPage)
-  .post()
+  .get(accountCtrl.getSignUpBirthdayGender)
+/*
+.post()
 
 router.route('/lifecycle/steps/signup/username')
-  .get(accountCtrl.apiGetRegisterPage)
-  .post()
+.get(accountCtrl.apiGetRegisterPage)
+.post()
 
 router.route('/lifecycle/steps/signup/password')
-  .get(accountCtrl.apiGetRegisterPage)
-  .post()
+.get(accountCtrl.apiGetRegisterPage)
+.post()
 
 
 router.route('/signin')
-  .get()
+.get()
 
 router.route('/signin/identifier')
-  .get()
-  .post()
+.get()
+.post()
 
 router.route('/signin/challange/pwd')
-  .get()
-  .post()
+.get()
+.post()
 
 router.route('/signin/challange/dp')
-  .get()
-  .post()
+.get()
+.post()
 
 router.route('/signin/oauth/consent')
-  .get()
-  .post()
+.get()
+.post()
 
 router.route('/signin/oauth/id')
-  .get()
-  .post()
+.get()
+.post()
 
 router.route('/signout')
-  .get()
-  .post()
-
+.get()
+.post()
+*/
 export default router
