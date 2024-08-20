@@ -1,26 +1,29 @@
 'use strict'
 
-document.addEventListener('click', (e) => {
-  const { target } = e;
+document.addEventListener('click', (event) => {
+  const { target } = event;
   if (!target.matches('nav a')) {
     return
   }
-  e.preventDefault()
+  event.preventDefault()
   urlRoute()
 })
 
-const urlRoutes = {
+const routesMap = {
   404: {
-    template: '/templates/404.html',
+    template: '/components/404/index.html',
   },
   '/': {
-    template: '/templates/index.html'
+    template: '/components/home/index.html'
   },
   '/signin': {
-    template: '/templates/signin.html'
+    template: '/components/signin/index.html'
   },
-  '/register': {
-    template: '/templates/register.html'
+  '/signup': {
+    template: '/components/signup/index.html'
+  },
+  '/signout': {
+    template: '/components/signout/index.html'
   }
 }
 
@@ -37,9 +40,10 @@ const urlLocationHandler = async () => {
     location = '/'
   }
 
-  const route = urlRoutes[location] || urlRoutes[404]
+  const route = routesMap[location] || routesMap[404]
+  console.log(route)
   const content = await fetch(route.template).then(data => data.text())
-  document.getElementById('main').innerHTML = content
+  document.getElementById('root').innerHTML = content
 }
 
 window.onpopstate = urlLocationHandler
