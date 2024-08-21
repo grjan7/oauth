@@ -27,7 +27,7 @@ const validateFlow = async (req, res, next) => {
 }
 // routes
 app.use('/account', accounts)
-app.use('/signin', validateFlow, express.static(join(__dirname, '../views/pages/signin')))
+app.use('/signin', express.static(join(__dirname, '../views/pages/signin')))
 app.use('/', (req, res, next) => res.redirect('/signin?flow=default'))
 
 
