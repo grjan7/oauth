@@ -20,8 +20,9 @@ process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
 // routes
 app.use('/account', accounts)
-app.use('/', (req, res, next) => res.redirect('/account/lifecycle/steps/signup/name'))
-//app.use('/', express.static(join(__dirname, '../views')))
+app.use('/signin', express.static(join(__dirname, '../views/pages/signin')))
+app.use('/', (req, res, next) => res.redirect('/signin'))
+
 
 // handle errors 
 app.use('*', (req, res) => res.status(404).json({ error: 'Not Found!' }))

@@ -5,13 +5,12 @@ import accountCtrl from './account.controller.js'
 
 const router = new Router()
 
-router.route('/lifecycle/steps/signup/name')
+/*router.route('/lifecycle/steps/signup/name')
   .get(accountCtrl.getSignUpName)
   .post(accountCtrl.postSignUpName)
 
 router.route('/lifecycle/steps/signup/birthdaygender')
   .get(accountCtrl.getSignUpBirthdayGender)
-/*
 .post()
 
 router.route('/lifecycle/steps/signup/username')
