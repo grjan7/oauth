@@ -15,6 +15,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const signupPage = join(__dirname, '../views/pages/signup')
 const signinPage = join(__dirname, '../views/pages/signin')
 const signoutPage = join(__dirname, '../views/pages/signout')
+const oauthSigninPage = join(__dirname, '../views/pages/oauth-signin')
 
 // middlewares
 app.use(bodyparser.json())
@@ -33,7 +34,8 @@ const validateFlow = async (req, res, next) => {
 // routes
 app.use('/account', accounts)
 app.use('/signup', express.static(signupPage))
-app.use('/signin/flow/:flowName', validateFlow, express.static(signinPage))
+app.use('/signin/flow/default', express.static(signinPage))
+app.use('/signin/flow/oauth', express.static(oauthSigninPage))
 app.use('/signout', express.static(signoutPage))
 app.use('/', (req, res, next) => res.redirect('/signin/flow/default'))
 
