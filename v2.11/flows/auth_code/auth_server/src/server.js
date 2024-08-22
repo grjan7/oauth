@@ -14,7 +14,6 @@ const app = express()
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const signupPage = join(__dirname, '../views/pages/signup')
 const signinPage = join(__dirname, '../views/pages/signin')
-const signoutPage = join(__dirname, '../views/pages/signout')
 const oauthSigninPage = join(__dirname, '../views/pages/oauth-signin')
 
 // middlewares
