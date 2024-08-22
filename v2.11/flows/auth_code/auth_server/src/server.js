@@ -22,8 +22,10 @@ app.use(bodyparser.urlencoded({ extended: true }))
 process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
 const validateFlow = async (req, res, next) => {
-  if (!req.query.flow) {
-    res.status(401).json({ error: "invalid access" })
+  const { flowName } = req.params
+  const isValidFlow = flowName == 'default' || flowName == 'oauth'
+  if (!isValidFlow) {
+    res.status(400).json({ error: "invalid flow" })
     return
   }
   next()
@@ -31,9 +33,9 @@ const validateFlow = async (req, res, next) => {
 // routes
 app.use('/account', accounts)
 app.use('/signup', express.static(signupPage))
-app.use('/signin', express.static(signinPage))
+app.use('/signin/flow/:flowName', validateFlow, express.static(signinPage))
 app.use('/signout', express.static(signoutPage))
-app.use('/', (req, res, next) => res.redirect('/signin'))
+app.use('/', (req, res, next) => res.redirect('/signin/flow/default'))
 
 // handle errors
 app.use((err, req, res, next) => {
