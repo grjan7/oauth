@@ -36,7 +36,18 @@ app.use('/account', accounts)
 app.use('/signup', express.static(signupPage))
 app.use('/signin/flow/default', express.static(signinPage))
 app.use('/signin/flow/oauth', express.static(oauthSigninPage))
-app.use('/signout', express.static(signoutPage))
+//app.use('/signout', express.static(signoutPage))
+/**
+ * sign out requires accountID, sessionID and client details for 
+ * confirming the account owner is the one initiated sign out request
+ * 
+ * /account/accountID/signout?sessionID=1616dsdas3c
+ * 
+ * likewise deleting an account requires accountID, sessionID, client details
+ * 
+ * including client app management 
+ * 
+ */
 app.use('/', (req, res, next) => res.redirect('/signin/flow/default'))
 
 // handle errors
