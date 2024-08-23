@@ -1,12 +1,18 @@
 'use strict'
 
+import { postSignin } from "./apiCalls.js"
+
 const setEventsService = () => {
-  /*
-  const signupButton = document.getElementById("signup")
-  signupButton.onclick = () => {
-    window.location.href = "./account/lifecycle/steps/signup/name"
+
+  const signinButton = document.getElementById("signin-button")
+
+  signinButton.onclick = async () => {
+    const userName = document.getElementById("username").value
+    const password = document.getElementById("password").value
+    const { status } = await postSignin({ userName, password })
+    document.getElementById('status-text').innerHTML = status
   }
-    */
+
 }
 
 

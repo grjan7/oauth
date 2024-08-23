@@ -6,10 +6,10 @@
 const passwordComponent = {
   template: `
     <div id="password-component">
-        <input type="password" name="password" placeholder="Password" id="pwd-box" required>
+        <input type="password" name="password" placeholder="Password" id="password" required>
         
     </div>`,
-  style: `#pwd-box {
+  style: `#password {
     width:90%;
     padding:5%;  
     border-radius: 5px;

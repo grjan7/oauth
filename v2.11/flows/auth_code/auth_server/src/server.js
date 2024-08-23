@@ -9,6 +9,7 @@ import bodyparser from 'body-parser'
 import morgan from 'morgan'
 
 import accounts from './api/v1/account.route.js'
+import signin from './api/v1/signin.route.js'
 
 const app = express()
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -33,8 +34,10 @@ const validateFlow = async (req, res, next) => {
 // routes
 app.use('/account', accounts)
 app.use('/signup', express.static(signupPage))
+app.use('/signin', signin)
 app.use('/signin/flow/default', express.static(signinPage))
 app.use('/signin/flow/oauth', express.static(oauthSigninPage))
+
 //app.use('/signout', express.static(signoutPage))
 /**
  * sign out requires accountID, sessionID and client details for 

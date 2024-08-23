@@ -6,7 +6,7 @@
 const userNameComponent = {
   template: `
     <div id="username-component">      
-      <input id="username" name="session-key" required="" validation="email" value="" autofocus="" type="text" placeholder="username">
+      <input id="username" required validation="email" value="" autofocus type="text" placeholder="username">
     </div>`,
   style: `#username{
     width:90%;

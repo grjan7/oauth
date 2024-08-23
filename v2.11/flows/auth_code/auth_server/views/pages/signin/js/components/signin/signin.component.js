@@ -14,6 +14,7 @@ const signinComponent = {
       ${signinButtonComponent.template}
       
       <p id="signup-text">Don't you have an account? <span id="sign-up-link"><a href="/signup">Sign Up</a></span></p>
+      <p id="status-text"></p>
     </div>`,
   style: `#signin-component{
     background-color:#fff;
