@@ -10,6 +10,7 @@ import morgan from 'morgan'
 
 import accounts from './api/v1/account.route.js'
 import signin from './api/v1/signin.route.js'
+import signout from './api/v1/signout.route.js'
 
 const app = express()
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -40,6 +41,8 @@ app.use('/signup', express.static(signupPage))
 app.use('/signin', signin)
 app.use('/signin/flow/default', express.static(signinPage))
 app.use('/signin/flow/oauth', express.static(oauthSigninPage))
+app.use('/signout', signout)
+app.use('/signout', (req, res, next) => res.redirect('/'))
 
 //app.use('/signout', express.static(signoutPage))
 /**

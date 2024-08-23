@@ -1,12 +1,21 @@
 'use strict'
 
-const setEventsService = () => {
-  /*
-  const signupButton = document.getElementById("signup")
-  signupButton.onclick = () => {
-    window.location.href = "./account/lifecycle/steps/signup/name"
+import { postSignout } from "./apiCalls.js"
+
+const setEventsService = async () => {
+  const signoutLink = document.getElementById("signout-link")
+  signoutLink.onclick = async () => {
+    try {
+      const data = { sessionID: 1225, accountID: 1254 }
+      const response = await postSignout(data)
+      if (response.status == 200) {
+        window.location.href = '/signout'
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
-    */
+
 }
 
 

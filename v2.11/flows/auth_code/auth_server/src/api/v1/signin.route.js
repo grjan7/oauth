@@ -3,8 +3,6 @@
 import { Router } from 'express'
 import signinCtrl from './signin.controller.js'
 
-
-
 const router = new Router()
 
 router
