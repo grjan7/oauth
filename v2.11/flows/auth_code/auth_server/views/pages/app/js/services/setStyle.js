@@ -9,19 +9,10 @@
 
 // import all components
 import rootComponent from '../components/root.component.js'
-import passwordComponent from '../components/signin/password.component.js'
-import userNameComponent from '../components/signin/username.component.js'
-import signinButtonComponent from '../components/signin/signinButton.component.js'
-import signinComponent from '../components/signin/signin.component.js'
-
 
 // include all imported components to this array
 const components = [
-  rootComponent,
-  passwordComponent,
-  userNameComponent,
-  signinButtonComponent,
-  signinComponent
+  rootComponent
 ]
 
 const setStyleService = () => {

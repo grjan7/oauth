@@ -1,13 +1,10 @@
 'use strict'
 
-import signinComponent from "./signin/signin.component.js"
-
-
 const rootComponent = {
   template: `
     <div>
         <div id="navbar-container">
-          ${signinComponent.template}
+          <h1>App</h1>
         </div>
     </div>`,
   style: ``

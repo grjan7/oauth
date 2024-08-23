@@ -11,9 +11,7 @@ export const postSignin = async (data) => {
   }
   try {
     const response = await fetch(url, options)
-    console.log(response)
-    const result = await response.json()
-    return result
+    return response
   } catch (e) {
     console.error(e)
   }
