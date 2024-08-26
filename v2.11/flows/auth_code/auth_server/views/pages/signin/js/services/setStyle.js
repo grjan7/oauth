@@ -9,21 +9,26 @@
 
 // import all components
 import rootComponent from '../components/root.component.js'
-import passwordComponent from '../components/signin/password.component.js'
-import userNameComponent from '../components/signin/username.component.js'
-import signinButtonComponent from '../components/signin/signinButton.component.js'
 import signinComponent from '../components/signin/signin.component.js'
-import signupButtonComponent from '../components/signin/signupButton.component.js'
-
+import signinButtonComponent from '../components/signin/signinButton.component.js'
+import signinHeaderComponent from '../components/signin/signinHeader.component.js'
+import siginPasswordComponent from '../components/signin/signinPassword.component.js'
+import signinStatusComponent from '../components/signin/signinStatus.component.js'
+import signinUsernameComponent from '../components/signin/signinUsername.component.js'
+import signupLinkButtonComponent from '../components/signin/signupLinkButton.component.js'
+import signupTextComponent from '../components/signin/signupText.component.js'
 
 // include all imported components to this array
 const components = [
   rootComponent,
-  passwordComponent,
-  userNameComponent,
-  signinButtonComponent,
   signinComponent,
-  signupButtonComponent
+  signinButtonComponent,
+  signinHeaderComponent,
+  signinStatusComponent,
+  signinUsernameComponent,
+  siginPasswordComponent,
+  signupLinkButtonComponent,
+  signupTextComponent
 ]
 
 const setStyleService = () => {

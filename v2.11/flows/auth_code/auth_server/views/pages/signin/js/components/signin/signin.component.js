@@ -1,42 +1,39 @@
 'use strict'
 
-import passwordComponent from "./password.component.js"
-import userNameComponent from "./username.component.js"
-import signinButtonComponent from "./signinButton.component.js"
-import signupButtonComponent from "./signupButton.component.js"
+import signinButtonComponent from './signinButton.component.js'
+import signinHeaderComponent from './signinHeader.component.js'
+import signinPasswordComponent from './signinPassword.component.js'
+import signinStatusComponent from './signinStatus.component.js'
+import signinUsernameComponent from './signinUsername.component.js'
+import signupLinkButtonComponent from './signupLinkButton.component.js'
+import signupTextComponent from './signupText.component.js'
 
 
 const signinComponent = {
   template: `
     <div id="signin-component">
-      <h1 id="signin-header">Sign in </h1>
-      ${userNameComponent.template}
-      ${passwordComponent.template}
+      ${signinHeaderComponent.template}
+      ${signinUsernameComponent.template}
+      ${signinPasswordComponent.template}
       ${signinButtonComponent.template}
-      <div>
-      <p id="signup-text" class="line-heading">Don't you have an account?</p>
-      </div>
-      ${signupButtonComponent.template}
-      <p id="status-text"></p>
+      ${signupTextComponent.template}      
+      ${signupLinkButtonComponent.template}
+      ${signinStatusComponent.template}    
     </div>`,
 
   style: `#signin-component{
-    background-color:#fff;
-    width:380px;
-    margin:auto;  
-    margin-top:1%;    
+    background-color: #fff;
+    width: 380px;
+    margin: auto;  
+    margin-top: 1%;    
     padding: 20px;
-    min-height:500px;
+    min-height: 500px;
     border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);  
-  }
+  }  
+  `,
 
-  #signin-header{
-  text-align:center;
-  color:#004182;
-  font-weight:600;
-  }
-  `
+  eventHandlers: {}
 }
 
 export default signinComponent

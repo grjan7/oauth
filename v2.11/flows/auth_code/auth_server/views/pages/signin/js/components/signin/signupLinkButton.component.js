@@ -1,13 +1,12 @@
 'use strict'
 
-// import navbarComponent from "./navbar/navbar.component.js"
+const signupLinkButtonComponent = {
 
-
-const signupButtonComponent = {
   template: `
     <div id="signup-link-button-component">
         <input type="submit" value="Sign up" id="signup-link-button">
     </div>`,
+
   style: `
   #signup-link-button {
     width:100%;
@@ -28,7 +27,16 @@ const signupButtonComponent = {
    color: #f0f0f0;
    border:0px;
    background-color:#009020;
-  }`
+  }`,
+
+  eventHandlers: {
+    signupLinkHandler: () => {
+      const signupLink = document.getElementById("signup-link-button")
+      signupLink.onclick = () => {
+        window.location.href = '/signup'
+      }
+    }
+  }
 }
 
-export default signupButtonComponent
+export default signupLinkButtonComponent

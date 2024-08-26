@@ -10,7 +10,11 @@ const rootComponent = {
           ${signinComponent.template}
         </div>
     </div>`,
-  style: ``
+  style: ``,
+
+  eventHandlers: {
+
+  }
 }
 
 export default rootComponent
