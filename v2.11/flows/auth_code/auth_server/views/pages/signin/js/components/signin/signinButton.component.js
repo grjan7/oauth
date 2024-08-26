@@ -39,7 +39,9 @@ const signinButtonComponent = {
         try {
           const response = await postSignin({ userName, password })
           const result = await response.json()
-          document.getElementById('signin-status-message').innerHTML = result.status
+          let signinStatusMessage = document.getElementById('signin-status-message')
+          signinStatusMessage.innerHTML = result.status
+          signinStatusMessage.style.display = 'block'
           if (response.status == 200) {
             window.location.href = '/app'
           }

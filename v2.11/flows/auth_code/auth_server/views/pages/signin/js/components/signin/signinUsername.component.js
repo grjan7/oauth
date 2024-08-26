@@ -6,6 +6,7 @@ const signinUsernameComponent = {
       <label for="signin-username" id="signin-username-label">Username or Email</label>      
       <input id="signin-username" name="signin-username" required validation="email" value="" autofocus type="text" placeholder="Username or Email">
     </div>`,
+
   style: `#signin-username{
     width:90%;
     padding:4%;  
