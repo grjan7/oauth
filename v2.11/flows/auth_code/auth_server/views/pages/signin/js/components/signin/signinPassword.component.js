@@ -1,11 +1,13 @@
 'use strict'
 
+import signinButtonComponent from "./signinButton.component.js"
+
 const siginPasswordComponent = {
 
   template: `
     <div id="signin-password-component">
         <label for="signin-password" id="signin-password-label">Password</label>
-        <input type="password" name="signin-password" placeholder="Password" id="signin-password" required>        
+        <input type="password" name="signin-password" placeholder="Password" id="signin-password" tabindex="2" required>        
     </div>`,
 
   style: `#signin-password {

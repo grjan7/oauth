@@ -10,15 +10,17 @@ import signupTextComponent from './signupText.component.js'
 
 
 const signinComponent = {
-  template: `
+  template: ` 
     <div id="signin-component">
+    <form id="signin-form">
       ${signinHeaderComponent.template}
+      ${signinStatusComponent.template}
       ${signinUsernameComponent.template}
       ${signinPasswordComponent.template}
-      ${signinButtonComponent.template}
+      ${signinButtonComponent.template}      
       ${signupTextComponent.template}      
       ${signupLinkButtonComponent.template}
-      ${signinStatusComponent.template}    
+    </form>         
     </div>`,
 
   style: `#signin-component{

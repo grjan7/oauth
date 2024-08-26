@@ -4,7 +4,7 @@ const signinUsernameComponent = {
   template: `
     <div id="signin-username-component">
       <label for="signin-username" id="signin-username-label">Username or Email</label>      
-      <input id="signin-username" name="signin-username" required validation="email" value="" autofocus type="text" placeholder="Username or Email">
+      <input id="signin-username" name="signin-username" required="" value="" autofocus type="text" placeholder="Username or Email" tabindex="1">
     </div>`,
 
   style: `#signin-username{

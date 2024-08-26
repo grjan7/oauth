@@ -4,7 +4,7 @@ const signupLinkButtonComponent = {
 
   template: `
     <div id="signup-link-button-component">
-        <input type="submit" value="Sign up" id="signup-link-button">
+        <input type="submit" value="Sign up" id="signup-link-button" tabindex="4">
     </div>`,
 
   style: `
