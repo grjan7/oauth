@@ -1,7 +1,7 @@
 'use strict'
 
 import { Component } from '../../core/component.class.js'
-import { authenticateUser } from "../../services/signin.service.js"
+import { ClientSDK } from "../../services/clientSDK.js"
 
 const template = `
   <div id="signin-button-component">
@@ -36,11 +36,11 @@ const eventHandlers = {
 
     signinButton.onclick = async (e) => {
       e.preventDefault()
-      const userName = document.getElementById("signin-username").value
-      const password = document.getElementById("signin-password").value
       try {
-        const response = await authenticateUser({ userName, password })
+        const user = ClientSDK.getUserCredentials()
+        const response = await ClientSDK.authenticateUser(user)
         const result = await response.json()
+
         let signinStatusMessage = document.getElementById('signin-status-message')
         if (response.status == 200) {
           signinStatusMessage.style.display = 'none'
