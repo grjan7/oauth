@@ -1,7 +1,7 @@
 'use strict'
 
-import { Component } from '../../core/component.js'
-import { authenticateUser } from "../../services/signinRequests.js"
+import { Component } from '../../core/component.class.js'
+import { authenticateUser } from "../../services/signin.service.js"
 
 const template = `
   <div id="signin-button-component">
@@ -44,7 +44,7 @@ const eventHandlers = {
         let signinStatusMessage = document.getElementById('signin-status-message')
         if (response.status == 200) {
           signinStatusMessage.style.display = 'none'
-          window.location.href = '/app'
+          window.location.replace('/app')
         } else {
           signinStatusMessage.innerHTML = result.status
           signinStatusMessage.style.display = 'block'

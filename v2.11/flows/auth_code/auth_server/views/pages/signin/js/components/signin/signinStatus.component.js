@@ -1,6 +1,6 @@
 'use strict'
 
-import { Component } from '../../core/component.js'
+import { Component } from '../../core/component.class.js'
 
 const template = `
   <div id="signin-status-component">

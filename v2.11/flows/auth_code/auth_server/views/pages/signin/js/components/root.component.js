@@ -1,6 +1,6 @@
 'use strict'
 
-import { Component } from "../core/component.js"
+import { Component } from "../core/component.class.js"
 import signinComponent from "./signin/signin.component.js"
 
 const template = `

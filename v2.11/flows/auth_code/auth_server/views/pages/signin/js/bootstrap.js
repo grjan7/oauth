@@ -4,10 +4,7 @@
 // during bootstrapping the application 
 
 import rootComponent from './components/root.component.js'
-import { Component } from './core/component.js'
-//import setStyleService from './services/setStyle.js'
-//import setEventsService from './services/setEvents.js'
-
+import { Component } from './core/component.class.js'
 
 const bootstrapApp = async () => {
   const root = document.getElementById('root')
