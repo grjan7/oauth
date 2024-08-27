@@ -1,6 +1,8 @@
 'use strict'
 
-const signinUsernameComponent = {
+import { Component } from '../../core/component.js'
+
+const signinUsernameComponent = new Component({
   template: `
     <div id="signin-username-component">
       <label for="signin-username" id="signin-username-label">Username or Email</label>      
@@ -40,6 +42,6 @@ const signinUsernameComponent = {
       }
     }
   }
-}
+})
 
 export default signinUsernameComponent

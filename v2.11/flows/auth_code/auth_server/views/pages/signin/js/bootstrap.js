@@ -4,16 +4,16 @@
 // during bootstrapping the application 
 
 import rootComponent from './components/root.component.js'
-import setStyleService from './services/setStyle.js'
-import setEventsService from './services/setEvents.js'
+import { Component } from './core/component.js'
+//import setStyleService from './services/setStyle.js'
+//import setEventsService from './services/setEvents.js'
 
 
 const bootstrapApp = async () => {
-
   const root = document.getElementById('root')
   root.innerHTML = rootComponent.template
-  setStyleService()
-  setEventsService()
+  Component.setStyles()
+  Component.initEventHandlers()
 }
 
 export default bootstrapApp

@@ -1,6 +1,8 @@
 'use strict'
 
-const signinHeaderComponent = {
+import { Component } from '../../core/component.js'
+
+const signinHeaderComponent = new Component({
 
   template: `
   <div id="signin-header-component">
@@ -15,6 +17,6 @@ const signinHeaderComponent = {
   }`,
 
   eventHandlers: {}
-}
+})
 
 export default signinHeaderComponent

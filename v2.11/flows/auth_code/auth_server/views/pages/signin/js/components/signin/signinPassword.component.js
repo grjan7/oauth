@@ -1,8 +1,8 @@
 'use strict'
 
-import signinButtonComponent from "./signinButton.component.js"
+import { Component } from "../../core/component.js"
 
-const siginPasswordComponent = {
+const siginPasswordComponent = new Component({
 
   template: `
     <div id="signin-password-component">
@@ -42,6 +42,6 @@ const siginPasswordComponent = {
       }
     }
   }
-}
+})
 
 export default siginPasswordComponent

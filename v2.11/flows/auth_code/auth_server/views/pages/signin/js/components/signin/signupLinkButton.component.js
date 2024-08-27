@@ -1,7 +1,8 @@
 'use strict'
 
-const signupLinkButtonComponent = {
+import { Component } from '../../core/component.js'
 
+const signupLinkButtonComponent = new Component({
   template: `
     <div id="signup-link-button-component">
         <input type="submit" value="Sign up" id="signup-link-button" tabindex="4">
@@ -37,6 +38,6 @@ const signupLinkButtonComponent = {
       }
     }
   }
-}
+})
 
 export default signupLinkButtonComponent

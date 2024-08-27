@@ -1,8 +1,9 @@
 'use strict'
 
-import { postSignin } from "../../services/apiCalls.js"
+import { Component } from '../../core/component.js'
+import { postSignin } from "../../services/signinRequests.js"
 
-const signinButtonComponent = {
+const signinButtonComponent = new Component({
   template: `
     <div id="signin-button-component">
       <input type="submit" value="Sign in" id="signin-button" tabindex="3">
@@ -53,6 +54,7 @@ const signinButtonComponent = {
       }
     }
   }
-}
+})
+
 
 export default signinButtonComponent

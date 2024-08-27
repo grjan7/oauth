@@ -1,6 +1,8 @@
 'use strict'
 
-const signinStatusComponent = {
+import { Component } from '../../core/component.js'
+
+const signinStatusComponent = new Component({
   template: `
   <div id="signin-status-component">
     <p id="signin-status-message"></p>
@@ -19,6 +21,8 @@ const signinStatusComponent = {
   }`,
 
   eventHandlers: {}
-}
+})
+
+
 
 export default signinStatusComponent

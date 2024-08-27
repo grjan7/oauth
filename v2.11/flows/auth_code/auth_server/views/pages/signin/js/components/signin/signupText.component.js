@@ -1,6 +1,8 @@
 'use strict'
 
-const signupTextComponent = {
+import { Component } from '../../core/component.js'
+
+const signupTextComponent = new Component({
   template: `
   <div>
       <p id="signup-text" class="line-heading">Don't you have an account?</p>
@@ -8,6 +10,6 @@ const signupTextComponent = {
   style: ``,
 
   eventHandlers: {}
-}
+})
 
 export default signupTextComponent

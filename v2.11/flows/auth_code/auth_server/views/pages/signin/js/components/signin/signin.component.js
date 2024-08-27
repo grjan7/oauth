@@ -1,5 +1,6 @@
 'use strict'
 
+import { Component } from '../../core/component.js'
 import signinButtonComponent from './signinButton.component.js'
 import signinHeaderComponent from './signinHeader.component.js'
 import signinPasswordComponent from './signinPassword.component.js'
@@ -8,8 +9,7 @@ import signinUsernameComponent from './signinUsername.component.js'
 import signupLinkButtonComponent from './signupLinkButton.component.js'
 import signupTextComponent from './signupText.component.js'
 
-
-const signinComponent = {
+const signinComponent = new Component({
   template: ` 
     <div id="signin-component">
     <form id="signin-form">
@@ -36,6 +36,6 @@ const signinComponent = {
   `,
 
   eventHandlers: {}
-}
+})
 
 export default signinComponent
