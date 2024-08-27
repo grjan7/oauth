@@ -3,20 +3,13 @@
 import { Component } from "../core/component.js"
 import signinComponent from "./signin/signin.component.js"
 
+const template = `
+  <div>
+    <div id="root-component">
+      ${signinComponent.template}
+    </div>
+  </div>`
 
-const rootComponent = new Component({
-  template: `
-    <div>
-        <div id="navbar-container">
-          ${signinComponent.template}
-        </div>
-    </div>`,
-
-  style: ``,
-
-  eventHandlers: {
-
-  }
-})
+const rootComponent = new Component({ template })
 
 export default rootComponent

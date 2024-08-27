@@ -9,9 +9,8 @@ import signinUsernameComponent from './signinUsername.component.js'
 import signupLinkButtonComponent from './signupLinkButton.component.js'
 import signupTextComponent from './signupText.component.js'
 
-const signinComponent = new Component({
-  template: ` 
-    <div id="signin-component">
+const template = ` 
+  <div id="signin-component">
     <form id="signin-form">
       ${signinHeaderComponent.template}
       ${signinStatusComponent.template}
@@ -21,9 +20,10 @@ const signinComponent = new Component({
       ${signupTextComponent.template}      
       ${signupLinkButtonComponent.template}
     </form>         
-    </div>`,
+  </div>`
 
-  style: `#signin-component{
+const style = `
+  #signin-component {
     background-color: #fff;
     width: 380px;
     margin: auto;  
@@ -33,9 +33,8 @@ const signinComponent = new Component({
     border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);  
   }  
-  `,
+  `
 
-  eventHandlers: {}
-})
+const signinComponent = new Component({ template, style })
 
 export default signinComponent

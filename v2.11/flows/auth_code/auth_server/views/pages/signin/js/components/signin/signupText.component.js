@@ -2,14 +2,11 @@
 
 import { Component } from '../../core/component.js'
 
-const signupTextComponent = new Component({
-  template: `
+const template = `
   <div>
-      <p id="signup-text" class="line-heading">Don't you have an account?</p>
-  </div>`,
-  style: ``,
+    <p id="signup-text" class="line-heading">Don't you have an account?</p>
+  </div>`
 
-  eventHandlers: {}
-})
+const signupTextComponent = new Component({ template })
 
 export default signupTextComponent

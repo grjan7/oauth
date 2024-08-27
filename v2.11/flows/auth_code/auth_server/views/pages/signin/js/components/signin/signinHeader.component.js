@@ -2,21 +2,18 @@
 
 import { Component } from '../../core/component.js'
 
-const signinHeaderComponent = new Component({
-
-  template: `
+const template = `
   <div id="signin-header-component">
     <h1 id="signin-header">Sign in</h1>
-  </div>`,
+  </div>`
 
-  style: `
-  #signin-header{
-    text-align:center;
-    color:#004182;
-    font-weight:600;
-  }`,
+const style = `
+  #signin-header {
+    text-align: center;
+    color: #004182;
+    font-weight: 600;
+  }`
 
-  eventHandlers: {}
-})
+const signinHeaderComponent = new Component({ template, style })
 
 export default signinHeaderComponent

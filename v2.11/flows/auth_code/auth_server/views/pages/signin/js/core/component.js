@@ -10,10 +10,11 @@ export class Component {
    * @property {object} component.eventHandlers object with methods to handle events
    * 
    */
-  constructor(component) {
-    this.template = component.template
-    this.style = component.style
-    this.eventHandlers = component.eventHandlers
+  constructor(component = {}) {
+    this.template = component.template || ''
+    this.style = component.style || ''
+    this.eventHandlers = component.eventHandlers || {}
+
     Component.components.push(component)
   }
 

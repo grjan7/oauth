@@ -1,6 +1,6 @@
 'use strict'
 
-export const postSignin = async (data) => {
+export const authenticateUser = async (data) => {
   const url = '/signin/flow/default'
   const options = {
     method: 'POST',
