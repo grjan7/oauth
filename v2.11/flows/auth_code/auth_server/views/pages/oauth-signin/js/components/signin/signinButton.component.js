@@ -2,6 +2,7 @@
 
 import { Component } from '../../core/component.class.js'
 import { AuthClient } from '../../services/authClient.js'
+import grantComponent from '../grant/grant.component.js'
 
 const template = `
   <div id="signin-button-component">
@@ -44,7 +45,7 @@ const eventHandlers = {
         let signinStatusMessage = document.getElementById('signin-status-message')
         if (response.status == 200) {
           signinStatusMessage.style.display = 'none'
-          window.location.replace('/app')
+          document.getElementById('root').innerHTML = grantComponent.template
         } else {
           signinStatusMessage.innerHTML = result.status
           signinStatusMessage.style.display = 'block'

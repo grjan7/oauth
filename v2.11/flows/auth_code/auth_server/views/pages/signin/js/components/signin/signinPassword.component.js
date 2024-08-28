@@ -47,6 +47,4 @@ const eventHandlers = {
 
 const siginPasswordComponent = new Component({ template, style, eventHandlers })
 
-console.log(siginPasswordComponent)
-
 export default siginPasswordComponent

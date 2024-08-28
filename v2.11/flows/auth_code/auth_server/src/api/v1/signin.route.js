@@ -7,10 +7,10 @@ const router = new Router()
 
 router
   .route('/flow/default')
-  .post(signinCtrl.validateUser)
+  .post(signinCtrl.authenticateUser)
 
 router
   .route('/flow/oauth')
-  .post(signinCtrl.validateUser)
+  .post(signinCtrl.authenticateUser)
 
 export default router
