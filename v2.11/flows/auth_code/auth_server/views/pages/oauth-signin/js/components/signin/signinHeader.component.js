@@ -1,0 +1,19 @@
+'use strict'
+
+import { Component } from '../../core/component.class.js'
+
+const template = `
+  <div id="signin-header-component">
+    <h1 id="signin-header">Sign in</h1>
+  </div>`
+
+const style = `
+  #signin-header {
+    text-align: center;
+    color: #004182;
+    font-weight: 600;
+  }`
+
+const signinHeaderComponent = new Component({ template, style })
+
+export default signinHeaderComponent

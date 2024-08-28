@@ -1,39 +1,40 @@
 'use strict'
 
-import passwordComponent from "./password.component.js"
-import userNameComponent from "./username.component.js"
-import signinButtonComponent from "./signinButton.component.js"
+import { Component } from '../../core/component.class.js'
+import signinButtonComponent from './signinButton.component.js'
+import signinHeaderComponent from './signinHeader.component.js'
+import signinPasswordComponent from './signinPassword.component.js'
+import signinStatusComponent from './signinStatus.component.js'
+import signinUsernameComponent from './signinUsername.component.js'
+import signupLinkButtonComponent from './signupLinkButton.component.js'
+import signupTextComponent from './signupText.component.js'
 
+const template = ` 
+  <div id="signin-component">
+    <form id="signin-form">
+      ${signinHeaderComponent.template}
+      ${signinStatusComponent.template}
+      ${signinUsernameComponent.template}
+      ${signinPasswordComponent.template}
+      ${signinButtonComponent.template}      
+      ${signupTextComponent.template}      
+      ${signupLinkButtonComponent.template}
+    </form>         
+  </div>`
 
-const signinComponent = {
-  template: `
-    <div id="signin-component">
-      <h1 id="signin-header">Oauth Sign in</h1>
-      ${userNameComponent.template}
-      ${passwordComponent.template}
-      ${signinButtonComponent.template}
-      
-      <p id="signup-text">Don't you have an account? <span id="sign-up-link"><a href="/signup">Sign Up</a></span></p>
-    </div>`,
-  style: `#signin-component{
-    background-color:#fff;
-    width: 300px;
-    margin:auto;  
-    margin-top:5%;    
+const style = `
+  #signin-component {
+    background-color: #fff;
+    width: 380px;
+    margin: auto;  
+    margin-top: 1%;    
     padding: 20px;
-    min-height:500px;
+    min-height: 500px;
     border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);  
-  }
-  #signin-header{
-    text-align:center;
-  }
-
-  #signup-text{
-  border-top: 1px solid rgba(0,0,0,0.3);
-  padding:5%;
-  }
+  }  
   `
-}
+
+const signinComponent = new Component({ template, style })
 
 export default signinComponent
