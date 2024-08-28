@@ -1,16 +1,15 @@
 'use strict'
 
-import signinComponent from "./signin/signin.component.js"
+import { Component } from '../../../../lib/component.class.js'
+import signupComponent from './signup/signup.component.js'
 
+const template = `
+  <div>
+    <div id="root-component">
+      ${signupComponent.template}
+    </div>
+  </div>`
 
-const rootComponent = {
-  template: `
-    <div>
-        <div id="navbar-container">
-          ${signinComponent.template}
-        </div>
-    </div>`,
-  style: ``
-}
+const rootComponent = new Component({ template })
 
 export default rootComponent

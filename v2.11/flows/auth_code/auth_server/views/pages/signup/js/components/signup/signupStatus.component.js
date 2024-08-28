@@ -3,12 +3,12 @@
 import { Component } from '../../../../../lib/component.class.js'
 
 const template = `
-  <div id="signin-status-component">
-    <p id="signin-status-message"></p>
+  <div id="signup-status-component">
+    <p id="signup-status-message"></p>
   </div>`
 
 const style = `
-  #signin-status-message {  
+  #signup-status-message {  
     display: none;
     color: #852020;
     text-align: center;
@@ -20,6 +20,6 @@ const style = `
     position: absolute;    
   }`
 
-const signinStatusComponent = new Component({ template, style })
+const signupStatusComponent = new Component({ template, style })
 
-export default signinStatusComponent
+export default signupStatusComponent

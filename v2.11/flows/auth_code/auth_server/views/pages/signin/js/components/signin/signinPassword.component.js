@@ -1,6 +1,6 @@
 'use strict'
 
-import { Component } from '../../core/component.class.js'
+import { Component } from '../../../../../lib/component.class.js'
 
 const template = `
 <div id="signin-password-component">
@@ -45,6 +45,6 @@ const eventHandlers = {
 
 }
 
-const siginPasswordComponent = new Component({ template, style, eventHandlers })
+const signinPasswordComponent = new Component({ template, style, eventHandlers })
 
-export default siginPasswordComponent
+export default signinPasswordComponent

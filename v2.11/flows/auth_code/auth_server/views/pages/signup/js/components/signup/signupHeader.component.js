@@ -3,17 +3,17 @@
 import { Component } from '../../../../../lib/component.class.js'
 
 const template = `
-  <div id="signin-header-component">
-    <h1 id="signin-header">Sign in</h1>
+  <div id="signup-header-component">
+    <h1 id="signup-header">Sign up</h1>
   </div>`
 
 const style = `
-  #signin-header {
+  #signup-header {
     text-align: center;
     color: #004182;
     font-weight: 600;
   }`
 
-const signinHeaderComponent = new Component({ template, style })
+const signupHeaderComponent = new Component({ template, style })
 
-export default signinHeaderComponent
+export default signupHeaderComponent

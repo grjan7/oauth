@@ -18,6 +18,7 @@ const signupPage = join(__dirname, '../views/pages/signup')
 const signinPage = join(__dirname, '../views/pages/signin')
 const oauthSigninPage = join(__dirname, '../views/pages/oauth-signin')
 const appPage = join(__dirname, '../views/pages/app')
+const jsLib = join(__dirname, '../views/lib')
 
 // middlewares
 app.use(bodyparser.json())
@@ -34,12 +35,15 @@ const validateFlow = async (req, res, next) => {
   next()
 }
 // routes
+
 app.use('/account', accounts)
 app.use('/account/home', express.static(appPage))
 app.use('/app', (req, res, next) => res.redirect('/account/home'))
 app.use('/signup', express.static(signupPage))
 app.use('/signin', signin)
 app.use('/signin/flow/default', express.static(signinPage))
+app.use('/lib', express.static(jsLib))
+app.use('/:module/lib', express.static(jsLib))
 app.use('/signin/flow/oauth', express.static(oauthSigninPage))
 app.use('/signout', signout)
 app.use('/signout', (req, res, next) => res.redirect('/'))

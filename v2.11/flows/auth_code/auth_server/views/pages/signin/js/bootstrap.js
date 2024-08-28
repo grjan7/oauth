@@ -4,7 +4,7 @@
 // during bootstrapping the application 
 
 import rootComponent from './components/root.component.js'
-import { Component } from './core/component.class.js'
+import { Component } from '../../../lib/component.class.js'
 
 const bootstrapApp = async () => {
   const root = document.getElementById('root')
