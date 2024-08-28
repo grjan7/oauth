@@ -3,8 +3,8 @@
 
 export default class SigninCtrl {
   static async validateUser(req, res, next) {
-    const { userName, password } = req.body;
-    const isValidUser = userName == "jana" && password == "ranga"
+    const { username, password } = req.body;
+    const isValidUser = username == "jana" && password == "ranga"
     if (isValidUser) {
       res.status(200).json({ status: "valid user" })
     } else {
