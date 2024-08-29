@@ -1,6 +1,6 @@
 'use strict'
 
-import { Component } from '../../../../../lib/component.class.js'
+import { Component } from 'lib/component.class.js'
 import signinLinkButtonComponent from './signinLinkButton.component.js'
 import signinTextComponent from './signinText.component.js'
 import signupButtonComponent from './signupButton.component.js'

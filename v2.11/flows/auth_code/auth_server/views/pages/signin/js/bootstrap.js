@@ -1,10 +1,11 @@
 'use strict'
 
 // initialize the objects and services that need to be available
-// during bootstrapping the application 
+// during bootstrapping the application
 
+import { Component } from 'lib/component.class.js'
 import rootComponent from './components/root.component.js'
-import { Component } from '../../../lib/component.class.js'
+
 
 const bootstrapApp = async () => {
   const root = document.getElementById('root')
