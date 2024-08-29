@@ -1,9 +1,10 @@
 'use strict'
 
-import { Component } from '../../core/component.class.js'
+import { Component } from 'lib/component.class.js'
 
 const template = `
-  <div id="grant-header-component">    
+  <div id="grant-header-component">
+    <h1>Need Permission</h1>
   </div>`
 
 

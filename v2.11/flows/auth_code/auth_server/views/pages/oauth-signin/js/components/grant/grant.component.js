@@ -1,6 +1,6 @@
 'use strict'
 
-import { Component } from '../../core/component.class.js'
+import { Component } from 'lib/component.class.js'
 
 import grantHeaderComponent from './grantHeader.component.js'
 import grantStatusComponent from './grantStatus.component.js'

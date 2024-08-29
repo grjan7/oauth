@@ -1,6 +1,6 @@
 'use strict'
 
-import { Component } from '../../core/component.class.js'
+import { Component } from 'lib/component.class.js'
 import { AuthClient } from '../../services/authClient.js'
 import grantComponent from '../grant/grant.component.js'
 
@@ -46,6 +46,9 @@ const eventHandlers = {
         if (response.status == 200) {
           signinStatusMessage.style.display = 'none'
           document.getElementById('root').innerHTML = grantComponent.template
+          history.replaceState(null, "", '/signin/flow/oauth/consent')
+          //window.location.replace('/signin/flow/oauth/consent')
+
         } else {
           signinStatusMessage.innerHTML = result.status
           signinStatusMessage.style.display = 'block'
