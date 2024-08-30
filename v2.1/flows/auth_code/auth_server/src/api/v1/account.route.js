@@ -5,6 +5,10 @@ import accountCtrl from './account.controller.js'
 
 const router = new Router()
 
+
+router.route('/signup').post(accountCtrl.register)
+
+
 /*router.route('/lifecycle/steps/signup/name')
   .get(accountCtrl.getSignUpName)
   .post(accountCtrl.postSignUpName)

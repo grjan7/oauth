@@ -8,3 +8,7 @@ export default class SignupCtrl {
   }
 }
 
+
+// POST '/account' signup
+// POST '/account/:accountID/signout'
+// POST '/signin/flow/default'
