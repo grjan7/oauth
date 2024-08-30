@@ -8,7 +8,7 @@ import cors from 'cors'
 import bodyparser from 'body-parser'
 import morgan from 'morgan'
 
-import accounts from './api/v1/account.route.js'
+import signup from './api/v1/signup.route.js'
 import signin from './api/v1/signin.route.js'
 import signout from './api/v1/signout.route.js'
 
@@ -36,9 +36,10 @@ const validateFlow = async (req, res, next) => {
 }
 // routes
 
-app.use('/account', accounts)
+
 app.use('/account/home', express.static(appPage))
 app.use('/app', (req, res, next) => res.redirect('/account/home'))
+app.use('/signup', signup)
 app.use('/signup', express.static(signupPage))
 app.use('/signin', signin)
 app.use('/signin/flow/default', express.static(signinPage))

@@ -11,9 +11,6 @@ import signupFirstnameComponent from './signupFirstname.component.js'
 import signupLastnameComponent from './signupLastname.component.js'
 import signupPasswordComponent from './signupPassword.component.js'
 import signupStatusComponent from './signupStatus.component.js'
-import signupUsernameComponent from './signupUsername.component.js'
-import signupGenderComponent from './signupGender.component.js'
-import signupDOBComponent from './signupDOB.component.js'
 
 const template = ` 
   <div id="signup-component">
@@ -22,10 +19,7 @@ const template = `
       ${signupStatusComponent.template}
       ${signupFirstnameComponent.template}
       ${signupLastnameComponent.template}
-      ${signupDOBComponent.template}
-      ${signupGenderComponent.template}
       ${signupEmailComponent.template}
-      ${signupUsernameComponent.template}
       ${signupPasswordComponent.template}
       ${signupConfirmPasswordComponent.template}
       ${signupButtonComponent.template}      

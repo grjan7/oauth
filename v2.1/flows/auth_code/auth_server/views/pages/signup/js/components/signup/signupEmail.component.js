@@ -4,9 +4,9 @@ import { Component } from 'lib/component.class.js'
 
 const template = `
   <div id="signup-email-component">
-    <label for="signup-email" id="signup-email-label">Email</label>      
+    <label for="signup-email" id="signup-email-label">Email*</label>      
     <input id="signup-email" name="signup-email" required="" value="" 
-    autofocus type="text" placeholder="Email" tabindex="1">
+    autofocus type="text" placeholder="" tabindex="1">
   </div>`
 
 const style = `
@@ -19,14 +19,14 @@ const style = `
 
   #signup-email-component {
     align-items: center; 
-    padding: 4%;
+    padding: 3%;
   }
 
   #signup-email-label {
-    display: none;
+    display: block;
     color: #004182;
     font-weight: 600;
-    padding: 0px 0px 5px 0px;
+    padding: 0px 0px 10px 0px;
   }
 `
 
@@ -46,6 +46,6 @@ const eventHandlers = {
 
 }
 
-const signupEmailComponent = new Component({ template, style, eventHandlers })
+const signupEmailComponent = new Component({ template, style })
 
 export default signupEmailComponent

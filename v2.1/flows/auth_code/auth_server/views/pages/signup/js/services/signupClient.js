@@ -9,11 +9,9 @@ export class SignupClient {
   /**
    * 
    * @param {UserInfo} userInfo
-   * @property {string} name
-   * @property {Date} dob
-   * @property {string} gender
-   * @property {string} email
-   * @property {string} username
+   * @property {string} firstname
+   * @property {string} lastname 
+   * @property {string} email 
    * @property {string} password
    * @returns {Response} AddUserResponse
    * 
@@ -42,13 +40,11 @@ export class SignupClient {
    *  
    */
   static getUserInfo() {
-    const name = document.getElementById("signup-name").value
-    const dob = document.getElementById("signup-dob").value
+    const firstname = document.getElementById("signup-firstname").value
+    const lastname = document.getElementById("signup-lastname").value
     const email = document.getElementById("signup-email").value
-    const gender = document.getElementById("signup-gender").value
-    const username = document.getElementById("signup-username").value
     const password = document.getElementById("signup-password").value
-    return { name, dob, email, gender, username, password }
+    return { firstname, lastname, email, password }
   }
 
 }
@@ -56,10 +52,8 @@ export class SignupClient {
 /**
  * Parameter passed to `SignupClient.addUser` method
  * @typedef UserInfo
- * @property {string} name
- * @property {Date} dob
- * @property {string} gender
+ * @property {string} firstname
+ * @property {string} lastname
  * @property {string} email
- * @property {string} username
  * @property {string} password
  */

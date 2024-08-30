@@ -20,7 +20,7 @@ const style = `
   }
     
   #signup-button-component {
-    padding: 4%;
+    padding: 3%;
     align-items: center;
   }
 
