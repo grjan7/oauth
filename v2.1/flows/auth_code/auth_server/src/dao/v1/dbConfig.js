@@ -1,7 +1,7 @@
 'use strict'
 
 import { MongoClient } from 'mongodb'
-import { UserStore } from './userStore.js'
+import { AccountStore } from './accountStore.js'
 import { SessionStore } from './sessionStore.js'
 import { ClientStore } from './clientStore.js'
 import { ScopeStore } from './scopeStore.js'
@@ -16,7 +16,7 @@ export const initDB = async () => {
     const db = conn.db(process.env.AUTH_DB_NAME)
     // initialize collections
     await LogStore.init(db)
-    await UserStore.init(db)
+    await AccountStore.init(db)
     await SessionStore.init(db)
     await ClientStore.init(db)
     await ScopeStore.init(db)

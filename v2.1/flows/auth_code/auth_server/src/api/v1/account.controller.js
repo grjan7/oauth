@@ -1,8 +1,8 @@
 'use strict'
 
-import { AccountStore } from '../../dao/v1/accountStore.js'
+//import { AccountStore } from '../../dao/v1/accountStore.js'
 import { createHash } from 'node:crypto'
-import { jwt } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 export class User {
   constructor({ firstname, lastname, email, password, preferences = {} } = {}) {
@@ -39,6 +39,7 @@ export class User {
 }
 
 export default class AccountCtrl {
+
   static async register(req, res, next) {
     const userFromBody = req.body
     try {
@@ -47,6 +48,26 @@ export default class AccountCtrl {
     } catch (e) {
       throw new Error(e)
     }
+  }
+
+  static async signin(req, res, next) {
+    const { username, password } = req.body;
+    const isValidUser = username == "jana" && password == "ranga"
+    if (isValidUser) {
+      res.status(200).json({ status: "valid user" })
+    } else {
+      res.status(400).json({ status: "Invalid user" })
+    }
+  }
+
+  static async signout(req, res, next) {
+    const { sessionID, accountID } = req.body;
+    res.status(200).json({ status: "Successfully signed out." })
+  }
+
+  static async signup(req, res, next) {
+    const { firstname, lastname, email, password } = req.body;
+    res.status(200).json({ status: "Successfully added user." })
   }
 }
 

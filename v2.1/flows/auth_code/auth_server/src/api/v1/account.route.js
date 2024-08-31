@@ -1,13 +1,23 @@
 'use strict'
 
 import { Router } from 'express'
-import accountCtrl from './account.controller.js'
 
 const router = new Router()
 
+//router.route('/')
+//.get(accountCtrl.listAccounts)
 
-router.route('/signup').post(accountCtrl.register)
+router.route('/:accountId')
+  .get((req, res, next) => next())
+//.get(accountCtrl.getAccountById)
+//.put(accountCtrl.updateAccountById)
+//.delete(accountCtrl.deleteAccountById)
 
+
+router.use('/:accountId/client/:clientId', (req, res, next) => {
+  const { accountId, clientId } = req.params;
+  res.json({ accountId, clientId })
+})
 
 /*router.route('/lifecycle/steps/signup/name')
   .get(accountCtrl.getSignUpName)
