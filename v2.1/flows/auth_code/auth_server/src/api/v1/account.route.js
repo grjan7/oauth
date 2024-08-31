@@ -1,23 +1,22 @@
 'use strict'
 
 import { Router } from 'express'
+import accountCtrl from './account.controller.js'
+
+import logCtrl from './logger.controller.js'
+
 
 const router = new Router()
 
-//router.route('/')
-//.get(accountCtrl.listAccounts)
+router.route('/')
+  .get(accountCtrl.listAccounts)
 
 router.route('/:accountId')
-  .get((req, res, next) => next())
-//.get(accountCtrl.getAccountById)
-//.put(accountCtrl.updateAccountById)
-//.delete(accountCtrl.deleteAccountById)
+  .get(accountCtrl.getAccountById)
+  .put(accountCtrl.updateAccountById)
+  .delete(accountCtrl.deleteAccountById)
 
-
-router.use('/:accountId/client/:clientId', (req, res, next) => {
-  const { accountId, clientId } = req.params;
-  res.json({ accountId, clientId })
-})
+export default router
 
 /*router.route('/lifecycle/steps/signup/name')
   .get(accountCtrl.getSignUpName)
@@ -63,4 +62,3 @@ router.route('/signout')
 .get()
 .post()
 */
-export default router

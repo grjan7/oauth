@@ -105,3 +105,4 @@ router.route('/token')
   .post() // code exchange for token
   .delete() // revoke token
 
+export default router

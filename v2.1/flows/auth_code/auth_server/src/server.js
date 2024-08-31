@@ -7,6 +7,8 @@ import morgan from 'morgan'
 
 import root from './api/v1/root.route.js'
 import account from './api/v1/account.route.js'
+import client from './api/v1/client.route.js'
+import logger from './api/v1/logger.route.js'
 
 const app = express()
 
@@ -17,7 +19,10 @@ process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
 // routes
 app.use('/account', account)
+app.use('/client', client)
+app.use('/log', logger)
 app.use('/', root)
+
 app.use((err, req, res, next) => {
   res.status(500).send("An unexpected error occured!!")
   next()
