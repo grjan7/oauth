@@ -32,4 +32,85 @@ export class TokenStore {
       tokenStore = db.collection("tokenStore")
     }
   }
+
+  static async createToken(token) {
+    try {
+      const result = await tokenStore.insertOne(token)
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateTokenWithAccessToken(tokenId, accessTokenInfo) {
+    try {
+      const result = await tokenStore.updateOne({ _id: ObjectId(tokenId) }, { $addFields: accessTokenInfo })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async getTokenByTokenId(tokenId) {
+    try {
+      const result = await tokenStore.findOne({ _id: ObjectId(tokenId) })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async listTokensByClientId(clientId) {
+    try {
+      const result = await tokenStore.find({ clientId })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async listTokensByEmailId(email) {
+    try {
+      const result = await tokenStore.find({ email })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteTokenByTokenId(tokenId) {
+    try {
+      const result = await tokenStore.deleteOne({ _id: ObjectId(tokenId) })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteTokenByEmailId(email) {
+    try {
+      const result = await tokenStore.deleteMany({ email })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteTokenByClientId(clientId) {
+    try {
+      const result = await tokenStore.deleteMany({ clientId })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async emptyTokenStore() {
+    try {
+      const result = await tokenStore.deleteMany({})
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 }
