@@ -25,18 +25,20 @@ export class AccountStore {
 
   static async createAccount(user) {
     try {
-      const { email } = user
-      const isAlreadyExist = await AccountStore.findAccountByEmailId(email)
-      if (!isAlreadyExist) {
-        const result = await accountStore.insertOne(user)
-      }
+      const result = await accountStore.insertOne(user)
+      return result
     } catch (e) {
       throw new Error(e)
     }
   }
 
   static async findAccountByEmailId(email) {
-    const pipeline = [{ $match: { email } }, { $count: { $sum: 1 } }]
+
+    const pipeline = [
+      { $match: { email } },
+      { $count: { $sum: 1 } }
+    ]
+
     try {
       const result = await accountStore.aggregate(pipeline)
       return result.toArray().length == 1

@@ -20,4 +20,5 @@ export class ClientStore {
       clientStore = db.collection("clientStore")
     }
   }
+
 }
