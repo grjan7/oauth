@@ -21,4 +21,49 @@ export class ClientStore {
     }
   }
 
+  static async createClient(clientInfo) {
+    try {
+      const result = await clientStore.insertOne(clientInfo)
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async listClientsByEmailId(email) {
+    try {
+      const result = await clientStore.find({ email })
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  static async findClientByClientId(clientId) {
+    try {
+      const result = await clientStore.findOne({ clientId })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateClientByClientId(clientId) {
+    try {
+      const result = await clientStore.updateOne({ clientId })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteClientByClientId(clientId) {
+    try {
+      const result = await clientStore.deleteOne({ clientId })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
 }

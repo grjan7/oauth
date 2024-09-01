@@ -23,25 +23,46 @@ export class AccountStore {
     }
   }
 
-  static async createAccount(user) {
+  static async createAccount(userInfo) {
     try {
-      const result = await accountStore.insertOne(user)
+      const result = await accountStore.insertOne(userInfo)
       return result
     } catch (e) {
       throw new Error(e)
     }
   }
 
-  static async findAccountByEmailId(email) {
-
-    const pipeline = [
-      { $match: { email } },
-      { $count: { $sum: 1 } }
-    ]
-
+  static async listAccounts() {
     try {
-      const result = await accountStore.aggregate(pipeline)
-      return result.toArray().length == 1
+      const result = await accountStore.find({})
+      return result
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  static async findAccountByEmailId(email) {
+    try {
+      const result = await accountStore.findOne({ email })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateAccountByEmailId(email) {
+    try {
+      const result = await accountStore.updateOne({ email })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteAccountByEmailId(email) {
+    try {
+      const result = await accountStore.deleteOne({ email })
+      return { success: true }
     } catch (e) {
       throw new Error(e)
     }
