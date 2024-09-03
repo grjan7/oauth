@@ -12,7 +12,7 @@ export class Session {
   }
 }
 
-export default class SessionStore {
+export class SessionStore {
   static async init(db) {
     if (!sessionStore) {
       sessionStore = db.collection("sessionStore")

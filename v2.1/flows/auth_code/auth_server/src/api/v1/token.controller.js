@@ -1,17 +1,5 @@
 'use strict'
 
-import { Router } from 'express'
-import tokenCtrl from './token.controller.js'
+export default class TokenController {
 
-const router = new Router()
-
-router.route('/')
-  .get(tokenCtrl.listTokensByAccountId)
-  .post(tokenCtrl.createTokensByAccountId)
-  .delete(tokenCtrl.deleteTokensByAccountId)
-
-router.route('/:tokenId')
-  .get(tokenCtrl.getTokenByTokenId)
-  .delete(tokenCtrl.deleteTokenByTokenId)
-
-export default router
+}
