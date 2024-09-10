@@ -40,16 +40,18 @@ export default class AccountCtrl {
     const hashedPassword = hash(password)
     try {
       const userInfo = await AccountStore.findAccountByEmailId(username)
-      const isValidUsername = username == userInfo.email
-      const isValidPassword = hashedPassword == userInfo.hashedPassword
-      if (isValidUsername) {
+      if (userInfo) {
+        const isValidPassword = (hashedPassword == userInfo.hashedPassword)
         if (isValidPassword) {
+          const session = { email: username } // add session info like browser details, ip address
+          const sessionResult = await SessionStore.createSession(session)
+          const sessionId = sessionResult.insertedId.toString()
+          res.cookie("sessionId", sessionId)
           res.status(200).json({ status: 'success' })
         } else {
           errorMessage.status = `Incorrect password`
           res.status(400).json(errorMessage)
         }
-
       } else {
         errorMessage.status = `Username is not found`
         res.status(400).json(errorMessage)
@@ -81,10 +83,11 @@ export default class AccountCtrl {
 
   static async getAccountById(req, res, next) {
     const { sessionId } = req.cookies
+    console.log(sessionId)
     try {
       const session = await SessionStore.getSessionBySessionId(sessionId)
       const { email } = session
-      const result = AccountStore.getAccountById(email)
+      const result = AccountStore.findAccountByEmailId(email)
       res.status(200).json(result)
     } catch (e) {
       throw new Error(e)

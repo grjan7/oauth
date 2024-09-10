@@ -22,7 +22,7 @@ export class SessionStore {
   static async createSession(session) {
     try {
       const result = await sessionStore.insertOne(session)
-      return result.id
+      return result
     } catch (e) {
       throw new Error(e)
     }
@@ -30,7 +30,7 @@ export class SessionStore {
 
   static async getSessionBySessionId(sessionId) {
     try {
-      const result = await sessionStore.findOne({ _id: ObjectId(sessionId) })
+      const result = await sessionStore.findOne({ _id: new ObjectId(sessionId) })
       return result
     } catch (e) {
       throw new Error(e)

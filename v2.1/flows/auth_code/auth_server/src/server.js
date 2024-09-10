@@ -3,6 +3,7 @@
 import express from 'express'
 import cors from 'cors'
 import bodyparser from 'body-parser'
+import cookieparser from 'cookie-parser'
 import morgan from 'morgan'
 
 import root from './api/v1/root.route.js'
@@ -15,6 +16,8 @@ const app = express()
 // middlewares
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
+app.use(cookieparser())
+
 process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
 // routes
