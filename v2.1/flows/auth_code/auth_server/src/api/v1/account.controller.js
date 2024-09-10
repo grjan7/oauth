@@ -5,6 +5,10 @@ import { SessionStore } from '../../dao/v1/sessionStore.js'
 import { createHash } from 'node:crypto'
 import jwt from 'jsonwebtoken'
 
+const hash = (data) => {
+  return createHash('sha256').update(data).digest('base64')
+}
+
 export class User {
   constructor({ firstname, lastname, email, password, preferences = {} } = {}) {
     this.firstname = firstname
@@ -72,12 +76,27 @@ export default class AccountCtrl {
   }
 
   static async signin(req, res, next) {
-    const { username, password } = req.body;
-    const isValidUser = username == "jana" && password == "ranga"
-    if (isValidUser) {
-      res.status(200).json({ status: "valid user" })
-    } else {
-      res.status(400).json({ status: "Invalid user" })
+    let errorMessage = {}
+    const { username, password } = req.body
+    const hashedPassword = hash(password)
+    try {
+      const userInfo = await AccountStore.findAccountByEmailId(username)
+      const isValidUsername = username == userInfo.email
+      const isValidPassword = hashedPassword == userInfo.hashedPassword
+      if (isValidUsername) {
+        if (isValidPassword) {
+          res.status(200).json({ status: 'success' })
+        } else {
+          errorMessage.status = `Incorrect password`
+          res.status(400).json(errorMessage)
+        }
+
+      } else {
+        errorMessage.status = `Username is not found`
+        res.status(400).json(errorMessage)
+      }
+    } catch (e) {
+      throw new Error(e)
     }
   }
 
