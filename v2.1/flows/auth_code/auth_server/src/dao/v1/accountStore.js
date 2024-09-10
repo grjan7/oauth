@@ -18,13 +18,19 @@ export class AccountUser {
 export class AccountStore {
 
   static async init(db) {
-    if (!accountStore) {
-      accountStore = db.collection("accountStore")
+    if (accountStore) {
+      return
+    }
+    try {
+      accountStore = await db.collection("accountStore")
+    } catch (e) {
+      console.error(`Unable to establish collection handles in accountStore: ${e}`)
     }
   }
 
   static async createAccount(userInfo) {
     try {
+      console.log(accountStore)
       const result = await accountStore.insertOne(userInfo)
       return result
     } catch (e) {

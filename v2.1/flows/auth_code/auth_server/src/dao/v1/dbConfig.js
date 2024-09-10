@@ -13,17 +13,16 @@ export const initDB = async () => {
   const client = new MongoClient(mongodbURL)
   try {
     const conn = await client.connect()
-    const db = conn.db(process.env.AUTH_DB_NAME)
+    const db = await conn.db(process.env.AUTH_DB_NAME)
     // initialize collections
-    await LogStore.init(db)
+    // await LogStore.init(conn)
     await AccountStore.init(db)
-    await SessionStore.init(db)
-    await ClientStore.init(db)
-    await ScopeStore.init(db)
-    await TokenStore.init(db)
+    // await SessionStore.init(conn)
+    // await ClientStore.init(conn)
+    // await ScopeStore.init(conn)
+    // await TokenStore.init(conn)
   } catch (err) {
-    console.log(err.message)
-  } finally {
-    await client.close()
+    console.log(err.stack)
+    process.exit(1)
   }
 }

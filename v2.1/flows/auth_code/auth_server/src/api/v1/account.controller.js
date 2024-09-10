@@ -4,52 +4,11 @@ import { AccountStore } from '../../dao/v1/accountStore.js'
 import { SessionStore } from '../../dao/v1/sessionStore.js'
 import { createHash } from 'node:crypto'
 import jwt from 'jsonwebtoken'
+import { ObjectId } from 'mongodb'
 
-const hash = (data) => {
-  return createHash('sha256').update(data).digest('base64')
-}
-
-export class User {
-  constructor({ firstname, lastname, email, password, preferences = {} } = {}) {
-    this.firstname = firstname
-    this.lastname = lastname
-    this.email = email
-    this.password = password
-    this.preferences = preferences
-  }
-  toJson() {
-    return { firstname: this.firstname, lastname: this.lastname, email: this.email, preferences: this.preferences }
-  }
-
-  async comparePassword(plainText) {
-    //return await bcrypt.compare(plainText, this.password)
-  }
-  encoded() {
-    return jwt.sign(
-      {
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 4,
-        ...this.toJson(),
-      },
-      process.env.SECRET_KEY,
-    )
-  }
-  static async decoded(userJwt) {
-    return jwt.verify(userJwt, process.env.SECRET_KEY, (error, res) => {
-      if (error) {
-        return { error }
-      }
-      return new User(res)
-    })
-  }
-}
+const hash = (data) => createHash('sha256').update(data).digest('base64')
 
 export default class AccountCtrl {
-  static async validateUserInfo(userInfo) {
-    // validate firstName
-    // validate lastName
-    // validate email
-    // validate password
-  }
 
   static async register(req, res, next) {
     // validate user info
@@ -57,11 +16,23 @@ export default class AccountCtrl {
     // add user if the user does not exist
     // email--user 1-to-1 relationship
 
-    const userInfo = req.body
-
+    const { firstname, lastname, email, password } = req.body
+    console.log(req.body)
     try {
-      const findResult = await AccountStore.findAccountByEmailId(userInfo.email)
-      console.log(findResult)
+      const findResult = await AccountStore.findAccountByEmailId(email)
+      console.log(findResult._id.toString())
+      const hashedPassword = hash(password)
+      const userInfo = {
+        firstname, lastname, email, hashedPassword
+      }
+
+      if (findResult == null) {
+        const insertResult = await AccountStore.createAccount(userInfo)
+        console.log(insertResult.insertedId.toString())
+        res.status(200).json({ status: 'Account has been successfully created.' })
+      } else {
+        res.status(400).json({ status: 'Account already exists.' })
+      }
       /*
       if (!findResult) {
         const result = await AccountStore.createAccount(userInfo)
@@ -157,4 +128,5 @@ export default class AccountCtrl {
   }
 
 }
+
 

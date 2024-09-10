@@ -19,7 +19,7 @@ router
 
 router
   .route('/signup')
-  .post(accountCtrl.signup)
+  .post(accountCtrl.register)
 
 router
   .route('/signout')
