@@ -17,30 +17,18 @@ export default class AccountCtrl {
     // email--user 1-to-1 relationship
 
     const { firstname, lastname, email, password } = req.body
-    console.log(req.body)
     try {
       const findResult = await AccountStore.findAccountByEmailId(email)
-      console.log(findResult._id.toString())
       const hashedPassword = hash(password)
       const userInfo = {
         firstname, lastname, email, hashedPassword
       }
-
       if (findResult == null) {
-        const insertResult = await AccountStore.createAccount(userInfo)
-        console.log(insertResult.insertedId.toString())
+        await AccountStore.createAccount(userInfo)
         res.status(200).json({ status: 'Account has been successfully created.' })
       } else {
         res.status(400).json({ status: 'Account already exists.' })
       }
-      /*
-      if (!findResult) {
-        const result = await AccountStore.createAccount(userInfo)
-        res.status(201).json({ status: 'Account has been successfully created.' })
-      } else {
-        res.status(400).json({ status: 'Account already exists' })
-      */
-
     } catch (e) {
       throw new Error(e)
     }

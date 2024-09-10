@@ -15,12 +15,12 @@ export const initDB = async () => {
     const conn = await client.connect()
     const db = await conn.db(process.env.AUTH_DB_NAME)
     // initialize collections
-    // await LogStore.init(conn)
+    await LogStore.init(db)
     await AccountStore.init(db)
-    // await SessionStore.init(conn)
-    // await ClientStore.init(conn)
-    // await ScopeStore.init(conn)
-    // await TokenStore.init(conn)
+    await SessionStore.init(db)
+    await ClientStore.init(db)
+    await ScopeStore.init(db)
+    await TokenStore.init(db)
   } catch (err) {
     console.log(err.stack)
     process.exit(1)
