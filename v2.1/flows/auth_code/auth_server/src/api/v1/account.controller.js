@@ -83,7 +83,7 @@ export default class AccountCtrl {
 
   static async getAccountById(req, res, next) {
     const { sessionId } = req.cookies
-    console.log(sessionId)
+
     try {
       const session = await SessionStore.getSessionBySessionId(sessionId)
       const { email } = session
