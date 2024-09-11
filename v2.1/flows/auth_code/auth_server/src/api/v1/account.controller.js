@@ -19,12 +19,12 @@ export default class AccountCtrl {
 
     const { firstname, lastname, email, password } = req.body
     try {
-      const findResult = await AccountStore.findAccountByEmailId(email)
+      const findAccountResult = await AccountStore.findAccountByEmailId(email)
       const hashedPassword = hash(password)
       const userInfo = {
         firstname, lastname, email, hashedPassword
       }
-      if (findResult == null) {
+      if (!findAccountResult) {
         await AccountStore.createAccount(userInfo)
         res.status(200).json({ status: 'Account has been successfully created.' })
       } else {
@@ -47,10 +47,10 @@ export default class AccountCtrl {
         const isValidPassword = (hashedPassword == userInfo.hashedPassword)
         if (isValidPassword) {
           const sessionId = await sessionCtrl.createSession(req, sessionOwner)
+          //res.clearCookie('sessionId')
           res.cookie("sessionId", sessionId)
           res.status(200).json({ status: 'success' })
         } else {
-          0
           errorMessage.status = `Incorrect password`
           res.status(400).json(errorMessage)
         }
@@ -64,9 +64,13 @@ export default class AccountCtrl {
   }
 
   static async signout(req, res, next) {
-    //const { sessionId } = req.cookie;
-    console.log(req)
-    res.status(200).json({ status: "Successfully signed out." })
+    try {
+      await sessionCtrl.deleteSessionBySessionId(req)
+      res.status(200).json({ status: "Successfully signed out." })
+    } catch (e) {
+      throw new Error(e)
+    }
+
   }
 
   static async signup(req, res, next) {

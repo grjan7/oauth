@@ -57,7 +57,7 @@ export class SessionStore {
 
   static async deleteSessionBySessionId(sessionId) {
     try {
-      const result = await sessionStore.deleteOne({ _id: ObjectId(sessionId) })
+      const result = await sessionStore.deleteOne({ _id: new ObjectId(sessionId) })
       return { success: true }
     } catch (e) {
       throw new Error(e)

@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path'
 
 import express from 'express'
 import accountCtrl from './account.controller.js'
+import sessionCtrl from './session.controller.js'
 
 const { Router } = express
 const router = new Router()
@@ -23,7 +24,7 @@ router
 
 router
   .route('/signout')
-  .post(accountCtrl.signout)
+  .post(sessionCtrl.validateSession, accountCtrl.signout)
 
 /*
 router.route('/auth')
