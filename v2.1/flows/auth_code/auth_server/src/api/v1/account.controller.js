@@ -2,6 +2,7 @@
 
 import { AccountStore } from '../../dao/v1/accountStore.js'
 import { SessionStore } from '../../dao/v1/sessionStore.js'
+import sessionCtrl from './session.controller.js'
 import { createHash } from 'node:crypto'
 import jwt from 'jsonwebtoken'
 import { ObjectId } from 'mongodb'
@@ -41,14 +42,15 @@ export default class AccountCtrl {
     try {
       const userInfo = await AccountStore.findAccountByEmailId(username)
       if (userInfo) {
+        const accountId = userInfo._id.toString()
+        const sessionOwner = { email: username, accountId }
         const isValidPassword = (hashedPassword == userInfo.hashedPassword)
         if (isValidPassword) {
-          const session = { email: username } // add session info like browser details, ip address
-          const sessionResult = await SessionStore.createSession(session)
-          const sessionId = sessionResult.insertedId.toString()
+          const sessionId = await sessionCtrl.createSession(req, sessionOwner)
           res.cookie("sessionId", sessionId)
           res.status(200).json({ status: 'success' })
         } else {
+          0
           errorMessage.status = `Incorrect password`
           res.status(400).json(errorMessage)
         }
@@ -62,7 +64,8 @@ export default class AccountCtrl {
   }
 
   static async signout(req, res, next) {
-    const { sessionID, accountID } = req.body;
+    //const { sessionId } = req.cookie;
+    console.log(req)
     res.status(200).json({ status: "Successfully signed out." })
   }
 

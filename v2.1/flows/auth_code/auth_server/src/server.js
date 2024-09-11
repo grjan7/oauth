@@ -21,11 +21,11 @@ app.use(cookieparser())
 process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
 // routes
+
 app.use('/account', account)
 app.use('/client', client)
 app.use('/log', logger)
 app.use('/', root)
-
 app.use((err, req, res, next) => {
   res.status(500).send("An unexpected error occured!!")
   next()

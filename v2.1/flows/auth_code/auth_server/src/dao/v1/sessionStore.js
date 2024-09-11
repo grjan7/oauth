@@ -37,6 +37,15 @@ export class SessionStore {
     }
   }
 
+  static async getSessionByEmailId(email) {
+    try {
+      const result = await sessionStore.findOne({ email })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async listSessionsByEmailId(email) {
     try {
       const result = await sessionStore.find({ email })

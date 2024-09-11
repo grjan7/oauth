@@ -44,13 +44,13 @@ const signinPage = join(__dirname, '../../../views/pages/signin')
 const oauthSigninPage = join(__dirname, '../../../views/pages/oauth-signin')
 
 router.use('/lib', express.static(libPage))
-router.use('/account/home', express.static(appPage))
+router.use('/app/home', express.static(appPage))
 router.use('/signup', express.static(signupPage))
 router.use('/signin/flow/default', express.static(signinPage))
 router.use('/signin/flow/oauth', express.static(oauthSigninPage))
 
 
-router.use('/app', (req, res, next) => res.redirect('/account/home'))
+router.use('/app', (req, res, next) => res.redirect('/app/home'))
 router.use('/signout', (req, res, next) => res.redirect('/'))
 router.use('/', (req, res, next) => res.redirect('/signin/flow/default'))
 
