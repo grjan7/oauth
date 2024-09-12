@@ -11,6 +11,78 @@ const hash = (data) => createHash('sha256').update(data).digest('base64')
 
 export default class AccountCtrl {
 
+  static async isSameOrigin(req, res, next) {
+
+  }
+
+  static validateFirstname(firstname) {
+    let isValid = false
+    if (firstname && typeof firstname == 'string' && firstname.length >= 2) {
+      const firstnamePattern = /[A-Z]{1}[a-z]+/
+      isValid = firstname.match(firstnamePattern).length > 0
+    }
+    return isValid
+  }
+
+  static validateLastname(lastname) {
+    let isValid = false
+    if (lastname && typeof lastname == 'string' && lastname.length >= 1) {
+      const lastnamePattern = /[A-Z]{1}[a-z]+/
+      isValid = lastname.match(lastnamePattern).length > 0
+    }
+    return isValid
+  }
+
+  static validateEmail(email) {
+    let isValid = false
+    if (email && typeof email == 'string') {
+      const emailPattern = /[A-Z]{1}[a-z]+/
+      isValid = email.match(emailPattern).length > 0
+    }
+    return isValid
+  }
+
+  static validatePassword(password) {
+    let isValid = false
+    if (password && typeof password == 'string' && password.length >= 8) {
+      const passwordPattern = /[A-Z]{1}[a-z]+/
+      isValid = password.match(passwordPattern).length > 0
+    }
+    return isValid
+  }
+
+  static async validateUserInfo(req, res, next) {
+    const userInfo = req.body
+    const { firstname, lastname, email, password } = userInfo
+
+    const isValidFirstName = this.validateFirstname(firstname)
+    const isValidLastName = this.validateLastname(lastname)
+    const isValidEmail = this.validateEmail(email)
+    const isValidPassword = this.validatePassword(password)
+
+    if (!isValidFirstName) {
+      res.status(400).json({ status: `Invalid firstname.` })
+      return
+    }
+
+    if (!isValidLastName) {
+      res.status(400).json({ status: `Invalid lastname.` })
+      return
+    }
+
+    if (!isValidEmail) {
+      res.status(400).json({ status: `Invalid email.` })
+      return
+    }
+
+    if (!isValidPassword) {
+      res.status(400).json({ status: `Invalid password.` })
+      return
+    }
+
+    next()
+  }
+
   static async register(req, res, next) {
     // validate user info
     // find if the user already exist

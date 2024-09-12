@@ -20,7 +20,7 @@ router
 
 router
   .route('/signup')
-  .post(accountCtrl.register)
+  .post(accountCtrl.validateUserInfo, accountCtrl.register)
 
 router
   .route('/signout')
