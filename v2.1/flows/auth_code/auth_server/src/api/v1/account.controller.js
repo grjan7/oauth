@@ -125,7 +125,7 @@ export default class AccountCtrl {
           //res.clearCookie('sessionId')
           res.cookie("sessionId", sessionId).status(200).json({ status: 'success' })
         } else {
-          res.status(400).json({ status: 'Incorrect password' })
+          res.status(400).json({ status: `Incorrect password` })
         }
       } else {
         res.status(400).json({ status: `Username is not found` })
@@ -142,11 +142,6 @@ export default class AccountCtrl {
     } catch (e) {
       throw new Error(e)
     }
-  }
-
-  static async signup(req, res, next) {
-    const { firstname, lastname, email, password } = req.body;
-    res.status(200).json({ status: "Successfully added user." })
   }
 
   static async listAccounts(req, res, next) {
