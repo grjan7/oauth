@@ -12,14 +12,15 @@ const hash = (data) => createHash('sha256').update(data).digest('base64')
 export default class AccountCtrl {
 
   static async isSameOrigin(req, res, next) {
-
+    console.log(req)
+    next()
   }
 
   static validateFirstname(firstname) {
     let isValid = false
     if (firstname && typeof firstname == 'string' && firstname.length >= 2) {
-      const firstnamePattern = /[A-Z]{1}[a-z]+/
-      isValid = firstname.match(firstnamePattern).length > 0
+      const firstnamePattern = /^[A-Z]{1}[a-z]+$/
+      isValid = firstnamePattern.test(firstname)
     }
     return isValid
   }
@@ -27,8 +28,8 @@ export default class AccountCtrl {
   static validateLastname(lastname) {
     let isValid = false
     if (lastname && typeof lastname == 'string' && lastname.length >= 1) {
-      const lastnamePattern = /[A-Z]{1}[a-z]+/
-      isValid = lastname.match(lastnamePattern).length > 0
+      const lastnamePattern = /^[A-Z]{1}[a-z]*$/
+      isValid = lastnamePattern.test(lastname)
     }
     return isValid
   }
@@ -36,8 +37,8 @@ export default class AccountCtrl {
   static validateEmail(email) {
     let isValid = false
     if (email && typeof email == 'string') {
-      const emailPattern = /[A-Z]{1}[a-z]+/
-      isValid = email.match(emailPattern).length > 0
+      const emailPattern = /^([a-z0-9-_.]{1,})@([a-z0-9-]+)\.([a-z]{2,})$/
+      isValid = emailPattern.test(email)
     }
     return isValid
   }
@@ -45,8 +46,12 @@ export default class AccountCtrl {
   static validatePassword(password) {
     let isValid = false
     if (password && typeof password == 'string' && password.length >= 8) {
-      const passwordPattern = /[A-Z]{1}[a-z]+/
-      isValid = password.match(passwordPattern).length > 0
+      const hasAlphabets = /[a-z]+/.test(password)
+      const hasUpperCase = /[A-Z]{1,}/.test(password)
+      const hasDigits = /[0-9]{1,}/.test(password)
+      const hasSymbols = /[~!@#$%^&*_+-.]{1,}/.test(password)
+
+      isValid = hasAlphabets && hasUpperCase && hasDigits && hasSymbols
     }
     return isValid
   }
@@ -55,10 +60,10 @@ export default class AccountCtrl {
     const userInfo = req.body
     const { firstname, lastname, email, password } = userInfo
 
-    const isValidFirstName = this.validateFirstname(firstname)
-    const isValidLastName = this.validateLastname(lastname)
-    const isValidEmail = this.validateEmail(email)
-    const isValidPassword = this.validatePassword(password)
+    const isValidFirstName = AccountCtrl.validateFirstname(firstname)
+    const isValidLastName = AccountCtrl.validateLastname(lastname)
+    const isValidEmail = AccountCtrl.validateEmail(email)
+    const isValidPassword = AccountCtrl.validatePassword(password)
 
     if (!isValidFirstName) {
       res.status(400).json({ status: `Invalid firstname.` })
