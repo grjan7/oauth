@@ -30,7 +30,6 @@ export class AccountStore {
 
   static async createAccount(userInfo) {
     try {
-      console.log(accountStore)
       const result = await accountStore.insertOne(userInfo)
       return result
     } catch (e) {

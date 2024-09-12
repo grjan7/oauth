@@ -12,7 +12,9 @@ const router = new Router()
 
 router
   .route('/signin/flow/default')
-  .post(accountCtrl.signin)
+  .post(
+    accountCtrl.isSameOrigin,
+    accountCtrl.signin)
 
 router
   .route('/signin/flow/oauth')
@@ -28,7 +30,10 @@ router
 
 router
   .route('/signout')
-  .post(sessionCtrl.validateSession, accountCtrl.signout)
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.signout)
 
 /*
 router.route('/auth')

@@ -12,8 +12,21 @@ const hash = (data) => createHash('sha256').update(data).digest('base64')
 export default class AccountCtrl {
 
   static async isSameOrigin(req, res, next) {
-    console.log(req)
-    next()
+    const { host, origin } = req.headers
+    if (host && origin) {
+      const originHost = origin.split("://")[1]
+      if (host != originHost) {
+        res.status(401).json({ status: `Request expected to be originated from same-site.` })
+        return
+      } else {
+        console.log(`same-origin request`)
+        next()
+      }
+    } else {
+      res.status(400).json({ status: `Use the browser for this request.` })
+      return
+    }
+
   }
 
   static validateFirstname(firstname) {
