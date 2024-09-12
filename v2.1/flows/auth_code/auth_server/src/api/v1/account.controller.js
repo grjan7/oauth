@@ -19,14 +19,12 @@ export default class AccountCtrl {
         res.status(401).json({ status: `Request expected to be originated from same-site.` })
         return
       } else {
-        console.log(`same-origin request`)
         next()
       }
     } else {
       res.status(400).json({ status: `Use the browser for this request.` })
       return
     }
-
   }
 
   static validateFirstname(firstname) {
@@ -63,7 +61,6 @@ export default class AccountCtrl {
       const hasUpperCase = /[A-Z]{1,}/.test(password)
       const hasDigits = /[0-9]{1,}/.test(password)
       const hasSymbols = /[~!@#$%^&*_+-.]{1,}/.test(password)
-
       isValid = hasAlphabets && hasUpperCase && hasDigits && hasSymbols
     }
     return isValid
@@ -72,43 +69,32 @@ export default class AccountCtrl {
   static async validateUserInfo(req, res, next) {
     const userInfo = req.body
     const { firstname, lastname, email, password } = userInfo
-
     const isValidFirstName = AccountCtrl.validateFirstname(firstname)
     const isValidLastName = AccountCtrl.validateLastname(lastname)
     const isValidEmail = AccountCtrl.validateEmail(email)
     const isValidPassword = AccountCtrl.validatePassword(password)
-
     if (!isValidFirstName) {
       res.status(400).json({ status: `Invalid firstname.` })
       return
     }
-
     if (!isValidLastName) {
       res.status(400).json({ status: `Invalid lastname.` })
       return
     }
-
     if (!isValidEmail) {
       res.status(400).json({ status: `Invalid email.` })
       return
     }
-
     if (!isValidPassword) {
       res.status(400).json({ status: `Invalid password.` })
       return
     }
-
     next()
   }
 
   static async register(req, res, next) {
-    // validate user info
-    // find if the user already exist
-    // add user if the user does not exist
-    // email--user 1-to-1 relationship
-
-    const { firstname, lastname, email, password } = req.body
     try {
+      const { firstname, lastname, email, password } = req.body
       const findAccountResult = await AccountStore.findAccountByEmailId(email)
       const hashedPassword = hash(password)
       const userInfo = {
@@ -126,10 +112,9 @@ export default class AccountCtrl {
   }
 
   static async signin(req, res, next) {
-    let errorMessage = {}
-    const { username, password } = req.body
-    const hashedPassword = hash(password)
     try {
+      const { username, password } = req.body
+      const hashedPassword = hash(password)
       const userInfo = await AccountStore.findAccountByEmailId(username)
       if (userInfo) {
         const accountId = userInfo._id.toString()
@@ -138,15 +123,12 @@ export default class AccountCtrl {
         if (isValidPassword) {
           const sessionId = await sessionCtrl.createSession(req, sessionOwner)
           //res.clearCookie('sessionId')
-          res.cookie("sessionId", sessionId)
-          res.status(200).json({ status: 'success' })
+          res.cookie("sessionId", sessionId).status(200).json({ status: 'success' })
         } else {
-          errorMessage.status = `Incorrect password`
-          res.status(400).json(errorMessage)
+          res.status(400).json({ status: 'Incorrect password' })
         }
       } else {
-        errorMessage.status = `Username is not found`
-        res.status(400).json(errorMessage)
+        res.status(400).json({ status: `Username is not found` })
       }
     } catch (e) {
       throw new Error(e)
@@ -160,7 +142,6 @@ export default class AccountCtrl {
     } catch (e) {
       throw new Error(e)
     }
-
   }
 
   static async signup(req, res, next) {
@@ -179,9 +160,8 @@ export default class AccountCtrl {
   }
 
   static async getAccountById(req, res, next) {
-    const { sessionId } = req.cookies
-
     try {
+      const { sessionId } = req.cookies
       const session = await SessionStore.getSessionBySessionId(sessionId)
       const { email } = session
       const result = AccountStore.findAccountByEmailId(email)
@@ -192,8 +172,8 @@ export default class AccountCtrl {
   }
 
   static async updateAccountById(req, res, next) {
-    const { sessionId } = req.cookies
     try {
+      const { sessionId } = req.cookies
       const session = await SessionStore.getSessionBySessionId(sessionId)
       const { email } = session
       const result = AccountStore.updateAccountByEmailId(email)
@@ -204,8 +184,8 @@ export default class AccountCtrl {
   }
 
   static async deleteAccountById(req, res, next) {
-    const { sessionId } = req.cookies
     try {
+      const { sessionId } = req.cookies
       const session = await SessionStore.getSessionBySessionId(sessionId)
       const { email } = session
       const result = AccountStore.deleteAccountByEmailId(email)
