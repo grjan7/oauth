@@ -37,18 +37,26 @@ const eventHandlers = {
     signupButton.onclick = async (e) => {
       e.preventDefault()
       try {
-        const user = SignupClient.getUserInfo()
-        const response = await SignupClient.addUser(user)
-        const result = await response.json()
-
+        const userInfo = SignupClient.getUserInfo()
+        const isValidUserInfo = SignupClient.validateUserInfo(userInfo)
         let signupStatusMessage = document.getElementById('signup-status-message')
-        if (response.status == 200) {
-          signupStatusMessage.style.display = 'none'
-          window.location.replace('/')
+        signupStatusMessage.style.display = 'none'
+
+        if (!isValidUserInfo) {
+          const response = await SignupClient.addUser(userInfo)
+          const result = await response.json()
+          if (response.status == 200) {
+            signupStatusMessage.style.display = 'none'
+            window.location.replace('/')
+          } else {
+            signupStatusMessage.innerHTML = result.status
+            signupStatusMessage.style.display = 'block'
+          }
         } else {
-          signupStatusMessage.innerHTML = result.status
+          signupStatusMessage.innerHTML = isValidUserInfo.error
           signupStatusMessage.style.display = 'block'
         }
+
       } catch (e) {
         console.error(e)
       }
