@@ -39,7 +39,8 @@ export class AccountStore {
 
   static async listAccounts() {
     try {
-      const result = await accountStore.find({})
+      const result = await accountStore.find({}).toArray()
+      console.log(result)
       return result
     } catch (error) {
       throw new Error(error)
@@ -49,6 +50,7 @@ export class AccountStore {
   static async findAccountByEmailId(email) {
     try {
       const result = await accountStore.findOne({ email })
+      console.log(result)
       return result
     } catch (e) {
       throw new Error(e)
@@ -67,7 +69,7 @@ export class AccountStore {
   static async deleteAccountByEmailId(email) {
     try {
       const result = await accountStore.deleteOne({ email })
-      return { success: true }
+      return result
     } catch (e) {
       throw new Error(e)
     }

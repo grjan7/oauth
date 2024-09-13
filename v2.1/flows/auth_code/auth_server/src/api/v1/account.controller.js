@@ -122,7 +122,7 @@ export default class AccountCtrl {
         const isValidPassword = (hashedPassword == userInfo.hashedPassword)
         if (isValidPassword) {
           const sessionId = await sessionCtrl.createSession(req, sessionOwner)
-          //res.clearCookie('sessionId')
+          //res.clearCookie('sessionId')          
           res.cookie("sessionId", sessionId).status(200).json({ status: 'success' })
         } else {
           res.status(400).json({ status: `Incorrect password` })
@@ -138,6 +138,7 @@ export default class AccountCtrl {
   static async signout(req, res, next) {
     try {
       await sessionCtrl.deleteSessionBySessionId(req)
+      res.clearCookie('sessionId')
       res.status(200).json({ status: "Successfully signed out." })
     } catch (e) {
       throw new Error(e)
@@ -145,7 +146,6 @@ export default class AccountCtrl {
   }
 
   static async listAccounts(req, res, next) {
-    const { sessionId } = req.cookies
     try {
       const result = await AccountStore.listAccounts()
       res.status(200).json(result)
@@ -154,37 +154,43 @@ export default class AccountCtrl {
     }
   }
 
-  static async getAccountById(req, res, next) {
+  static async getAccountByEmailId(req, res, next) {
     try {
-      const { sessionId } = req.cookies
-      const session = await SessionStore.getSessionBySessionId(sessionId)
-      const { email } = session
-      const result = AccountStore.findAccountByEmailId(email)
-      res.status(200).json(result)
+      const { email } = req.body
+      if (email) {
+        const result = await AccountStore.findAccountByEmailId(email)
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ error: 'Invalid session.' })
+      }
     } catch (e) {
       throw new Error(e)
     }
   }
 
-  static async updateAccountById(req, res, next) {
+  static async updateAccountByEmailId(req, res, next) {
     try {
-      const { sessionId } = req.cookies
-      const session = await SessionStore.getSessionBySessionId(sessionId)
-      const { email } = session
-      const result = AccountStore.updateAccountByEmailId(email)
-      res.status(200).json(result)
+      const { email } = req.body
+      if (email) {
+        const result = AccountStore.updateAccountByEmailId(email)
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ error: 'Invalid session.' })
+      }
     } catch (e) {
       throw new Error(e)
     }
   }
 
-  static async deleteAccountById(req, res, next) {
+  static async deleteAccountByEmailId(req, res, next) {
     try {
-      const { sessionId } = req.cookies
-      const session = await SessionStore.getSessionBySessionId(sessionId)
-      const { email } = session
-      const result = AccountStore.deleteAccountByEmailId(email)
-      res.status(200).json(result)
+      const { email } = req.body
+      if (email) {
+        const result = AccountStore.deleteAccountByEmailId(email)
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ error: 'Invalid session.' })
+      }
     } catch (e) {
       throw new Error(e)
     }

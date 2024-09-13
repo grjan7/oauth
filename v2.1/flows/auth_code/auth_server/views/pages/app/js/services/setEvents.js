@@ -1,13 +1,13 @@
 'use strict'
 
-import { postSignout } from "./apiCalls.js"
+import { AccountClient } from "./accountClient.js"
 
 const setEventsService = async () => {
   const signoutLink = document.getElementById("signout-link")
   signoutLink.onclick = async () => {
     try {
-      const data = { sessionID: 1225, accountID: 1254 }
-      const response = await postSignout(data)
+      const response = await AccountClient.signout()
+      console.log(response)
       if (response.status == 200) {
         window.location.href = '/signout'
       }
@@ -15,7 +15,6 @@ const setEventsService = async () => {
       console.error(e)
     }
   }
-
 }
 
 

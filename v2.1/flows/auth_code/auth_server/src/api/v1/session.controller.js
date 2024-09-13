@@ -13,7 +13,7 @@ export default class SessionController {
         const sessionCreationResult = await SessionStore.createSession(session)
         return sessionCreationResult.insertedId.toString()
       } else {
-        sessionFindResult._id.toString()
+        return sessionFindResult._id.toString()
       }
     } catch (e) {
       throw new Error(e)
@@ -27,17 +27,20 @@ export default class SessionController {
   // - the sessionId does not belong to the user-agent
 
   static async validateSession(req, res, next) {
-    const userAgent = req.headers["user-agent"]
+    const userAgentFromHeader = req.headers["user-agent"]
     const { sessionId } = req.cookies
     try {
       if (sessionId) {
         const session = await SessionStore.getSessionBySessionId(sessionId)
         if (session) {
-          if (session.userAgent == userAgent) {
+          const { userAgent, email, accountId } = session
+          if (userAgent == userAgentFromHeader) {
+            req.body["email"] = email
+            req.body["accountId"] = accountId
             next()
           } else {
             res.status(400).json(
-              { status: `This session does not belong to this useragent ${userAgent}` })
+              { status: `This session does not belong to this useragent ${userAgentFromHeader}` })
             //redirect('/signin/flow/default')
             return
           }

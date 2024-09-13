@@ -2,63 +2,40 @@
 
 import { Router } from 'express'
 import accountCtrl from './account.controller.js'
-
-import logCtrl from './logger.controller.js'
-
+import sessionCtrl from './session.controller.js'
 
 const router = new Router()
 
-router.route('/')
-  .get(accountCtrl.listAccounts)
+// all routes in this module requires to 
+// - be from same-origin
+// - have valid session
 
-router.route('/:accountId')
-  .get(accountCtrl.getAccountById)
-  .put(accountCtrl.updateAccountById)
-  .delete(accountCtrl.deleteAccountById)
+// list accounts
+router.route('/')
+  .get(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.listAccounts)
+
+// get account by email
+router.route('/getAccountById')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.getAccountByEmailId)
+
+// update account by email
+router.route('/updateAccountById')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.updateAccountByEmailId)
+
+// delete account by email
+router.route('/deleteAccountById')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.deleteAccountByEmailId)
 
 export default router
-
-/*router.route('/lifecycle/steps/signup/name')
-  .get(accountCtrl.getSignUpName)
-  .post(accountCtrl.postSignUpName)
-
-router.route('/lifecycle/steps/signup/birthdaygender')
-  .get(accountCtrl.getSignUpBirthdayGender)
-.post()
-
-router.route('/lifecycle/steps/signup/username')
-.get(accountCtrl.apiGetRegisterPage)
-.post()
-
-router.route('/lifecycle/steps/signup/password')
-.get(accountCtrl.apiGetRegisterPage)
-.post()
-
-
-router.route('/signin')
-.get()
-
-router.route('/signin/identifier')
-.get()
-.post()
-
-router.route('/signin/challange/pwd')
-.get()
-.post()
-
-router.route('/signin/challange/dp')
-.get()
-.post()
-
-router.route('/signin/oauth/consent')
-.get()
-.post()
-
-router.route('/signin/oauth/id')
-.get()
-.post()
-
-router.route('/signout')
-.get()
-.post()
-*/
