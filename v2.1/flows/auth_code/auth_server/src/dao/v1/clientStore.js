@@ -3,7 +3,7 @@
 let clientStore
 
 export class Client {
-  contructor(client) {
+  constructor(client) {
     this.userID = client.userID
     this.name = client.name
     this.clientID = client.clientID

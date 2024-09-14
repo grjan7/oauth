@@ -3,7 +3,7 @@
 let accountStore
 
 export class AccountUser {
-  contructor(accountUser) {
+  constructor(accountUser) {
     this.id = accountUser.id
     this.firstName = accountUser.firstName
     this.lastName = accountUser.lastName
