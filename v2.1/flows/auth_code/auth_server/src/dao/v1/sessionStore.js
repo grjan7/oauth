@@ -30,7 +30,8 @@ export class SessionStore {
 
   static async getSessionBySessionId(sessionId) {
     try {
-      const result = await sessionStore.findOne({ _id: new ObjectId(sessionId) })
+      const _id = ObjectId.createFromHexString(sessionId)
+      const result = await sessionStore.findOne({ _id })
       return result
     } catch (e) {
       throw new Error(e)
@@ -57,7 +58,8 @@ export class SessionStore {
 
   static async deleteSessionBySessionId(sessionId) {
     try {
-      const result = await sessionStore.deleteOne({ _id: new ObjectId(sessionId) })
+      const _id = ObjectId.createFromHexString(sessionId)
+      const result = await sessionStore.deleteOne({ _id })
       return { success: true }
     } catch (e) {
       throw new Error(e)

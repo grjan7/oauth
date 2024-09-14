@@ -7,7 +7,6 @@ const setEventsService = async () => {
   signoutLink.onclick = async () => {
     try {
       const response = await AccountClient.signout()
-      console.log(response)
       if (response.status == 200) {
         window.location.href = '/signout'
       }
