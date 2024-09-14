@@ -52,12 +52,14 @@ const appPage = join(__dirname, '../../../views/pages/app')
 const signupPage = join(__dirname, '../../../views/pages/signup')
 const signinPage = join(__dirname, '../../../views/pages/signin')
 const oauthSigninPage = join(__dirname, '../../../views/pages/oauth-signin')
+const docsPage = join(__dirname, '../../../views/pages/docs')
 
 router.use('/lib', express.static(libPage))
 router.use('/app/home', express.static(appPage))
 router.use('/signup', express.static(signupPage))
 router.use('/signin/flow/default', express.static(signinPage))
 router.use('/signin/flow/oauth', express.static(oauthSigninPage))
+router.use('/docs', express.static(docsPage))
 
 
 router.use('/app', (req, res, next) => res.redirect('/app/home'))
