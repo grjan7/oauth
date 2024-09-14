@@ -60,10 +60,9 @@ export class SessionStore {
     try {
       const _id = ObjectId.createFromHexString(sessionId)
       const result = await sessionStore.deleteOne({ _id })
-      return { success: true }
+      return result
     } catch (e) {
       throw new Error(e)
     }
   }
-
 }

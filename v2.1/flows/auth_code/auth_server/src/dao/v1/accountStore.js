@@ -63,10 +63,34 @@ export class AccountStore {
       throw new Error(e)
     }
   }
+  static async updateLastSessionByEmailId(sessionInfo) {
+    try {
+      sessionInfo["expiredAt"] = new Date().getTime()
+      const { email } = sessionInfo
+      const account = await accountStore.findOne({ email })
+      const { lastSessions } = account
+      let result
+      if (!lastSessions) {
+        result = await accountStore.updateOne({ email }, { $set: { lastSessions: [sessionInfo] } })
+      } else {
+        if (lastSessions.length < 10) {
+          result = await accountStore.updateOne({ email }, { $push: { lastSessions: sessionInfo } })
+        } else {
+          lastSessions.shift()
+          lastSessions.push(sessionInfo)
+          result = await accountStore.updateOne({ email }, { $set: { lastSessions } })
+        }
+      }
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async changePassword(email, hashedPassword, newPasswordHash) {
     try {
       const result = await accountStore.updateOne({ email, hashedPassword }, { $set: { hashedPassword: newPasswordHash } })
-      return result.modifiedCount
+      return result
     } catch (e) {
       throw new Error(e)
     }

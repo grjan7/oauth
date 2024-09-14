@@ -117,7 +117,7 @@ export default class AccountCtrl {
       const hashedPassword = hash(password)
       const userInfo = await AccountStore.findAccountByEmailId(username)
       if (userInfo) {
-        const accountId = userInfo._id.toString()
+        const accountId = userInfo._id
         const sessionOwner = { email: username, accountId }
         const isValidPassword = (hashedPassword == userInfo.hashedPassword)
         if (isValidPassword) {
@@ -135,11 +135,22 @@ export default class AccountCtrl {
     }
   }
 
+  // validate session
+  // getSessionInfo from body
+  // update account with last 10 sessions
+  // delete session from sessionstore
+
   static async signout(req, res, next) {
     try {
-      await sessionCtrl.deleteSessionBySessionId(req)
-      res.clearCookie('sessionId')
-      res.status(200).json({ status: "Successfully signed out." })
+      const sessionInfo = req.body.session
+      const updateResult = await AccountStore.updateLastSessionByEmailId(sessionInfo)
+      if (updateResult.modifiedCount == 1) {
+        await sessionCtrl.deleteSessionBySessionId(req)
+        res.clearCookie('sessionId')
+        res.status(200).json({ status: "Successfully signed out." })
+      } else {
+        res.status(400).json({ status: "Invalid credentials." })
+      }
     } catch (e) {
       throw new Error(e)
     }
@@ -156,7 +167,7 @@ export default class AccountCtrl {
 
   static async getAccountByEmailId(req, res, next) {
     try {
-      const { email } = req.body
+      const { email } = req.body.session
       if (email) {
         const result = await AccountStore.findAccountByEmailId(email)
         res.status(200).json(result)
@@ -170,7 +181,7 @@ export default class AccountCtrl {
 
   static async updateAccountByEmailId(req, res, next) {
     try {
-      const { email } = req.body
+      const { email } = req.body.session
       if (email) {
         const result = AccountStore.updateAccountByEmailId(email)
         res.status(200).json(result)
@@ -184,7 +195,8 @@ export default class AccountCtrl {
 
   static async changePasswordByEmailId(req, res, next) {
     try {
-      const { email, oldPassword, newPassword } = req.body
+      const { oldPassword, newPassword } = req.body
+      const { email } = req.body.session
       if (email && oldPassword && newPassword) {
 
         const validatedNewPassword = AccountCtrl.validatePassword(newPassword)
@@ -192,7 +204,7 @@ export default class AccountCtrl {
           const oldPasswordHash = hash(oldPassword)
           const newPasswordHash = hash(newPassword)
           const result = await AccountStore.changePassword(email, oldPasswordHash, newPasswordHash)
-          if (result == 1) {
+          if (result.modifiedCount == 1) {
             res.status(200).json({ status: `Password is successfully changed.` })
           } else {
             res.status(400).json({ error: `Invalid credentials.` })
@@ -210,7 +222,7 @@ export default class AccountCtrl {
 
   static async deleteAccountByEmailId(req, res, next) {
     try {
-      const { email } = req.body
+      const { email } = req.body.session
       if (email) {
         const result = AccountStore.deleteAccountByEmailId(email)
         res.status(200).json(result)

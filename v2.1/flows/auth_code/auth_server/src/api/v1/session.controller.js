@@ -6,7 +6,8 @@ export default class SessionController {
 
   static async createSession(req, sessionOwner) {
     const userAgent = req.headers["user-agent"]
-    const session = { userAgent, ...sessionOwner }
+    const startedAt = new Date().getTime()
+    const session = { userAgent, startedAt, ...sessionOwner }
     try {
       const sessionFindResult = await SessionStore.getSessionByEmailId(session.email)
       if (!sessionFindResult) {
@@ -33,10 +34,9 @@ export default class SessionController {
       if (sessionId) {
         const session = await SessionStore.getSessionBySessionId(sessionId)
         if (session) {
-          const { userAgent, email, accountId } = session
+          const { userAgent } = session
           if (userAgent == userAgentFromHeader) {
-            req.body["email"] = email
-            req.body["accountId"] = accountId
+            req.body["session"] = session
             next()
           } else {
             res.status(400).json(
