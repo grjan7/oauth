@@ -38,4 +38,12 @@ router.route('/deleteAccountById')
     sessionCtrl.validateSession,
     accountCtrl.deleteAccountByEmailId)
 
+
+router.route('/settings/changePassword')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.changePasswordByEmailId
+  )
+
 export default router

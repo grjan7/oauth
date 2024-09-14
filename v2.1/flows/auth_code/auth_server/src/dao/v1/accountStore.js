@@ -65,7 +65,14 @@ export class AccountStore {
       throw new Error(e)
     }
   }
-
+  static async changePassword(email, hashedPassword, newPasswordHash) {
+    try {
+      const result = await accountStore.updateOne({ email, hashedPassword }, { $set: { hashedPassword: newPasswordHash } })
+      return result.modifiedCount
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
   static async deleteAccountByEmailId(email) {
     try {
       const result = await accountStore.deleteOne({ email })

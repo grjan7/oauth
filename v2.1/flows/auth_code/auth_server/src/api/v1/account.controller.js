@@ -182,6 +182,32 @@ export default class AccountCtrl {
     }
   }
 
+  static async changePasswordByEmailId(req, res, next) {
+    try {
+      const { email, oldPassword, newPassword } = req.body
+      if (email && oldPassword && newPassword) {
+
+        const validatedNewPassword = AccountCtrl.validatePassword(newPassword)
+        if (validatedNewPassword) {
+          const oldPasswordHash = hash(oldPassword)
+          const newPasswordHash = hash(newPassword)
+          const result = await AccountStore.changePassword(email, oldPasswordHash, newPasswordHash)
+          if (result == 1) {
+            res.status(200).json({ status: `Password is successfully changed.` })
+          } else {
+            res.status(400).json({ error: `Invalid credentials.` })
+          }
+        } else {
+          res.status(400).json({ error: `Invalid new password.` })
+        }
+      } else {
+        res.status(400).json({ error: `email, oldPassword, newPassword cannot be undefined.` })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async deleteAccountByEmailId(req, res, next) {
     try {
       const { email } = req.body
