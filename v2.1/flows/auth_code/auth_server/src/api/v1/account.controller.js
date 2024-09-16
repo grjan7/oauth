@@ -233,12 +233,20 @@ export default class AccountCtrl {
     try {
       const { email, accountId } = req.body.session
       if (email) {
-        await TokenStore.updateAppEmailByEmailId(email)
-        await TokenStore.updateUserEmailByEmailId(email)
-        await ClientStore.updateClientsEmailByEmailId(email)
-        await LogStore.updateEmailByEmailId(email)
-        await AccountStore.updateEmailByEmailId(email)
-        await SessionStore.updateEmailByEmailId(email)
+        const { newEmail } = req.body
+        const isValidNewEmail = AccountCtrl.validateEmail(newEmail)
+        if (!isValidNewEmail) {
+          res.status(400).json({ status: `Invalid new email.` })
+        } else {
+          await AccountStore.updateEmailByEmailId(email, newEmail)
+          await SessionStore.updateEmailByEmailId(email, newEmail)
+          await ClientStore.updateClientsEmailByEmailId(email, newEmail)
+          await TokenStore.updateAppEmailByEmailId(email, newEmail)
+          await TokenStore.updateUserEmailByEmailId(email, newEmail)
+          await LogStore.updateEmailByEmailId(email, newEmail)
+
+          res.status(200).json({ status: `EmailId ${newEmail} is updated successfully.` })
+        }
       } else {
         res.status(404).json({ error: 'Invalid session.' })
       }

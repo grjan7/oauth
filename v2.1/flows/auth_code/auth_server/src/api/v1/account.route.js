@@ -46,11 +46,25 @@ router.route('/settings/changePassword')
     accountCtrl.changePasswordByEmailId
   )
 
-router.route('/updateEmailId')
+router.route('/settings/updateEmailId')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     accountCtrl.updateEmailByEmailId
+  )
+
+router.route('/settings/updateFirstName')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.updateFirstnameByEmailId
+  )
+
+router.route('/settings/updateLastName')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.updateLastnameByEmailId
   )
 
 export default router
