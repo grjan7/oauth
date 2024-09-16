@@ -56,6 +56,15 @@ export class SessionStore {
     }
   }
 
+  static async updateEmailByEmailId({ oldEmail, newEmail }) {
+    try {
+      const result = await sessionStore.updateOne({ email: oldEmail }, { $set: { email: newEmail } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async deleteSessionBySessionId(sessionId) {
     try {
       const _id = ObjectId.createFromHexString(sessionId)

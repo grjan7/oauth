@@ -75,4 +75,13 @@ export class ClientStore {
     }
   }
 
+  static async updateClientsEmailByEmailId({ oldEmail, newEmail }) {
+    try {
+      const result = await clientStore.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
 }

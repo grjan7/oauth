@@ -104,4 +104,13 @@ export class AccountStore {
     }
   }
 
+  static async updateEmailByEmailId({ oldEmail, newEmail }) {
+    try {
+      const result = await accountStore.updateOne({ email: oldEmail }, { $set: { email: newEmail } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
 }

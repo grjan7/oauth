@@ -114,11 +114,28 @@ export class TokenStore {
     }
   }
 
-
   static async deleteAllTokensOwnedAndGrantedByEmailId(email) {
     try {
       const query = { $OR: [{ email }, { "user.email": email }] }
       const result = await tokenStore.deleteMany(query)
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateAppEmailByEmailId({ oldEmail, newEmail }) {
+    try {
+      const result = await tokenStore.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateUserEmailByEmailId({ oldEmail, newEmail }) {
+    try {
+      const result = await tokenStore.updateMany({ "user.email": oldEmail }, { $set: { "user.email": newEmail } })
+      return result
     } catch (e) {
       throw new Error(e)
     }

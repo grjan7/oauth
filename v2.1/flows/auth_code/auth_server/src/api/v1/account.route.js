@@ -46,4 +46,11 @@ router.route('/settings/changePassword')
     accountCtrl.changePasswordByEmailId
   )
 
+router.route('/updateEmailId')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.updateEmailByEmailId
+  )
+
 export default router

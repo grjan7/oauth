@@ -224,6 +224,29 @@ export default class AccountCtrl {
     }
   }
 
+  // updateFirstNameByEmailId
+  // updateLastNameByEmailId
+
+  // updateEmailByEmailId
+
+  static async updateEmailByEmailId(req, res, next) {
+    try {
+      const { email, accountId } = req.body.session
+      if (email) {
+        await TokenStore.updateAppEmailByEmailId(email)
+        await TokenStore.updateUserEmailByEmailId(email)
+        await ClientStore.updateClientsEmailByEmailId(email)
+        await LogStore.updateEmailByEmailId(email)
+        await AccountStore.updateEmailByEmailId(email)
+        await SessionStore.updateEmailByEmailId(email)
+      } else {
+        res.status(404).json({ error: 'Invalid session.' })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async deleteAccountByEmailId(req, res, next) {
     try {
       const { email, accountId } = req.body.session
