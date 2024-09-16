@@ -2,6 +2,7 @@
 
 import { randomBytes } from 'node:crypto'
 import { ClientStore } from '../../dao/v1/clientStore.js'
+import { TokenStore } from '../../dao/v1/tokenStore.js'
 import { hash } from '../../utils/utils.js'
 
 
@@ -55,13 +56,23 @@ export default class ClientController {
     }
   }
 
-  static async createClientAppByEmailId(req, res, next) {
+  static async registerClientApp(req, res, next) {
     try {
       const { email, accountId } = req.body.session
       if (email) {
-        const { name, url, redirectUri, logo, scopesRequested } = req.body
+        const { name, url, redirectUri, logoUrl, scopes } = req.body
         const clientSecret = ClientController.generateClientSecret()
-        const clientInfo = { name, url, redirectUri, logo, scopesRequested, email, accountId, clientSecret }
+        const clientInfo = {
+          name,
+          url,
+          email,
+          accountId,
+          redirectUri,
+          logoUrl,
+          scopes,
+          clientSecret
+        }
+
         const isValidClientInfo = ClientController.validateClientAppInfo(clientInfo)
 
         if (isValidClientInfo) {
@@ -90,16 +101,30 @@ export default class ClientController {
     }
   }
 
-  static async deleteAllClientAppsByAccountId(req, res, next) {
-    res.status(200).json({})
+  static async deleteAllClientAppsByEmailId(req, res, next) {
+
+    // delete the tokens owned by the clientApps
+    // delete the clientApp
+    try {
+      const { email } = req.body.session
+      if (email) {
+        const result = await TokenStore.revokeAllClientAppsAccessByEmailId(email)
+        return result
+      } else {
+        res.status(400).json({ status: `Invalid session.` })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+
   }
-  static async getClientAppByAccountIdAndClientId(req, res, next) {
-    res.status(200).json({})
+  static async getClientAppByEmailIdAndClientId(req, res, next) {
+
   }
-  static async updateClientAppByAccountIdAndClientId(req, res, next) {
-    res.status(200).json({})
+  static async updateClientAppByEmailIdAndClientId(req, res, next) {
+
   }
-  static async deleteClientAppByAccountIdAndClientId(req, res, next) {
-    res.status(200).json({})
+  static async deleteClientAppByEmailIdAndClientId(req, res, next) {
+
   }
 }

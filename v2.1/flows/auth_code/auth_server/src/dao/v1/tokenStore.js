@@ -96,9 +96,9 @@ export class TokenStore {
     }
   }
 
-  static async deleteTokenByClientId(clientId) {
+  static async deleteTokenByClientId(email, clientId) {
     try {
-      const result = await tokenStore.deleteMany({ clientId })
+      const result = await tokenStore.deleteMany({ email, clientId })
       return { success: true }
     } catch (e) {
       throw new Error(e)
@@ -114,14 +114,30 @@ export class TokenStore {
     }
   }
 
-  static async deleteAllTokensOwnedAndGrantedByEmailId(email) {
+  // delete tokens that are owned by all client Apps that are created by the account
+  static async deleteAllTokensOwnedByEmailId(email) {
     try {
-      const query = { $OR: [{ email }, { "user.email": email }] }
+      const query = { email }
       const result = await tokenStore.deleteMany(query)
+      return { success: true }
     } catch (e) {
       throw new Error(e)
     }
   }
+
+  // this is used at the time of deleting an account
+
+  static async deleteAllTokensOwnedAndGrantedByEmailId(email) {
+    try {
+      const query = { $OR: [{ email }, { "user.email": email }] }
+      const result = await tokenStore.deleteMany(query)
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  // update email when you update the email of the account
 
   static async updateAppEmailByEmailId({ oldEmail, newEmail }) {
     try {
@@ -132,6 +148,8 @@ export class TokenStore {
     }
   }
 
+  // update user.email when you update the email of the account  
+
   static async updateUserEmailByEmailId({ oldEmail, newEmail }) {
     try {
       const result = await tokenStore.updateMany({ "user.email": oldEmail }, { $set: { "user.email": newEmail } })
@@ -141,6 +159,7 @@ export class TokenStore {
     }
   }
 
+  // lists the client apps that has access to the account 
   static async listClientAppsHasAccessByEmailId(email) {
     try {
       const pipeline = [{
@@ -161,6 +180,8 @@ export class TokenStore {
     }
   }
 
+  // list all tokens GRANTED by the account
+
   static async listTokensByEmailId(email) {
     try {
       const pipeline = [{
@@ -175,7 +196,8 @@ export class TokenStore {
     }
   }
 
-  static async revokeAccessToClientAppByEmailId(email, clientId) {
+  // revoke one third-party access GRANTED by the account
+  static async revokeClientAppAccessByEmailId(email, clientId) {
     try {
       const query = {
         "user.email": email,
@@ -188,11 +210,36 @@ export class TokenStore {
     }
   }
 
-  static async revokeAccessToClientAppsByEmailId(email) {
+  // revoke all third-party access GRANTED by the account
+
+  static async revokeAllClientAppsAccessByEmailId(email) {
     try {
       const query = {
         "user.email": email
       }
+      await tokenStore.deleteMany(query)
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  // deletes all client apps' tokens OWNED by the account
+
+  static async deleteAllTokensByEmailId(email) {
+    try {
+      const query = { email }
+      await tokenStore.deleteMany(query)
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  // delete one client app tokens OWNED by the account
+  static async deleteTokensByClientIdAndEmailId(email, clientId) {
+    try {
+      const query = { email, clientId }
       await tokenStore.deleteMany(query)
       return { success: true }
     } catch (e) {

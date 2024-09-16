@@ -16,7 +16,7 @@ router.route('/')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    clientCtrl.createClientAppByEmailId)
+    clientCtrl.registerClientApp)
   .delete(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,

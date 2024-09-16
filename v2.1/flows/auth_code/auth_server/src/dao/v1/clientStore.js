@@ -4,9 +4,9 @@ let clientStore
 
 export class Client {
   constructor(client) {
-    this.userID = client.userID
+    this.email = client.email
     this.name = client.name
-    this.clientID = client.clientID
+    this.clientId = client.clientId
     this.clientSecret = client.clientSecret
     this.redirectUri = client.redirectUri
     this.scopes = client.scopes

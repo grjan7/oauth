@@ -40,7 +40,7 @@ export default class TokenController {
       const { email } = req.body.session
       if (email) {
         const { clientId } = req.body
-        const result = await TokenStore.revokeAccessToClientAppByEmailId(email, clientId)
+        const result = await TokenStore.revokeClientAppAccessByEmailId(email, clientId)
         return result
       } else {
         res.status(400).json({ status: `Invalid session.` })
@@ -54,7 +54,7 @@ export default class TokenController {
     try {
       const { email } = req.body.session
       if (email) {
-        const result = await TokenStore.revokeAccessToClientAppByEmailId(email)
+        const result = await TokenStore.revokeAllClientAppsAccessByEmailId(email)
         return result
       } else {
         res.status(400).json({ status: `Invalid session.` })
