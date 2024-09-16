@@ -30,10 +30,11 @@ export class ClientStore {
     }
   }
 
-  static async listClientsByEmailId(email) {
+  static async listClientAppsByEmailId(email) {
     try {
-      const result = await clientStore.find({ email })
-      return result
+      const pipeline = [{ $match: { email } }]
+      const result = await clientStore.aggregate(pipeline)
+      return result.toArray()
     } catch (error) {
       throw new Error(error)
     }

@@ -2,18 +2,39 @@
 
 import { Router } from 'express'
 import clientCtrl from './client.controller.js'
+import accountCtrl from './account.controller.js'
+import sessionCtrl from './session.controller.js'
+
 
 const router = new Router()
 
 router.route('/')
-  .get(clientCtrl.listClientAppsByAccountId)
-  .post(clientCtrl.createClientAppForAccountId)
-  .delete(clientCtrl.deleteAllClientAppsByAccountId)
+  .get(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.listClientAppsByEmailId)
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.createClientAppByEmailId)
+  .delete(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.deleteClientAppsByEmailId)
 
 router.route('/:clientId')
-  .get(clientCtrl.getClientAppByAccountIdAndClientId)
-  .put(clientCtrl.updateClientAppByAccountIdAndClientId)
-  .delete(clientCtrl.deleteClientAppByAccountIdAndClientId)
+  .get(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.getClientAppByEmailIdAndClientId)
+  .put(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.updateClientAppByEmailIdAndClientId)
+  .delete(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.deleteClientAppByEmailIdAndClientId)
 
 
 
