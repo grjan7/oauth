@@ -9,8 +9,22 @@ export default class ClientController {
 
   static MAX_CLIENT_APPS_PER_USER = 10
 
-  static validateClientAppInfo(clientMetadata) {
+  // validateClientAppName
+  // validateRedirectUri
+  // validateScopes
+  // validateAppUrl
+  // logoUrl
+  // logo
 
+  static validateClientAppInfo(clientInfo) {
+    let isValid = false
+    // validateClientAppName
+    // validateRedirectUri
+    // validateScopes
+    // validateAppUrl
+    // logoUrl
+    // logo 
+    return isValid
   }
 
   static generateClientId() {
@@ -48,14 +62,14 @@ export default class ClientController {
         const { name, url, redirectUri, logo, scopesRequested } = req.body
         const clientSecret = ClientController.generateClientSecret()
         const clientInfo = { name, url, redirectUri, logo, scopesRequested, email, accountId, clientSecret }
-        const isValidClientInfo = ClientController.validateClientAppInfo()
+        const isValidClientInfo = ClientController.validateClientAppInfo(clientInfo)
 
         if (isValidClientInfo) {
           const clientAppsList = await ClientStore.listClientAppsByEmailId(email)
           const hasClientAppQuotaExceeded = (clientAppsList.length >= ClientController.MAX_CLIENT_APPS_PER_USER)
 
           if (!hasClientAppQuotaExceeded) {
-            const result = await ClientStore.createClientApp(email, clientInfo)
+            const result = await ClientStore.createClientApp(clientInfo)
             if (result.insertedId) {
               const clientCredentials = { clientId: result.insertedId, clientSecret }
               res.status(200).json(clientCredentials)

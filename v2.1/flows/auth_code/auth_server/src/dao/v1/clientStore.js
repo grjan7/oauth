@@ -21,7 +21,7 @@ export class ClientStore {
     }
   }
 
-  static async createClient(clientInfo) {
+  static async createClientApp(clientInfo) {
     try {
       const result = await clientStore.insertOne(clientInfo)
       return result
