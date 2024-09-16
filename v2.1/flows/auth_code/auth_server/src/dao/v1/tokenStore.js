@@ -113,4 +113,14 @@ export class TokenStore {
       throw new Error(e)
     }
   }
+
+
+  static async deleteAllTokensOwnedAndGrantedByEmailId(email) {
+    try {
+      const query = { $OR: [{ email }, { "user.email": email }] }
+      const result = await tokenStore.deleteMany(query)
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 }

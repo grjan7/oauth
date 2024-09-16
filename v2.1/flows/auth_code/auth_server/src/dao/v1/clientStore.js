@@ -66,4 +66,13 @@ export class ClientStore {
     }
   }
 
+  static async deleteAllClientsByEmailId(email) {
+    try {
+      const result = await clientStore.deleteMany({ email })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
 }

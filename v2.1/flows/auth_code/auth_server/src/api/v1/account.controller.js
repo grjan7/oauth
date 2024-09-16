@@ -2,6 +2,10 @@
 
 import { AccountStore } from '../../dao/v1/accountStore.js'
 import { SessionStore } from '../../dao/v1/sessionStore.js'
+import { TokenStore } from '../../dao/v1/tokenStore.js'
+import { ClientStore } from '../../dao/v1/clientStore.js'
+import { LogStore } from '../../dao/v1/logStore.js'
+
 import sessionCtrl from './session.controller.js'
 import { createHash } from 'node:crypto'
 import jwt from 'jsonwebtoken'
@@ -222,10 +226,16 @@ export default class AccountCtrl {
 
   static async deleteAccountByEmailId(req, res, next) {
     try {
-      const { email } = req.body.session
+      const { email, accountId } = req.body.session
       if (email) {
-        const result = AccountStore.deleteAccountByEmailId(email)
-        res.status(200).json(result)
+        await TokenStore.deleteAllTokensOwnedAndGrantedByEmailId(email)
+        await ClientStore.deleteAllClientsByEmailId(email)
+        await LogStore.deleteAllLogsByEmailId(email)
+        await AccountStore.deleteAccountByEmailId(email)
+        await SessionStore.deleteSessionByEmailId(email)
+        res.clearCookie('sessionId')
+          .status(200)
+          .json({ status: `Account with email ID ${email} has been successfully deleted.` })
       } else {
         res.status(404).json({ error: 'Invalid session.' })
       }

@@ -60,7 +60,16 @@ export class SessionStore {
     try {
       const _id = ObjectId.createFromHexString(sessionId)
       const result = await sessionStore.deleteOne({ _id })
-      return result
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteSessionByEmailId(email) {
+    try {
+      const result = await sessionStore.deleteOne({ email })
+      return { success: true }
     } catch (e) {
       throw new Error(e)
     }

@@ -16,4 +16,12 @@ export class LogStore {
       logStore = db.collection("logStore")
     }
   }
+  static async deleteAllLogsByEmailId(email) {
+    try {
+      const result = await logStore.deleteMany({ email })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 }
