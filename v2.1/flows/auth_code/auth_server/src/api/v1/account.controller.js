@@ -224,10 +224,56 @@ export default class AccountCtrl {
     }
   }
 
-  // updateFirstNameByEmailId
+
   // updateLastNameByEmailId
 
-  // updateEmailByEmailId
+  static async updateFirstnameByEmailId(req, res, next) {
+    try {
+      const { email, accountId } = req.body.session
+      if (email) {
+        const { firstname } = req.body
+        const isValidFirstname = AccountCtrl.validateFirstname(firstname)
+        if (!isValidFirstname) {
+          res.status(400).json({ status: `Invalid firstname.` })
+        } else {
+          const result = await AccountStore.updateFirstnameByEmailId(email, firstname)
+          if (result.modifiedCount == 1) {
+            res.status(200).json({ status: `Firstname ${firstname} has been successfully updated.` })
+          } else {
+            res.status(400).json({ error: `Invalid session` })
+          }
+        }
+      } else {
+        res.status(404).json({ error: 'Invalid session.' })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateLastnameByEmailId(req, res, next) {
+    try {
+      const { email, accountId } = req.body.session
+      if (email) {
+        const { lastname } = req.body
+        const isValidLastname = AccountCtrl.validateLastname(lastname)
+        if (!isValidLastname) {
+          res.status(400).json({ status: `Invalid lastname.` })
+        } else {
+          const result = await AccountStore.updateLastnameByEmailId(email, lastname)
+          if (result.modifiedCount == 1) {
+            res.status(200).json({ status: `Lastname ${lastname} has been successfully updated.` })
+          } else {
+            res.status(400).json({ error: `Invalid session` })
+          }
+        }
+      } else {
+        res.status(404).json({ error: 'Invalid session.' })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 
   static async updateEmailByEmailId(req, res, next) {
     try {
@@ -238,6 +284,7 @@ export default class AccountCtrl {
         if (!isValidNewEmail) {
           res.status(400).json({ status: `Invalid new email.` })
         } else {
+          // use transactions
           await AccountStore.updateEmailByEmailId(email, newEmail)
           await SessionStore.updateEmailByEmailId(email, newEmail)
           await ClientStore.updateClientsEmailByEmailId(email, newEmail)
@@ -245,7 +292,7 @@ export default class AccountCtrl {
           await TokenStore.updateUserEmailByEmailId(email, newEmail)
           await LogStore.updateEmailByEmailId(email, newEmail)
 
-          res.status(200).json({ status: `EmailId ${newEmail} is updated successfully.` })
+          res.status(200).json({ status: `EmailId ${newEmail} has been successfully updated.` })
         }
       } else {
         res.status(404).json({ error: 'Invalid session.' })

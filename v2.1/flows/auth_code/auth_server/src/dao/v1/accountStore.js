@@ -113,4 +113,21 @@ export class AccountStore {
     }
   }
 
+  static async updateFirstnameByEmailId({ email, firstname }) {
+    try {
+      const result = await accountStore.updateOne({ email }, { $set: { firstname } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateLastnameByEmailId({ email, lastname }) {
+    try {
+      const result = await accountStore.updateOne({ email }, { $set: { lastname } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 }
