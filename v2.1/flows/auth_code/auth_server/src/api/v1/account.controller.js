@@ -5,13 +5,9 @@ import { SessionStore } from '../../dao/v1/sessionStore.js'
 import { TokenStore } from '../../dao/v1/tokenStore.js'
 import { ClientStore } from '../../dao/v1/clientStore.js'
 import { LogStore } from '../../dao/v1/logStore.js'
-
 import sessionCtrl from './session.controller.js'
-import { createHash } from 'node:crypto'
-import jwt from 'jsonwebtoken'
-import { ObjectId } from 'mongodb'
+import { hash } from '../../utils/utils.js'
 
-const hash = (data) => createHash('sha256').update(data).digest('base64')
 
 export default class AccountCtrl {
 
@@ -223,7 +219,6 @@ export default class AccountCtrl {
       throw new Error(e)
     }
   }
-
 
   // updateLastNameByEmailId
 
