@@ -3,6 +3,7 @@
 import { Router } from 'express'
 import accountCtrl from './account.controller.js'
 import sessionCtrl from './session.controller.js'
+import tokenCtrl from './token.controller.js'
 
 const router = new Router()
 
@@ -66,5 +67,27 @@ router.route('/settings/updateLastName')
     sessionCtrl.validateSession,
     accountCtrl.updateLastnameByEmailId
   )
+
+router.route('/settings/security/listThirdPartyAccess')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    tokenCtrl.listClientAppsHasAccessByEmailId)
+
+
+router.route('/settings/security/revokeAllClientAppsAccess')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    tokenCtrl.revokeAllClientAppsAccessByEmailId)
+
+router.route('/settings/security/revokeClientAppAccess')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    tokenCtrl.revokeClientAppAccessByEmailId)
+
+//router.route('/settings/security/removeAllThirdPartyAccess')
+//router.route('/settings/security/removeThirdPartyAccessByClientId')
 
 export default router

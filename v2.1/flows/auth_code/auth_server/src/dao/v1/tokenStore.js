@@ -140,4 +140,64 @@ export class TokenStore {
       throw new Error(e)
     }
   }
+
+  static async listClientAppsHasAccessByEmailId(email) {
+    try {
+      const pipeline = [{
+        $match: {
+          "user.email": email
+        }
+      },
+      {
+        $project: {
+          clientId: 1,
+          clientAppName: 1
+        }
+      }]
+      const result = await tokenStore.aggregate(pipeline)
+      return result.toArray()
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async listTokensByEmailId(email) {
+    try {
+      const pipeline = [{
+        $match: {
+          "user.email": email
+        }
+      }]
+      const result = await tokenStore.aggregate(pipeline)
+      return result.toArray()
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async revokeAccessToClientAppByEmailId(email, clientId) {
+    try {
+      const query = {
+        "user.email": email,
+        clientId
+      }
+      await tokenStore.deleteOne(query)
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async revokeAccessToClientAppsByEmailId(email) {
+    try {
+      const query = {
+        "user.email": email
+      }
+      await tokenStore.deleteMany(query)
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
 }
