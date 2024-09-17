@@ -116,7 +116,8 @@ export default class ClientController {
     }
   }
 
-  static async getClientAppByEmailIdAndClientId(req, res, next) {
+  // use of emailId ensures authorized action
+  static async getClientAppByClientIdAndEmailId(req, res, next) {
     try {
       const { email } = req.body.session
       if (email) {
