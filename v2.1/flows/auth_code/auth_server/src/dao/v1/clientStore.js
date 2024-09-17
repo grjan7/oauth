@@ -49,25 +49,6 @@ export class ClientStore {
     }
   }
 
-  static async deleteClientAppByClientIdAndEmailId(clientId, email) {
-    try {
-      const query = { _id: new ObjectId(clientId), email }
-      const result = await clientStore.deleteOne(query)
-      return { success: true }
-    } catch (e) {
-      throw new Error(e)
-    }
-  }
-
-  static async deleteAllClientAppsByEmailId(email) {
-    try {
-      const result = await clientStore.deleteMany({ email })
-      return { success: true }
-    } catch (e) {
-      throw new Error(e)
-    }
-  }
-
   static async updateClientSecretByClientIdAndEmailId(clientId, email, clientSecret) {
     try {
       const query = { _id: new ObjectId(clientId), email }
@@ -138,6 +119,34 @@ export class ClientStore {
     try {
       const result = await clientStore.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
       return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteClientAppByClientIdAndEmailId(clientId, email) {
+    try {
+      const query = { _id: new ObjectId(clientId), email }
+      const result = await clientStore.deleteOne(query)
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async deleteAllClientAppsByEmailId(email) {
+    try {
+      const result = await clientStore.deleteMany({ email })
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async emptyClientStore() {
+    try {
+      const result = await clientStore.deleteMany({})
+      return { success: true }
     } catch (e) {
       throw new Error(e)
     }

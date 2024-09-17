@@ -83,4 +83,13 @@ export class SessionStore {
       throw new Error(e)
     }
   }
+
+  static async emptySessionStore() {
+    try {
+      const result = await sessionStore.deleteMany({})
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 }

@@ -130,4 +130,13 @@ export class AccountStore {
       throw new Error(e)
     }
   }
+
+  static async emptyAccountStore() {
+    try {
+      const result = await accountStore.deleteMany({})
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 }

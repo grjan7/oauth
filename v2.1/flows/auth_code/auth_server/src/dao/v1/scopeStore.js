@@ -12,9 +12,19 @@ export class Scope {
 }
 
 export class ScopeStore {
+
   static async init(db) {
     if (!scopeStore) {
       scopeStore = db.collection("scopeStore")
+    }
+  }
+
+  static async emptyScopeStore() {
+    try {
+      const result = await scopeStore.deleteMany({})
+      return { success: true }
+    } catch (e) {
+      throw new Error(e)
     }
   }
 }
