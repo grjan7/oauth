@@ -135,6 +135,7 @@ export default class ClientController {
   static async updateClientAppByEmailIdAndClientId(req, res, next) {
 
   }
+
   static async deleteClientAppByEmailIdAndClientId(req, res, next) {
 
   }

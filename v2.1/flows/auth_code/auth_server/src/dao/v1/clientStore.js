@@ -42,16 +42,7 @@ export class ClientStore {
 
   static async findClientAppByClientIdAndEmailId(clientId) {
     try {
-      const result = await clientStore.findOne({ email, clientId })
-      return result
-    } catch (e) {
-      throw new Error(e)
-    }
-  }
-
-  static async updateClientAppByClientId(clientId) {
-    try {
-      const result = await clientStore.updateOne({ clientId })
+      const result = await clientStore.findOne({ email, _id: new ObjectId(clientId) })
       return result
     } catch (e) {
       throw new Error(e)
@@ -60,7 +51,7 @@ export class ClientStore {
 
   static async deleteClientAppByClientId(clientId) {
     try {
-      const result = await clientStore.deleteOne({ clientId })
+      const result = await clientStore.deleteOne({ _id: new ObjectId(clientId) })
       return { success: true }
     } catch (e) {
       throw new Error(e)
@@ -71,6 +62,26 @@ export class ClientStore {
     try {
       const result = await clientStore.deleteMany({ email })
       return { success: true }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateClientAppByClientIdAndEmailId(clientId) {
+    try {
+      const result = await clientStore.updateOne({ _id: new ObjectId(clientId) }, { $set: {} })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateClientAppNameByClientIdAndEmailId(clientId, email, newName) {
+    try {
+      const query = { _id: new ObjectId(clientId), email }
+      const updateFields = { $set: { name: newName } }
+      const result = await clientStore.updateOne(query, updateFields)
+      return result
     } catch (e) {
       throw new Error(e)
     }
