@@ -40,9 +40,9 @@ export class ClientStore {
     }
   }
 
-  static async findClientAppByClientId(clientId) {
+  static async findClientAppByClientIdAndEmailId(clientId) {
     try {
-      const result = await clientStore.findOne({ clientId })
+      const result = await clientStore.findOne({ email, clientId })
       return result
     } catch (e) {
       throw new Error(e)
