@@ -102,25 +102,24 @@ export default class ClientController {
   }
 
   static async deleteAllClientAppsByEmailId(req, res, next) {
-
-    // delete the tokens owned by the clientApps
-    // delete the clientApp
     try {
       const { email } = req.body.session
       if (email) {
-        const result = await TokenStore.revokeAllClientAppsAccessByEmailId(email)
-        return result
+        await TokenStore.deleteAllTokensByEmailId(email)
+        await ClientStore.deleteAllClientsByEmailId(email)
+        res.status(200).json({ status: `All client applications owned by this account has been successfully deleted.` })
       } else {
         res.status(400).json({ status: `Invalid session.` })
       }
     } catch (e) {
       throw new Error(e)
     }
-
   }
+
   static async getClientAppByEmailIdAndClientId(req, res, next) {
 
   }
+
   static async updateClientAppByEmailIdAndClientId(req, res, next) {
 
   }

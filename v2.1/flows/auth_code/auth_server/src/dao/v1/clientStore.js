@@ -40,7 +40,7 @@ export class ClientStore {
     }
   }
 
-  static async findClientByClientId(clientId) {
+  static async findClientAppByClientId(clientId) {
     try {
       const result = await clientStore.findOne({ clientId })
       return result
@@ -49,7 +49,7 @@ export class ClientStore {
     }
   }
 
-  static async updateClientByClientId(clientId) {
+  static async updateClientAppByClientId(clientId) {
     try {
       const result = await clientStore.updateOne({ clientId })
       return result
@@ -58,7 +58,7 @@ export class ClientStore {
     }
   }
 
-  static async deleteClientByClientId(clientId) {
+  static async deleteClientAppByClientId(clientId) {
     try {
       const result = await clientStore.deleteOne({ clientId })
       return { success: true }
@@ -67,7 +67,7 @@ export class ClientStore {
     }
   }
 
-  static async deleteAllClientsByEmailId(email) {
+  static async deleteAllClientAppsByEmailId(email) {
     try {
       const result = await clientStore.deleteMany({ email })
       return { success: true }
@@ -76,7 +76,7 @@ export class ClientStore {
     }
   }
 
-  static async updateClientsEmailByEmailId({ oldEmail, newEmail }) {
+  static async updateClientAppsEmailByEmailId({ oldEmail, newEmail }) {
     try {
       const result = await clientStore.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
       return result
