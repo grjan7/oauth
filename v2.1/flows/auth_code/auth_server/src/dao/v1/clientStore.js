@@ -49,9 +49,10 @@ export class ClientStore {
     }
   }
 
-  static async deleteClientAppByClientId(clientId) {
+  static async deleteClientAppByClientIdAndEmailId(clientId, email) {
     try {
-      const result = await clientStore.deleteOne({ _id: new ObjectId(clientId) })
+      const query = { _id: new ObjectId(clientId), email }
+      const result = await clientStore.deleteOne(query)
       return { success: true }
     } catch (e) {
       throw new Error(e)
@@ -67,19 +68,65 @@ export class ClientStore {
     }
   }
 
-  static async updateClientAppByClientIdAndEmailId(clientId) {
+  static async updateClientSecretByClientIdAndEmailId(clientId, email, clientSecret) {
     try {
-      const result = await clientStore.updateOne({ _id: new ObjectId(clientId) }, { $set: {} })
+      const query = { _id: new ObjectId(clientId), email }
+      const updateFields = { $set: { clientSecret } }
+      const result = await clientStore.updateOne(query, updateFields)
       return result
     } catch (e) {
       throw new Error(e)
     }
   }
 
-  static async updateClientAppNameByClientIdAndEmailId(clientId, email, newName) {
+  static async updateRedirectUriByClientIdAndEmailId(clientId, email, redirectUri) {
     try {
       const query = { _id: new ObjectId(clientId), email }
-      const updateFields = { $set: { name: newName } }
+      const updateFields = { $set: { redirectUri } }
+      const result = await clientStore.updateOne(query, updateFields)
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateClientAppUrlByClientIdAndEmailId(clientId, email, url) {
+    try {
+      const query = { _id: new ObjectId(clientId), email }
+      const updateFields = { $set: { url } }
+      const result = await clientStore.updateOne(query, updateFields)
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateClientAppLogoUrlByClientIdAndEmailId(clientId, email, logoUrl) {
+    try {
+      const query = { _id: new ObjectId(clientId), email }
+      const updateFields = { $set: { logoUrl } }
+      const result = await clientStore.updateOne(query, updateFields)
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateClientAppScopesByClientIdAndEmailId(clientId, email, scopes) {
+    try {
+      const query = { _id: new ObjectId(clientId), email }
+      const updateFields = { $set: { scopes } }
+      const result = await clientStore.updateOne(query, updateFields)
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateClientAppNameByClientIdAndEmailId(clientId, email, name) {
+    try {
+      const query = { _id: new ObjectId(clientId), email }
+      const updateFields = { $set: { name } }
       const result = await clientStore.updateOne(query, updateFields)
       return result
     } catch (e) {
