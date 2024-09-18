@@ -1,9 +1,7 @@
 'use strict'
 
 import { ScopeStore } from '../../dao/v1/scopeStore.js'
-import sessionCtrl from './session.controller.js'
 import { LogStore } from '../../dao/v1/logStore.js'
-
 
 export default class ScopeController {
 
@@ -45,7 +43,7 @@ export default class ScopeController {
 
   static async getScopeByScopeId(req, res, next) {
     try {
-      const { scopeId } = req.body
+      const { scopeId } = req.params
       const scope = await ScopeStore.getScopeByScopeId(scopeId)
       res.status(200).json(scope)
     } catch (e) {
@@ -55,15 +53,14 @@ export default class ScopeController {
 
   static async updateScopeByScopeId(req, res, next) {
     try {
-      const { scopeId, scopeData } = req.body
+      const { scopeId } = req.params
+      const scopeData = req.body
       const result = await ScopeStore.updateScopeById(scopeId, scopeData)
-
       if (result.modifiedCount == 1) {
         res.status(200).json({ status: `scope is scuccessfully updated` })
       } else {
         res.status(400).json({ status: `The scopeId ${scopeId} does not exist.` })
       }
-
     } catch (e) {
       throw new Error(e)
     }
@@ -71,7 +68,7 @@ export default class ScopeController {
 
   static async deleteScopeByScopeId(req, res, next) {
     try {
-      const { scopeId } = req.body
+      const { scopeId } = req.params
       await ScopeStore.deleteScopeById(scopeId)
       res.status(200).json({ status: `The scopeId ${scopeId} has been successfully deleted.` })
     } catch (e) {
