@@ -1,6 +1,7 @@
 'use strict'
 
 import { Router } from 'express'
+import oauthCtrl from './oauth.controller.js'
 
 const router = new Router()
 
@@ -62,7 +63,8 @@ const router = new Router()
  * 
  */
 router.route('/auth')
-  .post()
+  .get(oauthCtrl.validateAuthorizeRequest, oauthCtrl.authorize)
+  .post(oauthCtrl)
 
 
 /**

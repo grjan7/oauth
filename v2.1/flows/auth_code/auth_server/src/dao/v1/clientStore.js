@@ -49,6 +49,15 @@ export class ClientStore {
     }
   }
 
+  static async findClientAppByClientId(clientId) {
+    try {
+      const result = await clientStore.findOne({ _id: new ObjectId(clientId) })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async updateClientSecretByClientIdAndEmailId(clientId, email, clientSecret) {
     try {
       const query = { _id: new ObjectId(clientId), email }
