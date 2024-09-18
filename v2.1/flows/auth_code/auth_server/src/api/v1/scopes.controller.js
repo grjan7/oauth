@@ -5,7 +5,34 @@ import sessionCtrl from './session.controller.js'
 import { LogStore } from '../../dao/v1/logStore.js'
 
 
-export default class SessionController {
+export default class ScopeController {
+
+  static validateScopeInfo(scopeInfo) {
+    let isValid = false
+
+    return isValid
+  }
+
+  static async addScope(req, res, next) {
+    try {
+      const scopeInfo = req.body
+      const { resource, action } = scopeInfo
+      const isScopeInfoValid = ScopeController.validateScopeInfo(scopeInfo)
+      if (isScopeInfoValid) {
+        const scope = await ScopeStore.getScopeByResourceAndAction(resource, action)
+        if (!scope) {
+          const result = await ScopeStore.addScope(scopeInfo)
+          res.status(200).json({ status: `Scope with Id (${result.insertedId}) has been successfully added.` })
+        } else {
+          res.status(400).json({ status: `The scope is already exist.` })
+        }
+      } else {
+        res.status(400).json({ status: `Invalid scope details.` })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 
   static async listScopes(req, res, next) {
     try {
@@ -19,7 +46,7 @@ export default class SessionController {
   static async getScopeByScopeId(req, res, next) {
     try {
       const { scopeId } = req.body
-      const scope = await ScopeStore.getScopeById(scopeId)
+      const scope = await ScopeStore.getScopeByScopeId(scopeId)
       res.status(200).json(scope)
     } catch (e) {
       throw new Error(e)
@@ -52,5 +79,12 @@ export default class SessionController {
     }
   }
 
-
+  static async deleteAllScopes(req, res, next) {
+    try {
+      const result = await ScopeStore.deleteAll()
+      res.status(200).json({ status: `The scopeId ${scopeId} has been successfully deleted.` })
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 }
