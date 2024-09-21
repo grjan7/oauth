@@ -6,6 +6,7 @@ import { dirname, join } from 'node:path'
 import express from 'express'
 import accountCtrl from './account.controller.js'
 import sessionCtrl from './session.controller.js'
+import oauthCtrl from './oauth.controller.js'
 
 const { Router } = express
 const router = new Router()
@@ -18,7 +19,9 @@ router
 
 router
   .route('/signin/flow/oauth')
-  .post(accountCtrl.signin)
+  .post(
+    accountCtrl.isSameOrigin,
+    oauthCtrl.signin)
 
 router
   .route('/signup')

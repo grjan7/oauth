@@ -159,6 +159,15 @@ export class TokenStore {
     }
   }
 
+  static async updateTokenWithUser({ tokenId, user }) {
+    try {
+      const result = await tokenStore.updateOne({ _id: new ObjectId(tokenId) }, { $set: { user } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   // lists the client apps that has access to the account 
   static async listClientAppsHasAccessByEmailId(email) {
     try {
