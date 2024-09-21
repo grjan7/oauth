@@ -57,6 +57,8 @@ export default class OauthController {
     }
   }
 
+  // oauth signin does not have session 
+  // it works based on tokenId - sid
   static async signin(req, res, next) {
     try {
       const { username, password } = req.body
@@ -88,6 +90,45 @@ export default class OauthController {
       } else {
         res.status(400).json({ status: `Username is not found` })
       }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateGrantStatus(req, res, next) {
+    try {
+      const { grantStatus } = req.body
+      const { sid } = req.query
+      if (grantStatus) {
+        if (sid) {
+          const token = await TokenStore.getTokenByTokenId(sid)
+          if (token) {
+            if (grantStatus == "allow") {
+              // generate authorizationCode 
+              // update token with authorizationCode
+              // post authorizationCode to client redirectUri
+
+            } else if (grantStatus == "deny") {
+              const { redirectUri } = token
+              await TokenStore.deleteTokenByTokenId(sid)
+              // need more clarity in redirection
+              axios.post(redirectUri, { body: { error: `access denied` } })
+              res.redirectUri(redirectUri)
+              //res.redirect(redirectUri).json({ error: `access denied` })
+            } else {
+              res.status(400).json({ error: `Invalid grantStatus.` })
+            }
+          } else {
+            res.status(400).json({ error: `Invalid sid.` })
+          }
+
+        } else {
+          res.status(400).json({ error: `sid is missing.` })
+        }
+      } else {
+        res.status(400).json({ error: `grantStatus is missing.` })
+      }
+
     } catch (e) {
       throw new Error(e)
     }

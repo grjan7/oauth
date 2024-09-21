@@ -2,6 +2,7 @@
 
 import { Router } from 'express'
 import oauthCtrl from './oauth.controller.js'
+import accountCtrl from './account.controller.js'
 
 const router = new Router()
 
@@ -64,7 +65,9 @@ const router = new Router()
  */
 router.route('/auth')
   .get(oauthCtrl.validateAuthorizeRequest, oauthCtrl.authorize)
-  .post(oauthCtrl)
+
+router.route('/auth/grantStatus')
+  .post(accountCtrl.isSameOrigin, oauthCtrl.updateGrantStatus)
 
 
 /**
