@@ -7,6 +7,7 @@ import { TokenStore } from '../../dao/v1/tokenStore.js'
 import { hash } from '../../utils/utils.js'
 
 export default class OauthController {
+
   static async validateAuthorizeRequest(req, res, next) {
     try {
       const { clientId, redirectUri, scopes } = req.query
@@ -68,7 +69,7 @@ export default class OauthController {
           const user = { accountId, email, firstname, lastname }
           const updateTokenWithUserResult = await TokenStore.updateTokenWithUser(sid, user)
           if (updateTokenWithUserResult.modifiedCount == 1) {
-            const clientInfo = await ClientStore.findClientAppByClientId(clientId)
+            const clientInfo = await ClientStore.getClientAppByClientId(clientId)
             if (clientInfo) {
               const { name, scopes, logoUrl } = clientInfo
               res.status(200).json({ clientId, name, scopes, logoUrl })
@@ -90,6 +91,24 @@ export default class OauthController {
     }
   }
 
+  static generateAuthorizationCode(tokenInfo) {
+    try {
+      const { tokenId, clientId, accountId, codeChallange, state } = tokenInfo
+      const authorizationCodeGeneratedTimeInMs = new Date().getTime()
+      const TIME_TO_LIVE = 5 * 60 * 1000 // 5 minutes
+      const authorizationCodeString = tokenId + clientId + accountId + codeChallange + state + authorizationCodeGeneratedTimeInMs
+      const code = hash(authorizationCodeString)
+      return {
+        createdAt: authorizationCodeGeneratedTimeInMs,
+        expiresAt: authorizationCodeGeneratedTimeInMs + TIME_TO_LIVE,
+        ttl: TIME_TO_LIVE,
+        code
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async updateGrantStatus(req, res, next) {
     try {
       const { grantStatus } = req.body
@@ -98,17 +117,29 @@ export default class OauthController {
         if (sid) {
           const token = await TokenStore.getTokenByTokenId(sid)
           if (token) {
+            const { clientId, redirectUri, state, scopes, nonce } = token
             if (grantStatus == "allow") {
-              // generate authorizationCode 
+              // generate authorizationCode
+              const authorizationCode = generateAuthorizationCode(token)
               // update token with authorizationCode
-              // post authorizationCode to client redirectUri
+              const result = await TokenStore.updateTokenWithAuthorizationCode(sid, authorizationCode)
+              if (result.matchedCount == 1 && result.modifiedCount == 1) {
+                // post authorizationCode to client redirectUri
+                const { code, expiresAt } = authorizationCode
+                const payLoad = JSON.stringify({ id: sid, code, expiresAt })
+                const query = stringify(clientId, scopes, state, nonce)
+                const redirectUriWithQuery = redirectUri + "?" + query
+                axios.post(redirectUriWithQuery, { headers: { "content-type": 'application/json' }, data: payLoad })
+                res.redirect(redirectUri)
+              } else {
+                res.status(500).json({ error: `Internal server error` })
+              }
 
             } else if (grantStatus == "deny") {
-              const { redirectUri } = token
               await TokenStore.deleteTokenByTokenId(sid)
               // need more clarity in redirection
               axios.post(redirectUri, { body: { error: `access denied` } })
-              res.redirectUri(redirectUri)
+              res.status(200).redirect(redirectUri)
               //res.redirect(redirectUri).json({ error: `access denied` })
             } else {
               res.status(400).json({ error: `Invalid grantStatus.` })

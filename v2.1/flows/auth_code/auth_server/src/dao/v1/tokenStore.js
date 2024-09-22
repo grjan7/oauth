@@ -139,7 +139,7 @@ export class TokenStore {
 
   // update email when you update the email of the account
 
-  static async updateAppEmailByEmailId({ oldEmail, newEmail }) {
+  static async updateAppEmailByEmailId(oldEmail, newEmail) {
     try {
       const result = await tokenStore.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
       return result
@@ -159,9 +159,20 @@ export class TokenStore {
     }
   }
 
-  static async updateTokenWithUser({ tokenId, user }) {
+  static async updateTokenWithUser(tokenId, user) {
     try {
       const result = await tokenStore.updateOne({ _id: new ObjectId(tokenId) }, { $set: { user } })
+      return result
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async updateTokenWithAuthorizationCode(tokenId, authorizationCode) {
+    try {
+      const query = { _id: new ObjectId(tokenId) }
+      const action = { $set: { authorizationCode } }
+      const result = await tokenStore.updateOne(query, action)
       return result
     } catch (e) {
       throw new Error(e)
