@@ -3,6 +3,7 @@
 import { Router } from 'express'
 import oauthCtrl from './oauth.controller.js'
 import accountCtrl from './account.controller.js'
+import clientCtrl from './client.controller.js'
 
 const router = new Router()
 
@@ -107,7 +108,7 @@ router.route('/auth/grantStatus')
  * - respond with accessToken
  */
 router.route('/token')
-  .post() // code exchange for token
+  .post(clientCtrl.validateClientCredentials) // code exchange for token
   .delete() // revoke token
 
 export default router

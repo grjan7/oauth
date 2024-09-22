@@ -28,6 +28,43 @@ export default class ClientController {
     return isValid
   }
 
+  // need to be implemented
+  static clientCredentialsFromHeader(req, res, next) {
+    const { authorization } = req.headers
+    const [authorizationType, credentials] = authorization.split(" ")
+    const isBasic = authorizationType == 'basic' || authorizationType == 'BASIC'
+    const isBearer = authorizationType == 'bearer' || authorizationType == 'BEARER'
+    if (authorizationType) {
+      if (isBasic) {
+
+      } else if (isBearer) {
+
+      } else {
+
+      }
+    }
+  }
+
+  static async validateClientCredentials(req, res, next) {
+    try {
+      const { clientId, clientSecret } = req.body
+      const client = await ClientStore.getClientAppByClientId(clientId)
+      if (client) {
+        if (clientSecret == client.clientSecret) {
+          next()
+        } else {
+          res.status(401).json({ error: `Invalid clientSecret` })
+          return
+        }
+      } else {
+        res.status(401).json({ error: `Invalid clientId.` })
+        return
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static generateClientId() {
     return randomBytes(24).toString('hex')
   }

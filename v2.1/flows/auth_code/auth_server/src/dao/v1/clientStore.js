@@ -40,7 +40,7 @@ export class ClientStore {
     }
   }
 
-  static async findClientAppByClientIdAndEmailId(clientId) {
+  static async getClientAppByClientIdAndEmailId(clientId) {
     try {
       const result = await clientStore.findOne({ email, _id: new ObjectId(clientId) })
       return result
@@ -49,7 +49,7 @@ export class ClientStore {
     }
   }
 
-  static async findClientAppByClientId(clientId) {
+  static async getClientAppByClientId(clientId) {
     try {
       const result = await clientStore.findOne({ _id: new ObjectId(clientId) })
       return result

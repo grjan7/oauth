@@ -7,11 +7,6 @@ import { TokenStore } from '../../dao/v1/tokenStore.js'
 import { hash } from '../../utils/utils.js'
 
 export default class OauthController {
-
-  static async validateClient(clientInfo) {
-
-  }
-
   static async validateAuthorizeRequest(req, res, next) {
     try {
       const { clientId, redirectUri, scopes } = req.query
