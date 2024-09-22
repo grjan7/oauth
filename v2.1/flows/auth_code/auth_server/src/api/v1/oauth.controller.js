@@ -126,12 +126,12 @@ export default class OauthController {
               if (result.matchedCount == 1 && result.modifiedCount == 1) {
                 // post authorizationCode to client redirectUri
                 const { code, expiresAt } = authorizationCode
-                const payLoad = JSON.stringify({ id: sid, code, expiresAt })
                 const query = stringify(clientId, scopes, state, nonce)
                 const redirectUriWithQuery = redirectUri + "?" + query
+                const payload = { id: sid, code, expiresAt }
                 const option = {
                   headers: { "content-type": 'application/json' },
-                  data: payLoad
+                  data: JSON.stringify(payload)
                 }
                 axios.post(redirectUriWithQuery, option)
                 res.redirect(redirectUri)
