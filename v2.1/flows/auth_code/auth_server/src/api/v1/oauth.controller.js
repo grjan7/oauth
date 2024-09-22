@@ -129,7 +129,11 @@ export default class OauthController {
                 const payLoad = JSON.stringify({ id: sid, code, expiresAt })
                 const query = stringify(clientId, scopes, state, nonce)
                 const redirectUriWithQuery = redirectUri + "?" + query
-                axios.post(redirectUriWithQuery, { headers: { "content-type": 'application/json' }, data: payLoad })
+                const option = {
+                  headers: { "content-type": 'application/json' },
+                  data: payLoad
+                }
+                axios.post(redirectUriWithQuery, option)
                 res.redirect(redirectUri)
               } else {
                 res.status(500).json({ error: `Internal server error` })
