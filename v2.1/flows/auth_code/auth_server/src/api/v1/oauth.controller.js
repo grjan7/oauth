@@ -86,11 +86,11 @@ export default class OauthController {
         return
       }
       if (!clientId) {
-        res.status(400).json(ERRORS.UNDEFINED_CLIENT_ID)
+        res.status(400).json(OAUTH_ERRORS.UNDEFINED_CLIENT_ID)
         return
       }
       if (!sid) {
-        res.status(400).json(ERRORS.UNDEFINED_SID)
+        res.status(400).json(OAUTH_ERRORS.UNDEFINED_SID)
         return
       }
       next()
@@ -119,8 +119,8 @@ export default class OauthController {
       // after successful sign-in, update token with userInfo
       const { _id, email, firstname, lastname } = user
       const userInfo = { _id, email, firstname, lastname }
-      const updateTokenWithUserResult = await TokenStore.updateTokenWithUser(sid, userInfo)
-      if (updateTokenWithUserResult.matchedCount != 1 && updateTokenWithUserResult.modifiedCount != 1) {
+      const updateResult = await TokenStore.updateTokenWithUser(sid, userInfo)
+      if (updateResult.matchedCount != 1 && updateResult.modifiedCount != 1) {
         res.status(500).json(ERRORS.INTERNAL_SERVER_ERROR)
         return
       }
@@ -159,41 +159,40 @@ export default class OauthController {
     try {
       const { grantStatus } = req.body
       const { sid } = req.query
-      if (grantStatus) {
-        if (sid) {
-          const token = await TokenStore.getTokenByTokenId(sid)
-          if (token) {
-            const { redirectUri, state } = token
-            if (grantStatus == 'allow') {
-              const authorizationCode = generateAuthorizationCode(token)
-              const result = await TokenStore.updateTokenWithAuthorizationCode(sid, authorizationCode)
-
-              if (result.matchedCount == 1 && result.modifiedCount == 1) {
-                const { code } = authorizationCode
-                const query = stringify(code, state)
-                const redirectUriWithCode = `${redirectUri}?${query}`
-                res.redirect(redirectUriWithCode)
-              } else {
-                res.status(500).json({ error: `Internal server error` })
-              }
-
-            } else if (grantStatus == 'deny') {
-              await TokenStore.deleteTokenByTokenId(sid)
-              const query = stringify({ error: 'access_denied', state })
-              const redirectUriWithErrorMessage = `${redirectUri}?${query}`
-              res.redirect(redirectUriWithErrorMessage)
-            } else {
-              res.status(400).json({ error: `Invalid grantStatus.` })
-            }
-          } else {
-            res.status(400).json({ error: `Invalid sid.` })
-          }
-
-        } else {
-          res.status(400).json({ error: `sid is missing.` })
+      if (!grantStatus) {
+        res.status(400).json(OAUTH_ERRORS.UNDEFINED_GRANT_STATUS)
+        return
+      }
+      if (!sid) {
+        res.status(400).json(OAUTH_ERRORS.UNDEFINED_SID)
+        return
+      }
+      const token = await TokenStore.getTokenByTokenId(sid)
+      if (!token) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_SID)
+        return
+      }
+      const { redirectUri, state } = token
+      if (grantStatus == 'allow') {
+        const authorizationCode = generateAuthorizationCode(token)
+        const result = await TokenStore.updateTokenWithAuthorizationCode(sid, authorizationCode)
+        if (result.matchedCount != 1 && result.modifiedCount != 1) {
+          res.status(500).json(ERRORS.INTERNAL_SERVER_ERROR)
+          return
         }
+        const { code } = authorizationCode
+        const query = stringify(code, state)
+        const redirectUriWithCode = `${redirectUri}?${query}`
+        res.redirect(redirectUriWithCode)
+
+      } else if (grantStatus == 'deny') {
+        await TokenStore.deleteTokenByTokenId(sid)
+        const query = stringify({ error: 'access_denied', state })
+        const redirectUriWithErrorMessage = `${redirectUri}?${query}`
+        res.redirect(redirectUriWithErrorMessage)
+
       } else {
-        res.status(400).json({ error: `grantStatus is missing.` })
+        res.status(400).json(OAUTH_ERRORS.INVALID_GRANT_STATUS)
       }
     } catch (e) {
       throw new Error(e)

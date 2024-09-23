@@ -5,7 +5,12 @@ export const OAUTH_ERRORS = {
   'INVALID_RESPONSE_TYPE': { error: 'Invalid responseType.' },
   'INVALID_SCOPES': { error: 'Invalid scopes.' },
   'INVALID_REDIRECT_URI': { error: 'Invalid redirectUri.' },
-  'UNDEFINED_QUERY_PARAMETERS': { error: 'Required query parameters cannot be undefined.' }
+  'UNDEFINED_QUERY_PARAMETERS': { error: 'Required query parameters cannot be undefined.' },
+  'INVALID_GRANT_STATUS': { error: 'Invalid grant status.' },
+  'INVALID_SID': { error: 'Invalid sid.' },
+  'UNDEFINED_CLIENT_ID': { error: 'clientId cannot be undefined.' },
+  'UNDEFINED_GRANT_STATUS': { error: 'grantStatus cannot be undefined.' },
+  'UNDEFINED_SID': { error: 'sid cannot be undefined.' }
 }
 
 export const ERRORS = {
@@ -13,7 +18,5 @@ export const ERRORS = {
   'USERNAME_NOT_FOUND': { error: 'Username is not found.' },
   'INVALID_PASSWORD': { error: 'Invalid password.' },
   'UNDEFINED_USERNAME': { error: 'Username cannot be undefined.' },
-  'UNDEFINED_PASSWORD': { error: 'Password cannot be undefined.' },
-  'UNDEFINED_CLIENT_ID': { error: 'ClientId cannot be undefined.' },
-  'UNDEFINED_SID': { error: 'sid cannot be undefined.' }
+  'UNDEFINED_PASSWORD': { error: 'Password cannot be undefined.' }
 }
