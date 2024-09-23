@@ -174,6 +174,7 @@ export default class OauthController {
       }
       const { redirectUri, state } = token
       if (grantStatus == 'allow') {
+        // update the token and redirect the user with code
         const authorizationCode = generateAuthorizationCode(token)
         const result = await TokenStore.updateTokenWithAuthorizationCode(sid, authorizationCode)
         if (result.matchedCount != 1 && result.modifiedCount != 1) {
@@ -186,6 +187,7 @@ export default class OauthController {
         res.redirect(redirectUriWithCode)
 
       } else if (grantStatus == 'deny') {
+        // delete the token and redirect the user with error message
         await TokenStore.deleteTokenByTokenId(sid)
         const query = stringify({ error: 'access_denied', state })
         const redirectUriWithErrorMessage = `${redirectUri}?${query}`
