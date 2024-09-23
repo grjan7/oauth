@@ -212,7 +212,11 @@ export default class OauthController {
     return isVerified
   }
 
-  static exchangeCodeForToken(req, res, next) {
+  static async validateTokenRequest(req, res, next) {
+
+  }
+
+  static async exchangeCodeForToken(req, res, next) {
 
   }
 
