@@ -5,6 +5,7 @@ import { stringify } from 'node:querystring'
 import { ClientStore } from '../../dao/v1/clientStore.js'
 import { TokenStore } from '../../dao/v1/tokenStore.js'
 import { hash } from '../../utils/utils.js'
+import { OAUTH_ERRORS, ERRORS } from '../../utils/constants.js'
 
 export default class OauthController {
 
@@ -22,34 +23,38 @@ export default class OauthController {
   static async validateAuthorizeRequest(req, res, next) {
     try {
       const { clientId, redirectUri, scopes, responseType } = req.query
-      const client = await ClientStore.findClientAppByClientId(clientId)
-      if (client) {
-        const isValidRedirectUri = (client.redirectUri == redirectUri)
-        const isValidScopes = OauthController.isValidScopes(client.scopes, scopes)
-        const isValidResponseType = responseType == "code"
-        if (!isValidRedirectUri) {
-          res.status(400).json({ error: `Invalid redirectUri.` })
-          return
-        }
-        if (!isValidScopes) {
-          res.status(400).json({ error: `Invalid scopes.` })
-          return
-        }
-        if (!isValidResponseType) {
-          res.status(400).json({ error: `Invalid responseType.` })
-          return
-        }
-        next()
-      } else {
-        res.status(400).json({ error: `Invalid clientId.` })
+      if (!clientId || !redirectUri || !scopes || !responseType) {
+        res.status(400).json(OAUTH_ERRORS.UNDEFINED_QUERY_PARAMETERS)
         return
       }
+      const client = await ClientStore.getClientAppByClientId(clientId)
+      if (!client) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_CLIENT_ID)
+        return
+      }
+      const isValidRedirectUri = (client.redirectUri == redirectUri)
+      const isValidScopes = OauthController.isValidScopes(client.scopes, scopes)
+      const isValidResponseType = responseType.toLowerCase() == "code"
+
+      if (!isValidResponseType) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_RESPONSE_TYPE)
+        return
+      }
+      if (!isValidRedirectUri) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_REDIRECT_URI)
+        return
+      }
+      if (!isValidScopes) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_SCOPES)
+        return
+      }
+      next()
+
     } catch (e) {
       throw new Error(e)
     }
   }
 
-  // 
   static async authorize(req, res, next) {
     try {
       const clientInfo = req.query
@@ -61,8 +66,34 @@ export default class OauthController {
         oauthSigninUri += 'sid=' + sid
         res.redirect(oauthSigninUri)
       } else {
-        res.status(500).json({ error: `Internal server error` })
+        res.status(500).json(ERRORS.INTERNAL_SERVER_ERROR)
       }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static async validateSignInInfo(req, res, next) {
+    try {
+      const { username, password } = req.body
+      const { clientId, sid } = req.query
+      if (!username) {
+        res.status(400).json(ERRORS.UNDEFINED_USERNAME)
+        return
+      }
+      if (!password) {
+        res.status(400).json(ERRORS.UNDEFINED_PASSWORD)
+        return
+      }
+      if (!clientId) {
+        res.status(400).json(ERRORS.UNDEFINED_CLIENT_ID)
+        return
+      }
+      if (!sid) {
+        res.status(400).json(ERRORS.UNDEFINED_SID)
+        return
+      }
+      next()
     } catch (e) {
       throw new Error(e)
     }
@@ -75,32 +106,32 @@ export default class OauthController {
       const { username, password } = req.body
       const { clientId, sid } = req.query
       const hashedPassword = hash(password)
-      const userInfo = await AccountStore.findAccountByEmailId(username)
-      if (userInfo) {
-        const isValidPassword = (hashedPassword == userInfo.hashedPassword)
-        if (isValidPassword) {
-          const accountId = userInfo._id
-          const { email, firstname, lastname } = userInfo
-          const user = { accountId, email, firstname, lastname }
-          const updateTokenWithUserResult = await TokenStore.updateTokenWithUser(sid, user)
-          if (updateTokenWithUserResult.modifiedCount == 1) {
-            const clientInfo = await ClientStore.getClientAppByClientId(clientId)
-            if (clientInfo) {
-              const { name, scopes, logoUrl } = clientInfo
-              res.status(200).json({ clientId, name, scopes, logoUrl })
-            } else {
-              res.status(500).json({ error: `Invalid clientId` })
-            }
-
-          } else {
-            res.status(500).json({ error: `Internal server error` })
-          }
-        } else {
-          res.status(400).json({ status: `Incorrect password` })
-        }
-      } else {
-        res.status(400).json({ status: `Username is not found` })
+      const user = await AccountStore.findAccountByEmailId(username)
+      if (!user) {
+        res.status(400).json(ERRORS.USERNAME_NOT_FOUND)
+        return
       }
+      const isValidPassword = (hashedPassword == user.hashedPassword)
+      if (!isValidPassword) {
+        res.status(400).json(ERRORS.INVALID_PASSWORD)
+        return
+      }
+      // after successful sign-in, update token with userInfo
+      const { _id, email, firstname, lastname } = user
+      const userInfo = { _id, email, firstname, lastname }
+      const updateTokenWithUserResult = await TokenStore.updateTokenWithUser(sid, userInfo)
+      if (updateTokenWithUserResult.matchedCount != 1 && updateTokenWithUserResult.modifiedCount != 1) {
+        res.status(500).json(ERRORS.INTERNAL_SERVER_ERROR)
+        return
+      }
+      // get clientInfo to receive user consent 
+      const client = await ClientStore.getClientAppByClientId(clientId)
+      if (!client) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_CLIENT_ID)
+        return
+      }
+      const { name, scopes, logoUrl } = client
+      res.status(200).json({ clientId, name, scopes, logoUrl })
     } catch (e) {
       throw new Error(e)
     }
@@ -132,26 +163,24 @@ export default class OauthController {
         if (sid) {
           const token = await TokenStore.getTokenByTokenId(sid)
           if (token) {
-            const { clientId, redirectUri, state, scopes, nonce } = token
-            if (grantStatus == "allow") {
-              // generate authorizationCode
+            const { redirectUri, state } = token
+            if (grantStatus == 'allow') {
               const authorizationCode = generateAuthorizationCode(token)
-              // update token with authorizationCode
               const result = await TokenStore.updateTokenWithAuthorizationCode(sid, authorizationCode)
+
               if (result.matchedCount == 1 && result.modifiedCount == 1) {
-                // post authorizationCode to client redirectUri
-                const { code, expiresAt } = authorizationCode
+                const { code } = authorizationCode
                 const query = stringify(code, state)
-                const redirectUriWithQuery = redirectUri + "?" + query
-                res.redirect(redirectUriWithQuery)
+                const redirectUriWithCode = `${redirectUri}?${query}`
+                res.redirect(redirectUriWithCode)
               } else {
                 res.status(500).json({ error: `Internal server error` })
               }
 
-            } else if (grantStatus == "deny") {
+            } else if (grantStatus == 'deny') {
               await TokenStore.deleteTokenByTokenId(sid)
-              // need more clarity in redirection
-              const redirectUriWithErrorMessage = redirectUri + "?" + "error=access_denied"
+              const query = stringify({ error: 'access_denied', state })
+              const redirectUriWithErrorMessage = `${redirectUri}?${query}`
               res.redirect(redirectUriWithErrorMessage)
             } else {
               res.status(400).json({ error: `Invalid grantStatus.` })
@@ -166,11 +195,9 @@ export default class OauthController {
       } else {
         res.status(400).json({ error: `grantStatus is missing.` })
       }
-
     } catch (e) {
       throw new Error(e)
     }
   }
-
 
 }

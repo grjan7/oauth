@@ -7,6 +7,7 @@ import { ClientStore } from '../../dao/v1/clientStore.js'
 import { LogStore } from '../../dao/v1/logStore.js'
 import sessionCtrl from './session.controller.js'
 import { hash } from '../../utils/utils.js'
+import { ERRORS } from '../../utils/constants.js'
 
 
 export default class AccountCtrl {
@@ -110,6 +111,24 @@ export default class AccountCtrl {
       throw new Error(e)
     }
   }
+
+  static async validateSignInInfo(req, res, next) {
+    try {
+      const { username, password } = req.body
+      if (!username) {
+        res.status(400).json(ERRORS.UNDEFINED_USERNAME)
+        return
+      }
+      if (!password) {
+        res.status(400).json(ERRORS.UNDEFINED_PASSWORD)
+        return
+      }
+      next()
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
 
   static async signin(req, res, next) {
     try {

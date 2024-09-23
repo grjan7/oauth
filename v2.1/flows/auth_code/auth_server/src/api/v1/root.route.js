@@ -15,12 +15,14 @@ router
   .route('/signin/flow/default')
   .post(
     accountCtrl.isSameOrigin,
+    accountCtrl.validateSignInInfo,
     accountCtrl.signin)
 
 router
   .route('/signin/flow/oauth')
   .post(
     accountCtrl.isSameOrigin,
+    oauthCtrl.validateSignInInfo,
     oauthCtrl.signin)
 
 router
