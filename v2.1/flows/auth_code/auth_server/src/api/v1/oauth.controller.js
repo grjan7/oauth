@@ -1,6 +1,6 @@
-
 'use strict'
 
+import { createHash } from 'node:crypto'
 import { stringify } from 'node:querystring'
 import { ClientStore } from '../../dao/v1/clientStore.js'
 import { TokenStore } from '../../dao/v1/tokenStore.js'
@@ -22,8 +22,8 @@ export default class OauthController {
 
   static async validateAuthorizeRequest(req, res, next) {
     try {
-      const { clientId, redirectUri, scopes, responseType } = req.query
-      if (!clientId || !redirectUri || !scopes || !responseType) {
+      const { clientId, redirectUri, scopes, responseType, codeChallange, challangeMethod } = req.query
+      if (!clientId || !redirectUri || !scopes || !responseType || !codeChallange || !challangeMethod) {
         res.status(400).json(OAUTH_ERRORS.UNDEFINED_QUERY_PARAMETERS)
         return
       }
@@ -35,6 +35,7 @@ export default class OauthController {
       const isValidRedirectUri = (client.redirectUri == redirectUri)
       const isValidScopes = OauthController.isValidScopes(client.scopes, scopes)
       const isValidResponseType = responseType.toLowerCase() == "code"
+      const isValidChallangeMethod = challangeMethod.toLowerCase() == 'sha256'
 
       if (!isValidResponseType) {
         res.status(400).json(OAUTH_ERRORS.INVALID_RESPONSE_TYPE)
@@ -46,6 +47,10 @@ export default class OauthController {
       }
       if (!isValidScopes) {
         res.status(400).json(OAUTH_ERRORS.INVALID_SCOPES)
+        return
+      }
+      if (!isValidChallangeMethod) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_CHALLANGE_METHOD)
         return
       }
       next()
@@ -199,6 +204,16 @@ export default class OauthController {
     } catch (e) {
       throw new Error(e)
     }
+  }
+
+  static verifyPKCE(codeChallange, challangeMethod, codeVerifier) {
+    const codeVerifierHash = createHash(challangeMethod).update(codeVerifier).digest('base64')
+    const isVerified = (codeVerifierHash == codeChallange)
+    return isVerified
+  }
+
+  static exchangeCodeForToken(req, res, next) {
+
   }
 
 }
