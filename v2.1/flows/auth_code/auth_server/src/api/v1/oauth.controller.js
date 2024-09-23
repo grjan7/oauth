@@ -8,19 +8,35 @@ import { hash } from '../../utils/utils.js'
 
 export default class OauthController {
 
+  static isValidScopes(registeredScopes, requestedScopes) {
+    let isValid = true
+    for (let requestedScope of requestedScopes) {
+      if (registeredScopes.indexOf(requestedScope) == -1) {
+        isValid = false
+        break
+      }
+    }
+    return isValid
+  }
+
   static async validateAuthorizeRequest(req, res, next) {
     try {
-      const { clientId, redirectUri, scopes } = req.query
+      const { clientId, redirectUri, scopes, responseType } = req.query
       const client = await ClientStore.findClientAppByClientId(clientId)
       if (client) {
         const isValidRedirectUri = (client.redirectUri == redirectUri)
-        const isValidScopes = (client.scopes == scopes) // need to validate array properly
+        const isValidScopes = OauthController.isValidScopes(client.scopes, scopes)
+        const isValidResponseType = responseType == "code"
         if (!isValidRedirectUri) {
           res.status(400).json({ error: `Invalid redirectUri.` })
           return
         }
         if (!isValidScopes) {
           res.status(400).json({ error: `Invalid scopes.` })
+          return
+        }
+        if (!isValidResponseType) {
+          res.status(400).json({ error: `Invalid responseType.` })
           return
         }
         next()
@@ -43,7 +59,6 @@ export default class OauthController {
         let oauthSigninUri = '/signin/flow/oauth?'
         oauthSigninUri += stringify(req.query)
         oauthSigninUri += 'sid=' + sid
-
         res.redirect(oauthSigninUri)
       } else {
         res.status(500).json({ error: `Internal server error` })
@@ -126,15 +141,9 @@ export default class OauthController {
               if (result.matchedCount == 1 && result.modifiedCount == 1) {
                 // post authorizationCode to client redirectUri
                 const { code, expiresAt } = authorizationCode
-                const query = stringify(clientId, scopes, state, nonce)
+                const query = stringify(code, state)
                 const redirectUriWithQuery = redirectUri + "?" + query
-                const payload = { id: sid, code, expiresAt }
-                const option = {
-                  headers: { "content-type": 'application/json' },
-                  data: JSON.stringify(payload)
-                }
-                axios.post(redirectUriWithQuery, option)
-                res.redirect(redirectUri)
+                res.redirect(redirectUriWithQuery)
               } else {
                 res.status(500).json({ error: `Internal server error` })
               }
@@ -142,9 +151,8 @@ export default class OauthController {
             } else if (grantStatus == "deny") {
               await TokenStore.deleteTokenByTokenId(sid)
               // need more clarity in redirection
-              axios.post(redirectUri, { body: { error: `access denied` } })
-              res.status(200).redirect(redirectUri)
-              //res.redirect(redirectUri).json({ error: `access denied` })
+              const redirectUriWithErrorMessage = redirectUri + "?" + "error=access_denied"
+              res.redirect(redirectUriWithErrorMessage)
             } else {
               res.status(400).json({ error: `Invalid grantStatus.` })
             }
@@ -163,5 +171,6 @@ export default class OauthController {
       throw new Error(e)
     }
   }
+
 
 }
