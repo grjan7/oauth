@@ -11,7 +11,12 @@ export const OAUTH_ERRORS = {
   'INVALID_CHALLANGE_METHOD': { error: 'Invalid challangeMethod.' },
   'UNDEFINED_CLIENT_ID': { error: 'clientId cannot be undefined.' },
   'UNDEFINED_GRANT_STATUS': { error: 'grantStatus cannot be undefined.' },
-  'UNDEFINED_SID': { error: 'sid cannot be undefined.' }
+  'UNDEFINED_SID': { error: 'sid cannot be undefined.' },
+  'INVALID_AUTHORIZATION_METHOD': { error: 'Invalid authorization method' },
+  'UNDEFINED_AUTHORIZATION_HEADER': { error: 'Authorization header cannot be undefined.' },
+  'MISSING_CLIENT_CREDENTIALS': { error: 'Missing client credentials.' },
+  'MISSING_CLIENT_ID': { error: 'Missing clientId.' },
+  'MISSING_CLIENT_SECRET': { error: 'Missing clientSecret.' }
 }
 
 export const ERRORS = {

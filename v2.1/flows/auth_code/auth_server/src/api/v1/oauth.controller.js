@@ -207,13 +207,65 @@ export default class OauthController {
   }
 
   static verifyPKCE(codeChallange, challangeMethod, codeVerifier) {
-    const codeVerifierHash = createHash(challangeMethod).update(codeVerifier).digest('base64')
+    const codeVerifierHash = createHash(challangeMethod)
+      .update(codeVerifier)
+      .digest('base64')
     const isVerified = (codeVerifierHash == codeChallange)
     return isVerified
   }
 
   static async validateTokenRequest(req, res, next) {
+    try {
+      const { codeVerifier, grantType, code, redirectUri } = req.query
+      const { authorization } = req.headers
+      if (!authorization) {
+        res.status(400).json(OAUTH_ERRORS.UNDEFINED_AUTHORIZATION_HEADER)
+        return
+      }
+      const [authorizationMethod, credentials] = authorization.split(" ")
+      if (authorizationMethod.toLowerCase() != 'basic') {
+        res.status(400).json(OAUTH_ERRORS.INVALID_AUTHORIZATION_METHOD)
+        return
+      }
+      if (!credentials) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_CREDENTIALS)
+        return
+      }
+      const [clientId, clientSecret] = btoa(credentials).split(":")
+      if (!clientId) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_ID)
+        return
+      }
+      if (!clientSecret) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_SECRET)
+        return
+      }
+      if (!codeVerifier) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_CODE_VERIFIER)
+        return
+      }
+      if (!grantType) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_GRANT_TYPE)
+        return
+      }
+      if (grantType != 'authorization_code') {
+        res.status(400).json(OAUTH_ERRORS.INVALID_GRANT_TYPE)
+        return
+      }
+      if (!code) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_AUTHORIZATION_CODE)
+        return
+      }
+      if (!redirectUri) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_REDIRECT_URI)
+        return
+      }
+      // validate redirectUri
+      next()
 
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 
   static async exchangeCodeForToken(req, res, next) {
