@@ -16,7 +16,8 @@ export const OAUTH_ERRORS = {
   'UNDEFINED_AUTHORIZATION_HEADER': { error: 'Authorization header cannot be undefined.' },
   'MISSING_CLIENT_CREDENTIALS': { error: 'Missing client credentials.' },
   'MISSING_CLIENT_ID': { error: 'Missing clientId.' },
-  'MISSING_CLIENT_SECRET': { error: 'Missing clientSecret.' }
+  'MISSING_CLIENT_SECRET': { error: 'Missing clientSecret.' },
+  'INVALID_CODE': { error: 'Invalid authorization code' }
 }
 
 export const ERRORS = {

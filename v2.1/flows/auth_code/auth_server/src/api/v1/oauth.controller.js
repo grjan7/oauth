@@ -264,20 +264,69 @@ export default class OauthController {
         res.status(400).json(OAUTH_ERRORS.MISSING_REDIRECT_URI)
         return
       }
-      // validate redirectUri
       next()
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 
+  static async validateClientCredentials(req, res, next) {
+    try {
+      const { clientId, clientSecret } = req.body
+      const { redirectUri } = req.query
+      if (!clientId) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_ID)
+        return
+      }
+      if (!clientSecret) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_SECRET)
+        return
+      }
+      const client = await ClientStore.getClientAppByClientId(clientId)
+      if (!client) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_CLIENT_ID)
+        return
+      }
+      const isValidSecret = (client.clientSecret == clientSecret)
+      if (!isValidSecret) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_CLIENT_SECRET)
+        return
+      }
+      const isValidRedirectUri = (client.redirectUri == redirectUri)
+      if (!isValidRedirectUri) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_REDIRECT_URI)
+        return
+      }
+      next()
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  static generateAccessToken() { }
+
+  static async validatePKCE(req, res, next) {
+    try {
+      const { codeVerifier, redirectUri, code } = req.query
+      const { clientId } = req.body
+      const token = await TokenStore.getTokenByClientIdAuthCodeRedirectUri(clientId, code, redirectUri)
+      if (!token) {
+        res.status(400).json(OAUTH_ERRORS.INVALID_CODE)
+      }
+
+      // need to implement 
+      next()
     } catch (e) {
       throw new Error(e)
     }
   }
 
   // when the request hits token endpoint
-  // validate request query parameters
-  // validate pkce
+  // validate request query parameters  
   // validate clientCredentials
+  // validate pkce
   // validate authorization code and its validity
-  // generate access_token
+  // generate access_token and update token with access token
   // respond with access_token
 
   static async exchangeCodeForToken(req, res, next) {
