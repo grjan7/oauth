@@ -170,10 +170,14 @@ export default class ClientController {
   }
 
   static async updateClientAppByEmailIdAndClientId(req, res, next) {
-
+    res.status(200).json({ success: true })
   }
 
   static async deleteClientAppByEmailIdAndClientId(req, res, next) {
+    res.status(200).json({ success: true })
+  }
 
+  static async deleteClientAppsByEmailId(req, res, next) {
+    res.status(200).json({ success: true })
   }
 }

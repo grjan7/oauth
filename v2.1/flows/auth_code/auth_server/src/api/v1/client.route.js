@@ -37,5 +37,4 @@ router.route('/:clientId')
     clientCtrl.deleteClientAppByEmailIdAndClientId)
 
 
-
 export default router

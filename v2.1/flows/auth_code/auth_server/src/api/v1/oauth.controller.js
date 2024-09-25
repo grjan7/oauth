@@ -214,32 +214,36 @@ export default class OauthController {
     return isVerified
   }
 
+  static async validateCredentialsFromAuthorization(req, res, next) {
+    const { authorization } = req.headers
+    if (!authorization) {
+      res.status(400).json(OAUTH_ERRORS.UNDEFINED_AUTHORIZATION_HEADER)
+      return
+    }
+    const [authorizationMethod, credentials] = authorization.split(" ")
+    if (authorizationMethod.toLowerCase() != 'basic') {
+      res.status(400).json(OAUTH_ERRORS.INVALID_AUTHORIZATION_METHOD)
+      return
+    }
+    if (!credentials) {
+      res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_CREDENTIALS)
+      return
+    }
+    const [clientId, clientSecret] = btoa(credentials).split(":")
+    if (!clientId) {
+      res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_ID)
+      return
+    }
+    if (!clientSecret) {
+      res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_SECRET)
+      return
+    }
+    next()
+  }
+
   static async validateTokenRequest(req, res, next) {
     try {
       const { codeVerifier, grantType, code, redirectUri } = req.query
-      const { authorization } = req.headers
-      if (!authorization) {
-        res.status(400).json(OAUTH_ERRORS.UNDEFINED_AUTHORIZATION_HEADER)
-        return
-      }
-      const [authorizationMethod, credentials] = authorization.split(" ")
-      if (authorizationMethod.toLowerCase() != 'basic') {
-        res.status(400).json(OAUTH_ERRORS.INVALID_AUTHORIZATION_METHOD)
-        return
-      }
-      if (!credentials) {
-        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_CREDENTIALS)
-        return
-      }
-      const [clientId, clientSecret] = btoa(credentials).split(":")
-      if (!clientId) {
-        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_ID)
-        return
-      }
-      if (!clientSecret) {
-        res.status(400).json(OAUTH_ERRORS.MISSING_CLIENT_SECRET)
-        return
-      }
       if (!codeVerifier) {
         res.status(400).json(OAUTH_ERRORS.MISSING_CODE_VERIFIER)
         return
@@ -267,6 +271,14 @@ export default class OauthController {
       throw new Error(e)
     }
   }
+
+  // when the request hits token endpoint
+  // validate request query parameters
+  // validate pkce
+  // validate clientCredentials
+  // validate authorization code and its validity
+  // generate access_token
+  // respond with access_token
 
   static async exchangeCodeForToken(req, res, next) {
 
