@@ -1,7 +1,7 @@
 {
   "name": "authorization_server",
   "version": "1.0.0",
-  "description": "OAuth 2.11 authorization code flow authorization server implementation",
+  "description": "OAuth 2.1 authorization code flow authorization server implementation",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",

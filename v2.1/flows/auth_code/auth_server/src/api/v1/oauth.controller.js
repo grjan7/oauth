@@ -313,7 +313,6 @@ export default class OauthController {
       if (!token) {
         res.status(400).json(OAUTH_ERRORS.INVALID_CODE)
       }
-
       // need to implement 
       next()
     } catch (e) {
