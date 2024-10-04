@@ -1,19 +1,13 @@
 'use strict'
 
-// initialize the objects and services that need to be available
-// during bootstrapping the application 
-
+import { Component } from 'lib/component.class.js'
 import rootComponent from './components/root.component.js'
-import setStyleService from './services/setStyle.js'
-import setEventsService from './services/setEvents.js'
-
 
 const bootstrapApp = async () => {
-
   const root = document.getElementById('root')
   root.innerHTML = rootComponent.template
-  setStyleService()
-  setEventsService()
+  Component.setStyles()
+  Component.initAllEventHandlers()
 }
 
 export default bootstrapApp

@@ -21,7 +21,7 @@ router.route('/')
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.deleteClientAppsByEmailId)
-
+/*
 router.route('/:clientId')
   .get(
     accountCtrl.isSameOrigin,
@@ -36,5 +36,5 @@ router.route('/:clientId')
     sessionCtrl.validateSession,
     clientCtrl.deleteClientAppByEmailIdAndClientId)
 
-
+*/
 export default router

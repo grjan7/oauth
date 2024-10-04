@@ -10,7 +10,7 @@ const bootstrapApp = async () => {
   const root = document.getElementById('root')
   root.innerHTML = rootComponent.template
   Component.setStyles()
-  Component.initEventHandlers()
+  Component.initAllEventHandlers()
 }
 
 export default bootstrapApp
