@@ -1,11 +1,8 @@
 'use strict'
 
-export class AccountClient {
-  static host = 'http://localhost:5000'
+import { Client } from './client.class.js'
 
-  static connect(url) {
-    AccountClient.host = url
-  }
+export class AccountClient extends Client {
 
   static async getAccountById() {
     const path = '/account/getAccountById'
@@ -42,4 +39,3 @@ export class AccountClient {
   }
 
 }
-

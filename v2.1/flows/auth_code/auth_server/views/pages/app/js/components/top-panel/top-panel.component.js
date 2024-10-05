@@ -2,7 +2,7 @@
 
 import { Component } from 'lib/component.class.js'
 
-import { AccountClient } from '../../services/accountClient.js'
+import { AccountClient } from '../../services/clientSDK.js'
 
 const template = `
   <div id="top-panel-component">
