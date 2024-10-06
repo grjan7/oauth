@@ -9,7 +9,7 @@ import rightPanelComponent from './right-panel/right-panel.component.js'
 import mainPanelComponent from './main-panel/main-panel.component.js'
 
 const template = `
-  <div id="root-component">
+  <div id="root-component" class="show-on-init-very-slow">
     <div id="app-header">
       ${topPanelComponent.template}
     </div>

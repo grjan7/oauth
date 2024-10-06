@@ -11,7 +11,7 @@ const template = `
     </div>
     <div id="profile-container">
       <img src="" alt="" id="profile-img"></img>
-      <div id="profile-menu">
+      <div id="profile-menu" class="show-on-init-slow">
         <p id="signout-link"><span>Sign out</span></p>
       </div>
     </div>
@@ -21,7 +21,7 @@ const template = `
 const style = `
   #top-panel-component {    
     display: grid;
-    grid-template-columns: 20% 80%;        
+    grid-template-columns: 20% 80%;
     background-color: #101010;   
   }
 
