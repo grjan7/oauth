@@ -4,13 +4,15 @@ import { Component } from 'lib/component.class.js'
 
 const template = `
   <div id="left-panel-component" class="big-panel">  
-    <ul id="side-nav">
-      <li>Settings</li>
-      <ul>
-        <li>General</li>
-        <li>Security</li>
-      </ul>
-    </ul>
+    <div id="side-nav">
+      <div class="li-0">
+        <p>Settings</p>
+        <div class="li-1">
+          <p>General</p>
+          <p>Security</p>
+        </div>
+      </div>
+    </div>
   </div>
 `
 
