@@ -19,7 +19,7 @@ const template = `
     <div id="email-change-component">
     </div>
 
-    <div id="password-settings-component">
+    <div id="password-change-component">
     </div>
 
     <div id="delete-account-component">
@@ -33,4 +33,4 @@ const style = ``
 
 const eventHandlers = {}
 
-const accountSettingsComponent = new Component({ template, style, eventHandlers })
+export default new Component({ template, style, eventHandlers })
