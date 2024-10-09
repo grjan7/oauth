@@ -107,3 +107,7 @@ a {
   animation: fadeOut 2s;
   opacity: 0;
 }
+
+.li-0 {
+  text-indent: 10%;
+}

@@ -7,7 +7,7 @@ import { AccountClient } from '../../services/clientSDK.js'
 const template = `
   <div id="top-panel-component">
     <div id="logo-container">
-      <p id="logo-text"><span class="blue-bold">Json</span><span class="white-bold">alytiX</span></p>
+      <p id="logo-text"><span class="blue-bold">OAuth</span> <span class="white-bold">2.1</span></p>
     </div>
     <div id="profile-container">
       <img src="" alt="" id="profile-img"></img>
