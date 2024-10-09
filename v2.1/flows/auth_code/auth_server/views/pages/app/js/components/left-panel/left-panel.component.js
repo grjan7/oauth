@@ -12,6 +12,7 @@ const template = `
         <span>My Applications</span><br>
         <span>Third-Party Apps</span>
       </p>
+      <p>Logs</p>
     </div>
   </div>
 `
