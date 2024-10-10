@@ -21,10 +21,16 @@ const template = `
       <p id="logo-text"><span class="blue-bold">OAuth</span> <span class="white-bold">2.1</span></p>
     </div>
     <div id="profile-container">
-      <img src="" alt="" id="profile-img"></img>
-      <p id="user-fullname">${firstname} ${lastname}</p>
+      <div id="profile-name">
+        <div>
+          <img src="" alt="" id="profile-img"></img>
+        </div>
+        <div>
+          <p id="user-fullname">${firstname} ${lastname}</p>
+        </div>
+      </div>
       <div id="profile-menu" class="show-on-init-slow">
-        <p id="signout-link"><span>Sign out</span></p>
+        <p id="signout-link">Sign out</p>
       </div>
     </div>
   </div>
@@ -33,27 +39,41 @@ const template = `
 const style = `
   #top-panel-component {    
     display: grid;
-    grid-template-columns: 20% 80%;
-    background-color: #101010;   
+    grid-template-columns: 80% 20%;    
+    max-width:100vw;
+    max-height:6vh;    
   }
 
-  #profile-img {
-    float: right;
-    padding: 1%;
+  #profile-img {    
+    padding: 5%;
+    border: 0.15rem dashed #909090;
+  }
+
+  #user-fullname {
+    text-wrap: wrap;
+    margin: 0;
+    padding: 5% 2%;
+    
   }
 
   #logo-container {    
     font-size: 1rem;
   }
 
+  #profile-container {    
+    position: relative;
+    left: 6rem;
+    top: 0.4rem;
+    z-index:1;
+  }
+
   #logo-text {
-    padding-left: 5%;
+    padding-left: 1.9rem;
   }
 
   .blue-bold {
     color: #006585;
-    font-weight: 600;
-    
+    font-weight: 600;    
   }
   
   .white-bold {
@@ -61,17 +81,23 @@ const style = `
     font-weight: 600;
   }
 
+  #profile-name {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    width: 50%;
+  }
+
   #profile-menu {
-    position: absolute;        
-    width: 5rem;
-    right: 0.1rem;
-    top: 3rem;
+    position: relative;        
+    width: 8rem;
+    left: 0.5rem;    
+    top: 0.2rem;
     display: none;  
     background-color: #191919;
     border-radius: 5%;
-    padding: 1% 2%;
+    padding: 5% 2%;
     margin: 0;
-    z-index:1;   
+    z-index: 1;   
   }  
   
   #profile-img {
@@ -82,7 +108,7 @@ const style = `
   }
 
   #signout-link {
-    width: 100%;
+    width: 80%;
     border-radius: 5%;
     padding: 2% 10%;
     background-color: #992929;

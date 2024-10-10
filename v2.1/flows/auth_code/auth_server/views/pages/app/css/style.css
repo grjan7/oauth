@@ -9,7 +9,7 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.9);
-  background-color: #050505;
+  background-color: #010405;
 }
 
 #root {
@@ -32,11 +32,12 @@ a {
 }
 
 .big-panel {
-  height: 90vh;
-  border-radius: 2%;
-  border: 1px solid #191919;
-  margin: 0% 1%;
-  padding: 1% 5%;
+  min-height: 90vh;
+  border-radius: 0.1rem;
+  background-color: #090909;
+  /*border: 1px solid #191919;*/
+  margin: 0% 0.1rem;
+  padding: 6% 5%;
 }
 
 
