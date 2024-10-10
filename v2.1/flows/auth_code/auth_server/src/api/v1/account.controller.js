@@ -198,6 +198,20 @@ export default class AccountCtrl {
     }
   }
 
+  static async getAccountInfo(req, res, next) {
+    try {
+      const { email } = req.body.session
+      if (email) {
+        const result = await AccountStore.getAccountInfo(email)
+        res.status(200).json(result)
+      } else {
+        res.status(404).json({ error: 'Invalid session.' })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
   static async updateAccountByEmailId(req, res, next) {
     try {
       const { email } = req.body.session

@@ -1,8 +1,19 @@
 'use strict'
 
 import { Component } from 'lib/component.class.js'
-
 import { AccountClient } from '../../services/clientSDK.js'
+
+let accountInfo = {}
+try {
+  accountInfo = await AccountClient.getAccountInfo()
+  console.log(accountInfo)
+} catch (e) {
+  throw new Error(e)
+}
+
+console.log(accountInfo)
+
+const { firstname, lastname } = accountInfo
 
 const template = `
   <div id="top-panel-component">
@@ -11,6 +22,7 @@ const template = `
     </div>
     <div id="profile-container">
       <img src="" alt="" id="profile-img"></img>
+      <p id="user-fullname">${firstname} ${lastname}</p>
       <div id="profile-menu" class="show-on-init-slow">
         <p id="signout-link"><span>Sign out</span></p>
       </div>
@@ -102,7 +114,6 @@ const eventHandlers = {
     const signoutLink = document.getElementById("signout-link")
 
     signoutLink.onclick = async (e) => {
-
       try {
         const response = await AccountClient.signout()
         if (response.status == 200) {

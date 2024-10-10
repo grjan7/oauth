@@ -4,8 +4,8 @@ import { Client } from './client.class.js'
 
 export class AccountClient extends Client {
 
-  static async getAccountById() {
-    const path = '/account/getAccountById'
+  static async getAccountInfo() {
+    const path = '/account/getAccountInfo'
     const url = AccountClient.host + path
     const options = {
       method: 'POST',
@@ -15,7 +15,7 @@ export class AccountClient extends Client {
     }
     try {
       const response = await fetch(url, options)
-      return response
+      return response.json()
     } catch (e) {
       console.error(e)
     }
