@@ -9,18 +9,18 @@ const template = `
 
     <div id="side-nav">
 
-      <p id="home-link"><span class="dir-icon"></span> Home</p>      
-      <p id="account-settings-link"><span class="dir-icon"></span> Account Settings</p>
-      <p id="app-settings-link" class="li-head"><span class="dir-icon">+</span> Applications Settings</p>
+      <p id="home-link" class="link"><span class="dir-icon"></span> Home</p>      
+      <p id="account-settings-link" class="link"><span class="dir-icon"></span> Account Settings</p>
+      <p id="app-settings-link" class="li-head link"><span class="dir-icon">+</span> Applications Settings</p>
 
       <div id="app-sublist" class="show-on-init-very-slow">
 
-        <p id="my-apps-link" class="li-0"><span class="dir-icon"></span> My Applications</p>
-        <p id="third-party-apps-link" class="li-0"><span class="dir-icon"></span> Third-Party Apps</p>
+        <p id="my-apps-link" class="li-0 link">My Applications</p>
+        <p id="third-party-apps-link" class="li-0 link">Third-Party Apps</p>
         
       </div>
       
-      <p id="logs-settings-link"><span class="dir-icon"></span> Logs Settings</p>
+      <p id="logs-link" class="link"><span class="dir-icon"></span> Logs</p>      
 
     </div>
 
@@ -31,16 +31,20 @@ const style = `
   #side-nav p:hover {
     background-color: #101010;
   }
-
-  #side-nav p  {
+  
+  .link {
     padding: 3% 5%;    
     margin: 0;
+  }
+  
+  .link:hover {
+    background-color: #101010; 
   }
   
   #side-nav {
     margin-top: 5%;
   }
-  
+
   #app-sublist {
     display: none;
   }
@@ -62,21 +66,36 @@ const eventHandlers = {
     const appSettingsLink = document.getElementById('app-settings-link')
     const myAppsLink = document.getElementById('my-apps-link')
     const thirdPartyAppsLink = document.getElementById('third-party-apps-link')
-    const logSettingsLink = document.getElementById('logs-settings-link')
+    const logsLink = document.getElementById('logs-link')
     const appSubList = document.getElementById("app-sublist")
 
     const isAllElExist = mainPanel && homeLink && accountSettingsLink &&
-      appSettingsLink && myAppsLink && thirdPartyAppsLink && logSettingsLink && appSubList
+      appSettingsLink && myAppsLink && thirdPartyAppsLink && logsLink && appSubList
 
     if (isAllElExist) {
       // set my-apps-link handler
-      let appSubListVisible = false
+      const defaultColor = 'transparent'
+      const onClickColor = '#101010'
+
+      const links = document.querySelectorAll('.link')
+      links.forEach(link => { link.onclick = async (e) => { link.style.backgroundColor = 'transparent' } })
+
+      homeLink.onclick = async (e) => {
+        links.forEach(link => link.style.backgroundColor = defaultColor)
+        homeLink.style.backgroundColor = onClickColor
+      }
 
       accountSettingsLink.onclick = async (e) => {
+        links.forEach(link => link.style.backgroundColor = defaultColor)
+        accountSettingsLink.style.backgroundColor = onClickColor
         accountSettingsComponent.load(mainPanel)
       }
 
+      let appSubListVisible = false
       appSettingsLink.onclick = async (e) => {
+        links.forEach(link => link.style.backgroundColor = defaultColor)
+        appSettingsLink.style.backgroundColor = onClickColor
+
         appSubListVisible = !appSubListVisible
         if (appSubListVisible) {
           appSettingsLink.innerHTML = `<span class="dir-icon">&ndash;</span> Application Settings`
@@ -88,9 +107,20 @@ const eventHandlers = {
       }
 
       myAppsLink.onclick = async (e) => {
+        links.forEach(link => link.style.backgroundColor = defaultColor)
+        myAppsLink.style.backgroundColor = onClickColor
         myAppsComponent.load(mainPanel)
       }
 
+      thirdPartyAppsLink.onclick = async (e) => {
+        links.forEach(link => link.style.backgroundColor = defaultColor)
+        thirdPartyAppsLink.style.backgroundColor = onClickColor
+      }
+
+      logsLink.onclick = async (e) => {
+        links.forEach(link => link.style.backgroundColor = defaultColor)
+        logsLink.style.backgroundColor = onClickColor
+      }
 
     }
   }
