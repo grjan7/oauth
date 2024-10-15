@@ -6,14 +6,14 @@ import { AccountClient } from '../../services/clientSDK.js'
 let accountInfo = {}
 try {
   accountInfo = await AccountClient.getAccountInfo()
-  console.log(accountInfo)
+  //console.log(accountInfo)
 } catch (e) {
   throw new Error(e)
 }
 
 console.log(accountInfo)
 
-const { firstname, lastname } = accountInfo
+const { firstname, lastname, email } = accountInfo
 
 const template = `
   <div id="top-panel-component">
@@ -30,6 +30,7 @@ const template = `
         </div>
       </div>
       <div id="profile-menu" class="show-on-init-slow">
+        <p id="email">${email}</p>
         <p id="signout-link">Sign out</p>
       </div>
     </div>
@@ -107,11 +108,14 @@ const style = `
     background-color: black;
   }
 
-  #signout-link {
+  #signout-link {    
+    background-color: #992929;
+  }
+
+  #profile-menu p {
     width: 80%;
     border-radius: 5%;
-    padding: 2% 10%;
-    background-color: #992929;
+    padding: 2% 10%;    
   }
 
 `

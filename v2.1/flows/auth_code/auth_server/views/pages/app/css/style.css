@@ -112,3 +112,21 @@ a {
 .li-0 {
   text-indent: 10%;
 }
+
+.sub-head {
+  margin: 1%;
+  padding: 2% 3%;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid #101010;
+}
+
+td {
+  border: 1px solid #101010;
+  padding: 1% 2%;
+
+}

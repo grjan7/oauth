@@ -3,6 +3,7 @@
 import { Component } from 'lib/component.class.js'
 import myAppsComponent from '../core/my-applications/my-applications.component.js'
 import accountSettingsComponent from '../core/account-settings/account-settings.component.js'
+import lastSessionsListComponent from '../core/last-sessions-list/last-sessions-list.component.js'
 
 const template = `
   <div id="left-panel-component" class="big-panel">
@@ -19,8 +20,9 @@ const template = `
         <p id="third-party-apps-link" class="li-0 link">Third-Party Apps</p>
         
       </div>
-      
-      <p id="logs-link" class="link"><span class="dir-icon"></span> Logs</p>      
+
+      <p id="last-sessions-link" class="link">Last Sessions</p>      
+      <p id="logs-link" class="link">Logs</p>  
 
     </div>
 
@@ -68,9 +70,10 @@ const eventHandlers = {
     const thirdPartyAppsLink = document.getElementById('third-party-apps-link')
     const logsLink = document.getElementById('logs-link')
     const appSubList = document.getElementById("app-sublist")
+    const lastSessionsLink = document.getElementById("last-sessions-link")
 
     const isAllElExist = mainPanel && homeLink && accountSettingsLink &&
-      appSettingsLink && myAppsLink && thirdPartyAppsLink && logsLink && appSubList
+      appSettingsLink && myAppsLink && thirdPartyAppsLink && logsLink && appSubList && lastSessionsLink
 
     if (isAllElExist) {
       // set my-apps-link handler
@@ -115,6 +118,12 @@ const eventHandlers = {
       thirdPartyAppsLink.onclick = async (e) => {
         links.forEach(link => link.style.backgroundColor = defaultColor)
         thirdPartyAppsLink.style.backgroundColor = onClickColor
+      }
+
+      lastSessionsLink.onclick = async (e) => {
+        links.forEach(link => link.style.backgroundColor = defaultColor)
+        lastSessionsLink.style.backgroundColor = onClickColor
+        lastSessionsListComponent.load(mainPanel)
       }
 
       logsLink.onclick = async (e) => {
