@@ -5,7 +5,7 @@ import rootComponent from './components/root.component.js'
 
 const bootstrapApp = async () => {
   const root = document.getElementById('root')
-  root.innerHTML = rootComponent.template
+  rootComponent.load(root)
   Component.setStyles()
   Component.initAllEventHandlers()
 }
