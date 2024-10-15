@@ -58,7 +58,7 @@ export class AccountStore {
   static async getAccountInfo(email) {
     const pipeline = [
       { $match: { email } },
-      { $project: { hashedPassword: 0 } }
+      { $project: { hashedPassword: 0, lastSessions: 0 } }
     ]
     try {
       const result = await accountStore.aggregate(pipeline)
@@ -66,7 +66,19 @@ export class AccountStore {
     } catch (e) {
       throw new Error(e)
     }
+  }
 
+  static async getLastSessions(email) {
+    const pipeline = [
+      { $match: { email } },
+      { $project: { email: 1, lastSessions: 1 } }
+    ]
+    try {
+      const result = await accountStore.aggregate(pipeline)
+      return (await result.toArray())[0]
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 
   static async updateAccountByEmailId(email) {

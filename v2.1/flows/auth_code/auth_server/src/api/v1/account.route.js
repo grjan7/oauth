@@ -32,6 +32,13 @@ router.route('/getAccountInfo')
     sessionCtrl.validateSession,
     accountCtrl.getAccountInfo)
 
+// get account by email
+router.route('/getLastSessions')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    accountCtrl.getLastSessions)
+
 // update account by email
 router.route('/updateAccountById')
   .post(
