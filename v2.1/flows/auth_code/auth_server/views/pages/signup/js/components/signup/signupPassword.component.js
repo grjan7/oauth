@@ -3,31 +3,13 @@
 import { Component } from 'lib/component.class.js'
 
 const template = `
-<div id="signup-password-component">
+<div id="signup-password-component" class="input-component">
   <label for="signup-password" id="signup-password-label">Password*</label>
   <input type="password" name="signup-password" placeholder="" 
   id="signup-password" tabindex="2" required>       
 </div>`
 
-const style = `
-#signup-password {
-  width: 90%;
-  padding: 4%;
-  border-radius:5px;  
-  border: 1px solid rgba(0,0,0,0.6);  
-}
-
-#signup-password-component{  
-  align-items: center; 
-  padding: 3%;  
-}
-
-#signup-password-label{
-  display: block;
-  color: #004182;
-  font-weight: 600;
-  padding: 0px 0px 5px 0px;
-}`
+const style = ``
 
 const eventHandlers = {
 

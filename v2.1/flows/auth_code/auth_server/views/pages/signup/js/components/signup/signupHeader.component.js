@@ -10,8 +10,9 @@ const template = `
 const style = `
   #signup-header {
     text-align: center;
-    color: #004182;
+    color: #0061a2;
     font-weight: 600;
+    width: 100%;    
   }`
 
 const signupHeaderComponent = new Component({ template, style })

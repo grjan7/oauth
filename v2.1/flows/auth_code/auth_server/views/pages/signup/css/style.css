@@ -7,9 +7,9 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
-  font-size: 18px;
-  color: rgba(0, 0, 0, 0.9);
-  background-color: #fff;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  background-color: #010405;
 }
 
 #root {
@@ -19,7 +19,25 @@ body {
 }
 
 input {
-  font-size: 18px;
+  border-radius: 0.4rem;
+  background-color: #151515;
+  border: 0.1rem solid #424242;
+  color: #e0e0e0;
+  width: 90%;
+  padding: 4%;
+  font-weight: 600;
+}
+
+.input-component {
+  align-items: center;
+  padding: 3%;
+}
+
+label {
+  color: #2a8ddf;
+  display: block;
+  font-weight: 600;
+  padding: 0px 0px 5px 0px;
 }
 
 h1 {
@@ -54,4 +72,65 @@ a {
   border-top: 1px solid #b0b0b0;
   margin: 0px 0px 0px 5px;
   flex: 1 0 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.show-on-init-fast {
+  animation: fadeIn 0.2s;
+  opacity: 1;
+}
+
+.show-on-init-medium {
+  animation: fadeIn 0.5s;
+  opacity: 1;
+}
+
+.show-on-init-slow {
+  animation: fadeIn 1s;
+  opacity: 1;
+}
+
+.show-on-init-very-slow {
+  animation: fadeIn 2s;
+  opacity: 1;
+}
+
+
+.hide-on-end-fast {
+  animation: fadeOut 0.2s;
+  opacity: 0;
+}
+
+.hide-on-end-medium {
+  animation: fadeOut 0.5s;
+  opacity: 0;
+}
+
+.hide-on-end-slow {
+  animation: fadeOut 1s;
+  opacity: 0;
+}
+
+.hide-on-end-very-slow {
+  animation: fadeOut 2s;
+  opacity: 0;
 }

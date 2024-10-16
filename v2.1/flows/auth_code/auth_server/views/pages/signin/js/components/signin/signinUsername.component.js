@@ -12,9 +12,7 @@ const template = `
 const style = `
   #signin-username {
     width: 90%;
-    padding: 4%;  
-    border-radius: 5px;
-    border: 1px solid rgba(0,0,0,0.6);
+    padding: 4%;
   }
 
   #signin-username-component {

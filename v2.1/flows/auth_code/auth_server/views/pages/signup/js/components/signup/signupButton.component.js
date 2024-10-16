@@ -4,7 +4,7 @@ import { Component } from 'lib/component.class.js'
 import { SignupClient } from '../../services/signupClient.js'
 
 const template = `
-  <div id="signup-button-component">
+  <div id="signup-button-component" class="input-component">
     <input type="submit" value="Create an account" id="signup-button" tabindex="3">
   </div>`
 
@@ -15,13 +15,9 @@ const style = `
     color: #fff;
     background-color: #0061a2;
     border: 0;
-    border-radius: 50px;
-    font-size: 18px;    
-  }
-    
-  #signup-button-component {
-    padding: 3%;
-    align-items: center;
+    border-radius: 50px;  
+    margin-top: 1rem;    
+    font-size: 18px;
   }
 
   #signup-button:hover {

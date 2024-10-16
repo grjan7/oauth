@@ -10,7 +10,7 @@ import signupLinkButtonComponent from './signupLinkButton.component.js'
 import signupTextComponent from './signupText.component.js'
 
 const template = ` 
-  <div id="signin-component">
+  <div id="signin-component" class="show-on-init-slow">
     <form id="signin-form">
       ${signinHeaderComponent.template}
       ${signinStatusComponent.template}
@@ -24,14 +24,14 @@ const template = `
 
 const style = `
   #signin-component {
-    background-color: #fff;
-    width: 380px;
+    background-color: #151515;
+    width: 25vw;
     margin: auto;  
-    margin-top: 1%;    
+    margin-top: 1rem;    
     padding: 20px;
     min-height: 500px;
     border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);  
+    box-shadow: 0 4px 12px rgba(0,0,0,0.9);  
   }  
   `
 

@@ -10,12 +10,6 @@ const template = `
 </div>`
 
 const style = `
-#signin-password {
-  width: 90%;
-  padding: 4%;  
-  border-radius: 5px;
-  border: 1px solid rgba(0,0,0,0.6);  
-}
 
 #signin-password-component{  
   align-items: center; 

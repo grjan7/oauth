@@ -3,7 +3,7 @@
 import { Component } from 'lib/component.class.js'
 
 const template = `
-  <div id="signin-link-button-component">
+  <div id="signin-link-button-component" class="input-component">
     <input type="submit" value="Sign in" id="signin-link-button" tabindex="4">
   </div>`
 
@@ -17,12 +17,7 @@ const style = `
     border-radius: 50px;
     font-size: 18px;
   }
-
-  #signin-link-button-component {
-    padding: 3%;
-    align-items: center;
-  }
-
+    
   #signin-link-button:hover {
     color: #f0f0f0;
     border: 0px;

@@ -13,9 +13,9 @@ import signupPasswordComponent from './signupPassword.component.js'
 import signupStatusComponent from './signupStatus.component.js'
 
 const template = ` 
-  <div id="signup-component">
+  <div id="signup-component" class="show-on-init-slow">
+    ${signupHeaderComponent.template}
     <form id="signup-form">
-      ${signupHeaderComponent.template}
       ${signupStatusComponent.template}
       ${signupFirstnameComponent.template}
       ${signupLastnameComponent.template}
@@ -30,11 +30,11 @@ const template = `
 
 const style = `
   #signup-component {
-    background-color: #fff;
-    width: 380px;
+    background-color: #151515;
+    width: 25vw;
     margin: auto;  
     margin-top: 1%;    
-    padding: 20px;
+    padding: 1% 2%;
     min-height: 500px;
     border-radius: 5px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);  

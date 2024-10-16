@@ -10,7 +10,7 @@ const template = `
 const style = `
   #signin-header {
     text-align: center;
-    color: #004182;
+    color: #909090;
     font-weight: 600;
   }`
 
