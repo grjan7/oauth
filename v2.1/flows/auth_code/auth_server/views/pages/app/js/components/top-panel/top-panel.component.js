@@ -30,8 +30,20 @@ const template = `
         </div>
       </div>
       <div id="profile-menu" class="show-on-init-slow">
-        <p id="email">${email}</p>
-        <p id="signout-link">Sign out</p>
+        <div>
+          <p id="profile-email">${email}</p>
+        </div>
+        <div id="signout-container">
+          <div id="signout-icon-svg">
+            <svg height="16" width="16" viewBox="0 0 24 24" focusable="false" class="highlight">
+              <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path>
+              <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+          </div>
+          <div id="signout-link-container">
+            <span id="signout-link">Sign out</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -88,15 +100,21 @@ const style = `
     width: 50%;
   }
 
+  #profile-email {
+    padding: 0% 5%;
+    text-align:center;
+    
+  }
+    
   #profile-menu {
     position: relative;        
-    width: 8rem;
+    width: 60%;
     left: 0.5rem;    
     top: 0.2rem;
     display: none;  
     background-color: #191919;
     border-radius: 5%;
-    padding: 5% 2%;
+    padding: 5% 0%;
     margin: 0;
     z-index: 1;   
   }  
@@ -107,15 +125,26 @@ const style = `
     border-radius: 25px;
     background-color: black;
   }
+  
+  #profile-img:hover {
+    border: 3px solid #f0f0f0;
+  }
 
-  #signout-link {    
-    background-color: #992929;
+  #signout-container:hover {    
+    background-color: #505050;
   }
 
   #profile-menu p {
     width: 80%;
     border-radius: 5%;
     padding: 2% 10%;    
+  }
+
+  #signout-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    background-color: #303030;
+    padding: 0.5rem;
   }
 
 `
