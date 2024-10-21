@@ -4,14 +4,14 @@ import { Component } from 'lib/component.class.js'
 
 const template = `
   <div id="signin-header-component">
-    <h1 id="signin-header">Sign in</h1>
+    <p id="signin-header">Sign in</p>
   </div>`
 
 const style = `
   #signin-header {
     text-align: center;
-    color: #909090;
-    font-weight: 600;
+    color: #f0f0f0;
+    font-size: 2rem;
   }`
 
 const signinHeaderComponent = new Component({ template, style })

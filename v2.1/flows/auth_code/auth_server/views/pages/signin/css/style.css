@@ -6,7 +6,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Google Sans", roboto, "Noto Sans Myanmar UI", arial, sans-serif;
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.9);
   background-color: #010405;
