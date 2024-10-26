@@ -1,2 +1,2 @@
 # oauth
-OAuth 2.0 Implementation
+OAuth 2.1 Implementation
