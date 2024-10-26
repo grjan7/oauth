@@ -29,8 +29,8 @@ const generateLastSessionsList = lastSession => `
 `
 try {
   const { lastSessions } = await AccountClient.getLastSessions()
-  console.log(lastSessions)
-  if (lastSessions.length > 0) {
+
+  if (lastSessions && lastSessions.length > 0) {
     lastSessionsList = lastSessions.map(generateLastSessionsList).join("\n")
   }
 } catch (e) {
