@@ -21,7 +21,7 @@ const generateAppList = app => `
 `
 
 try {
-  const appsList = await ClientAppClient.listApps()
+  const appsList = await ClientAppClient.listClientApps()
   if (appsList.length > 0) {
     appLists = appsList.map(generateAppList).join("\n")
   }

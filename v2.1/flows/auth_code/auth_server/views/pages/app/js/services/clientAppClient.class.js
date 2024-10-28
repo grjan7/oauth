@@ -4,17 +4,20 @@ import { Client } from './client.class.js'
 
 export class ClientAppClient extends Client {
 
-  static async listApps() {
-    const appsList = [
-      {
-        name: "Jsonalytix",
-        description: "Analytics App"
-      },
-      {
-        name: "Nango",
-        description: "Unified API integration for all services."
+  static async listClientApps() {
+    try {
+      const path = '/client/listClientAppsByEmailId'
+      const url = ClientAppClient.host + path
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    ]
-    return appsList
+      const response = await fetch(url, options)
+      return response.json()
+    } catch (e) {
+      console.error(e)
+    }
   }
 }

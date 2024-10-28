@@ -8,19 +8,23 @@ import sessionCtrl from './session.controller.js'
 
 const router = new Router()
 
-router.route('/')
-  .get(
-    accountCtrl.isSameOrigin,
-    sessionCtrl.validateSession,
-    clientCtrl.listClientAppsByEmailId)
+router.route('/listClientAppsByEmailId')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    clientCtrl.registerClientApp)
+    clientCtrl.listClientAppsByEmailId)
+
+router.route('/registerClientAppByEmailId')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.registerClientAppByEmailId)
+
+router.route('/deleteClientAppByEmailId')
   .delete(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    clientCtrl.deleteClientAppsByEmailId)
+    clientCtrl.deleteClientAppByEmailId)
 /*
 router.route('/:clientId')
   .get(

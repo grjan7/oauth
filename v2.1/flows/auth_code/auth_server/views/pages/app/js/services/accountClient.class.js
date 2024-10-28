@@ -21,7 +21,6 @@ export class AccountClient extends Client {
     }
   }
 
-
   static async getLastSessions() {
     try {
       const path = '/account/getLastSessions'

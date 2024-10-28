@@ -93,7 +93,7 @@ export default class ClientController {
     }
   }
 
-  static async registerClientApp(req, res, next) {
+  static async registerClientAppByEmailId(req, res, next) {
     try {
       const { email, accountId } = req.body.session
       if (email) {
@@ -143,7 +143,7 @@ export default class ClientController {
       const { email } = req.body.session
       if (email) {
         await TokenStore.deleteAllTokensByEmailId(email)
-        await ClientStore.deleteAllClientsByEmailId(email)
+        await ClientStore.deleteAllClientAppsByEmailId(email)
         res.status(200).json({ status: `All client applications owned by this account has been successfully deleted.` })
       } else {
         res.status(400).json({ status: `Invalid session.` })
