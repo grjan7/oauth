@@ -20,11 +20,11 @@ router.route('/registerClientAppByEmailId')
     sessionCtrl.validateSession,
     clientCtrl.registerClientAppByEmailId)
 
-router.route('/deleteClientAppByEmailId')
-  .delete(
+router.route('/deleteClientAppsByEmailId')
+  .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    clientCtrl.deleteClientAppByEmailId)
+    clientCtrl.deleteClientAppsByEmailId)
 /*
 router.route('/:clientId')
   .get(

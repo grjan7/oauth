@@ -37,7 +37,7 @@ export default app
 //app.use('/signout', express.static(signoutPage))
 /**
  * sign out requires accountID, sessionID and client details for 
- * confirming the account owner is the one initiated sign out request
+ * confirming the account owner is the one who initiated sign out request
  * 
  * /account/accountID/signout?sessionID=1616dsdas3c
  * 
