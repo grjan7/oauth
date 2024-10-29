@@ -40,7 +40,7 @@ export class ClientStore {
     }
   }
 
-  static async getClientAppByClientIdAndEmailId(clientId) {
+  static async getClientAppByClientIdAndEmailId(email, clientId) {
     try {
       const result = await clientStore.findOne({ email, _id: new ObjectId(clientId) })
       return result
@@ -124,7 +124,7 @@ export class ClientStore {
     }
   }
 
-  static async updateClientAppsEmailByEmailId({ oldEmail, newEmail }) {
+  static async updateClientAppsEmailByEmailId(oldEmail, newEmail) {
     try {
       const result = await clientStore.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
       return result

@@ -159,7 +159,7 @@ export default class ClientController {
       const { email } = req.body.session
       if (email) {
         const { clientId } = req.body
-        const result = await ClientStore.findClientAppByClientIdAndEmailId(email, clientId)
+        const result = await ClientStore.getClientAppByClientIdAndEmailId(email, clientId)
         res.status(200).json(result)
       } else {
         res.status(400).json({ status: `Invalid session.` })
