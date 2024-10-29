@@ -2,6 +2,7 @@
 
 export const OAUTH_ERRORS = {
   'INVALID_CLIENT_ID': { error: 'Invalid clientId.' },
+  'INVALID_CLIENT_SECRET': { error: 'Invalid clientSecret' },
   'INVALID_RESPONSE_TYPE': { error: 'Invalid responseType.' },
   'INVALID_SCOPES': { error: 'Invalid scopes.' },
   'INVALID_REDIRECT_URI': { error: 'Invalid redirectUri.' },
