@@ -6,7 +6,7 @@ import app from './server.js'
 
 dotenv.config()
 try {
-  await initDB()
+  //await initDB()
 } catch (e) {
   console.error(e)
 } finally {
