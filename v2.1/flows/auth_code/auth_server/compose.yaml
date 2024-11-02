@@ -19,17 +19,17 @@ services:
     ports:
       - 5000:5000
     depends_on:
-      - mongodb
+      - oauth-db
     networks:
       - oauth-network
 
-  mongodb:
-    image: mongo:6-jammy
-    container_name: auth_db
+  oauth-db:
+    image: mongodb/mongodb-community-server:latest
+    container_name: oauth_db
     ports:
       - '27017:27017'
     volumes:
-      - dbdata6:/data/db
+      - db-data:/data/db
     networks:
       - oauth-network
 
@@ -68,7 +68,8 @@ services:
 #     file: db/password.txt
 
 volumes:
-  dbdata6:
+  db-data:
+    name: oauth-data
 
 networks:
   oauth-network:
