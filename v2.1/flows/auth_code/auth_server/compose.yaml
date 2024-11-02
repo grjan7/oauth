@@ -10,12 +10,29 @@
 services:
   oauth-server:
     container_name: oauth_server
-    build:
-      context: ./
+    env_file:
+      - ./src/.env 
+    build: .
+    image: oauth-server
     environment:
       NODE_ENV: production
     ports:
       - 5000:5000
+    depends_on:
+      - mongodb
+    networks:
+      - oauth-network
+
+  mongodb:
+    image: mongo:6-jammy
+    container_name: auth_db
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata6:/data/db
+    networks:
+      - oauth-network
+
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
@@ -50,5 +67,10 @@ services:
 #   db-password:
 #     file: db/password.txt
 
+volumes:
+  dbdata6:
+
 networks:
-    oauth:
+  oauth-network:
+    name: oauth-network
+    driver: bridge 

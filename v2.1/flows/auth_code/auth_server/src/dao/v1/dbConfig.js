@@ -13,7 +13,8 @@ export const initDB = async () => {
   const client = new MongoClient(mongodbURL)
   try {
     const conn = await client.connect()
-    const db = await conn.db(process.env.AUTH_DB_NAME)
+    console.log(`Successfully connected to db.`)
+    const db = conn.db(process.env.AUTH_DB_NAME)
     // initialize collections
     await LogStore.init(db)
     await AccountStore.init(db)
