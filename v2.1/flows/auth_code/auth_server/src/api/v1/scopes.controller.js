@@ -69,7 +69,7 @@ export default class ScopeController {
   static async deleteScopeByScopeId(req, res, next) {
     try {
       const { scopeId } = req.params
-      await ScopeStore.deleteScopeById(scopeId)
+      await ScopeStore.deleteScopeByScopeId(scopeId)
       res.status(200).json({ status: `The scopeId ${scopeId} has been successfully deleted.` })
     } catch (e) {
       throw new Error(e)
