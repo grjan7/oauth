@@ -84,4 +84,5 @@ export default class ScopeController {
       throw new Error(e)
     }
   }
+
 }

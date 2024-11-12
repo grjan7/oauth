@@ -5,14 +5,22 @@ import scopeCtrl from './scopes.controller'
 
 const router = new Router()
 
-router.route('/')
-  .get(scopeCtrl.listScopes)
-  .post(scopeCtrl.addScope)
-  .delete(scopeCtrl.deleteAllScopes)
+router.route('/listScopes')
+  .post(scopeCtrl.listScopes)
 
-router.route('/:scopeId')
-  .get(scopeCtrl.getScopeByScopeId)
-  .update(scopeCtrl.updateScopeByScopeId)
-  .delete(scopeCtrl.deleteScopeByScopeId)
+router.route('/addScope')
+  .post(scopeCtrl.addScope)
+
+router.route('/deleteAllScopes')
+  .post(scopeCtrl.deleteAllScopes)
+
+router.route('/getScopeByScopeId/:scopeId')
+  .post(scopeCtrl.getScopeByScopeId)
+
+router.route('/updateScopeByScopeId/:scopeId')
+  .post(scopeCtrl.updateScopeByScopeId)
+
+router.route('/deleteScopeByScopeId/:scopeId')
+  .post(scopeCtrl.deleteScopeByScopeId)
 
 export default router
