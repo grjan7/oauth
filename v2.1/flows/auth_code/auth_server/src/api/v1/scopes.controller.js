@@ -55,7 +55,7 @@ export default class ScopeController {
     try {
       const { scopeId } = req.params
       const scopeData = req.body
-      const result = await ScopeStore.updateScopeById(scopeId, scopeData)
+      const result = await ScopeStore.updateScopeByScopeId(scopeId, scopeData)
       if (result.modifiedCount == 1) {
         res.status(200).json({ status: `scope is scuccessfully updated` })
       } else {
