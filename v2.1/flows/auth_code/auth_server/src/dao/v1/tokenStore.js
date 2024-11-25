@@ -44,7 +44,9 @@ export class TokenStore {
 
   static async updateTokenWithAccessToken(tokenId, accessTokenInfo) {
     try {
-      const result = await tokenStore.updateOne({ _id: ObjectId(tokenId) }, { $addFields: accessTokenInfo })
+      const query = { _id: ObjectId(tokenId) }
+      const updateOperation = { $addFields: accessTokenInfo }
+      const result = await tokenStore.updateOne(query, updateOperation)
       return { success: true }
     } catch (e) {
       throw new Error(e)
