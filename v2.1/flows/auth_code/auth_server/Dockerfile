@@ -16,8 +16,6 @@ COPY src/ ./src/
 COPY src/package*.json ./
 COPY views/ ./views/
 
-#COPY views/ views/
-
 RUN npm install --omit=dev
 
 CMD [ "node", "./src/index.js" ]
