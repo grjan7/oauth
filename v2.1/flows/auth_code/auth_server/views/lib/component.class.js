@@ -20,7 +20,7 @@ export class Component {
 
   // initializes the eventHandlers of each components
   static initAllEventHandlers() {
-    let components = Component.components
+    let { components } = Component
     for (let i in components) {
       let eventHandlers = components[i]["eventHandlers"]
       for (let eventHandler in eventHandlers) {
@@ -33,7 +33,7 @@ export class Component {
 
   // sets styles for each component
   static setStyles() {
-    let components = Component.components
+    let { components } = Component
     const styles = components.map(component => component.style).join('\n').replaceAll(/\n+|\t+/g, '')
     const style = document.getElementsByTagName('style')[0]
     style.innerHTML = styles
