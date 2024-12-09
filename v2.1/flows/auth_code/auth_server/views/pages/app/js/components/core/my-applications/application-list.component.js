@@ -3,13 +3,13 @@
 import { Component } from 'lib/component.class.js'
 import { ClientAppClient } from '../../../services/clientSDK.js'
 
-let appLists = `
+let appsListComponent = `
   <div class="app-card">
-    <p class="app-description">You app list will live here.</p>
+    <p class="app-description">Your apps list will live here.</p>
   </div>
 `
 
-const generateAppList = app => `
+const generateAppsList = app => `
   <div class="app-card" id="${app._id}">
     <div class="app-name-container">
       <p class="app-name">${app.name}</p>
@@ -23,7 +23,7 @@ const generateAppList = app => `
 try {
   const appsList = await ClientAppClient.listClientApps()
   if (appsList.length > 0) {
-    appLists = appsList.map(generateAppList).join("\n")
+    appsListComponent = appsList.map(generateAppsList).join("\n")
   }
 } catch (e) {
   throw new Error(e)
@@ -31,7 +31,7 @@ try {
 
 const template = `
   <div id="application-list-component">
-    ${appLists}
+    ${appsListComponent}
   </div>
 `
 
@@ -52,6 +52,7 @@ const style = `
     font-weight: 600;
     padding: 0% 3%;
   }
+    
   .app-description-container {
     border: 0.1rem solid #0f0f0f; 
     border-radius: 0rem 0rem 0.5rem 0.5rem;
