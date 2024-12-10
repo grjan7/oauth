@@ -25,6 +25,15 @@ router.route('/deleteClientAppsByEmailId')
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.deleteClientAppsByEmailId)
+
+router.route('/getClientAppByClientIdAndEmailId')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.getClientAppByClientIdAndEmailId
+  )
+
+
 /*
 router.route('/:clientId')
   .get(

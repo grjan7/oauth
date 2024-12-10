@@ -79,20 +79,6 @@ export default class ClientController {
     return { clientId, clientSecret }
   }
 
-  static async listClientAppsByEmailId(req, res, next) {
-    try {
-      const { email } = req.body.session
-      if (email) {
-        const result = await ClientStore.listClientAppsByEmailId(email)
-        res.status(200).json(result)
-      } else {
-        res.status(401).json({ status: `Unauthorized access.` })
-      }
-    } catch (e) {
-      throw new Error(e)
-    }
-  }
-
   static async registerClientAppByEmailId(req, res, next) {
     try {
       const { email, accountId } = req.body.session
@@ -138,15 +124,14 @@ export default class ClientController {
     }
   }
 
-  static async deleteAllClientAppsByEmailId(req, res, next) {
+  static async listClientAppsByEmailId(req, res, next) {
     try {
       const { email } = req.body.session
       if (email) {
-        await TokenStore.deleteAllTokensByEmailId(email)
-        await ClientStore.deleteAllClientAppsByEmailId(email)
-        res.status(200).json({ status: `All client applications owned by this account has been successfully deleted.` })
+        const result = await ClientStore.listClientAppsByEmailId(email)
+        res.status(200).json(result)
       } else {
-        res.status(400).json({ status: `Invalid session.` })
+        res.status(401).json({ status: `Unauthorized access.` })
       }
     } catch (e) {
       throw new Error(e)
@@ -171,6 +156,21 @@ export default class ClientController {
 
   static async updateClientAppByEmailIdAndClientId(req, res, next) {
     res.status(200).json({ success: true })
+  }
+
+  static async deleteAllClientAppsByEmailId(req, res, next) {
+    try {
+      const { email } = req.body.session
+      if (email) {
+        await TokenStore.deleteAllTokensByEmailId(email)
+        await ClientStore.deleteAllClientAppsByEmailId(email)
+        res.status(200).json({ status: `All client applications owned by this account has been successfully deleted.` })
+      } else {
+        res.status(400).json({ status: `Invalid session.` })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 
   static async deleteClientAppByEmailIdAndClientId(req, res, next) {

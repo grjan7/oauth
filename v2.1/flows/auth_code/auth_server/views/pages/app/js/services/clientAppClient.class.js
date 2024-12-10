@@ -42,7 +42,7 @@ export class ClientAppClient extends Client {
 
   static async getClientApp(clientId) {
     try {
-      const path = '/client/getClientAppByEmailIdAndClientId'
+      const path = '/client/getClientAppByClientIdAndEmailId'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
