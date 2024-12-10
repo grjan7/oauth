@@ -8,23 +8,17 @@ import sessionCtrl from './session.controller.js'
 
 const router = new Router()
 
-router.route('/listClientAppsByEmailId')
-  .post(
-    accountCtrl.isSameOrigin,
-    sessionCtrl.validateSession,
-    clientCtrl.listClientAppsByEmailId)
-
 router.route('/registerClientAppByEmailId')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.registerClientAppByEmailId)
 
-router.route('/deleteClientAppsByEmailId')
+router.route('/listClientAppsByEmailId')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    clientCtrl.deleteClientAppsByEmailId)
+    clientCtrl.listClientAppsByEmailId)
 
 router.route('/getClientAppByClientIdAndEmailId')
   .post(
@@ -32,6 +26,20 @@ router.route('/getClientAppByClientIdAndEmailId')
     sessionCtrl.validateSession,
     clientCtrl.getClientAppByClientIdAndEmailId
   )
+
+router.route('/deleteAllClientAppsByEmailId')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.deleteAllClientAppsByEmailId)
+
+router.route('/deleteClientAppByClientIdAndEmailId')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.deleteClientAppsByEmailId)
+
+
 
 
 /*
