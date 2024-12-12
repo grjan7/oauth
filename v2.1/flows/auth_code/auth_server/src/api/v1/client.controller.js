@@ -154,24 +154,30 @@ export default class ClientController {
     }
   }
 
-  static async updateClientAppByEmailIdAndClientId(req, res, next) {
+  static async updateClientSecretByClientIdAndEmailId(req, res, next) {
     res.status(200).json({ success: true })
   }
 
-  static async deleteAllClientAppsByEmailId(req, res, next) {
-    try {
-      const { email } = req.body.session
-      if (email) {
-        await TokenStore.deleteAllTokensByEmailId(email)
-        await ClientStore.deleteAllClientAppsByEmailId(email)
-        res.status(200).json({ status: `All client applications owned by this account has been successfully deleted.` })
-      } else {
-        res.status(400).json({ status: `Invalid session.` })
-      }
-    } catch (e) {
-      throw new Error(e)
-    }
+  static async updateRedirectUriByClientIdAndEmailId(req, res, next) {
+    res.status(200).json({ success: true })
   }
+
+  static async updateClientAppUrlByClientIdAndEmailId(req, res, next) {
+    res.status(200).json({ success: true })
+  }
+
+  static async updateClientAppLogoUrlByClientIdAndEmailId(req, res, next) {
+    res.status(200).json({ success: true })
+  }
+
+  static async updateClientAppScopesByClientIdAndEmailId(req, res, next) {
+    res.status(200).json({ success: true })
+  }
+
+  static async updateClientAppNameByClientIdAndEmailId(req, res, next) {
+    res.status(200).json({ success: true })
+  }
+
 
   static async deleteClientAppByClientIdAndEmailId(req, res, next) {
     try {
@@ -188,7 +194,19 @@ export default class ClientController {
     }
   }
 
-  static async deleteClientAppsByEmailId(req, res, next) {
-    res.status(200).json({ success: true })
+
+  static async deleteAllClientAppsByEmailId(req, res, next) {
+    try {
+      const { email } = req.body.session
+      if (email) {
+        await TokenStore.deleteAllTokensByEmailId(email)
+        await ClientStore.deleteAllClientAppsByEmailId(email)
+        res.status(200).json({ status: `All client applications owned by this account has been successfully deleted.` })
+      } else {
+        res.status(400).json({ status: `Invalid session.` })
+      }
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 }

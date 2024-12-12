@@ -8,40 +8,77 @@ import sessionCtrl from './session.controller.js'
 
 const router = new Router()
 
-router.route('/registerClientAppByEmailId')
+router.route('/registerClientApp')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.registerClientAppByEmailId)
 
-router.route('/listClientAppsByEmailId')
+router.route('/listClientApps')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.listClientAppsByEmailId)
 
-router.route('/getClientAppByClientIdAndEmailId')
+router.route('/getClientApp')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.getClientAppByClientIdAndEmailId
   )
 
-router.route('/deleteAllClientAppsByEmailId')
+router.route('/updateClientSecret')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.updateClientSecretByClientIdAndEmailId
+  )
+
+router.route('/updateRedirectUri')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.updateRedirectUriByClientIdAndEmailId
+  )
+
+router.route('/updateClientAppUrl')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.updateClientAppUrlByClientIdAndEmailId
+  )
+
+router.route('/updateClientAppLogoUrl')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.updateClientAppLogoUrlByClientIdAndEmailId
+  )
+
+router.route('/updateClientAppScopes')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.updateClientAppScopesByClientIdAndEmailId
+  )
+
+router.route('/updateClientAppName')
+  .post(accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.updateClientAppNameByClientIdAndEmailId
+  )
+
+router.route('/deleteMyClientApp')
+  .post(
+    accountCtrl.isSameOrigin,
+    sessionCtrl.validateSession,
+    clientCtrl.deleteClientAppByClientIdAndEmailId)
+
+router.route('/deleteMyClientApps')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.deleteAllClientAppsByEmailId)
-
-router.route('/deleteClientAppByClientIdAndEmailId')
-  .post(
-    accountCtrl.isSameOrigin,
-    sessionCtrl.validateSession,
-    clientCtrl.deleteClientAppsByEmailId)
-
-
-
-
 /*
 router.route('/:clientId')
   .get(
