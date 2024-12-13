@@ -127,8 +127,7 @@ export class ClientStore {
   }
 
   // changing emailId will be a vulnerability
-  /*
-  
+  /*  
     static async updateClientAppsEmailByEmailId(oldEmail, newEmail) {
       try {
         const result = await clientStore.updateMany({ email: oldEmail }, { $set: { email: newEmail } })

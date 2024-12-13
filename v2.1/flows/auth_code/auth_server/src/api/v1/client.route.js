@@ -14,20 +14,20 @@ router.route('/registerClientApp')
     sessionCtrl.validateSession,
     clientCtrl.registerClientAppByEmailId)
 
-router.route('/listClientApps')
+router.route('/listMyClientApps')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.listClientAppsByEmailId)
 
-router.route('/getClientApp')
+router.route('/getMyClientApp')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     clientCtrl.getClientAppByClientIdAndEmailId
   )
 
-router.route('/updateClientSecret')
+router.route('/regenerateClientSecret')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,

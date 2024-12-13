@@ -8,7 +8,7 @@ export class ClientAppClient extends Client {
 
   static async registerClientApp() {
     try {
-      const path = '/client/registerClientAppByEmailId'
+      const path = '/client/registerClientApp'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -23,9 +23,9 @@ export class ClientAppClient extends Client {
     }
   }
 
-  static async listClientApps() {
+  static async listMyClientApps() {
     try {
-      const path = '/client/listClientAppsByEmailId'
+      const path = '/client/listMyClientApps'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -40,9 +40,9 @@ export class ClientAppClient extends Client {
     }
   }
 
-  static async getClientApp(clientId) {
+  static async getMyClientApp(clientId) {
     try {
-      const path = '/client/getClientAppByClientIdAndEmailId'
+      const path = '/client/getMyClientApp'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -58,9 +58,47 @@ export class ClientAppClient extends Client {
     }
   }
 
+  static async updateClientAppUrl(clientId, clientAppUrl) {
+    try {
+      const path = '/client/updateClientAppUrl'
+      const url = ClientAppClient.host + path
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ clientId, clientAppUrl })
+
+      }
+      const response = await fetch(url, options)
+      return response.json()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  static async updateClientAppLogoUrl(clientId, logoUrl) {
+    try {
+      const path = '/client/updateClientAppLogoUrl'
+      const url = ClientAppClient.host + path
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ clientId, clientAppLogoUrl })
+
+      }
+      const response = await fetch(url, options)
+      return response.json()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   static async updateClientAppName(clientId, clientAppName) {
     try {
-      const path = '/client/updateClientAppNameByEmailIdAndClientId'
+      const path = '/client/updateClientAppName'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -79,7 +117,7 @@ export class ClientAppClient extends Client {
 
   static async updateRedirectUri(clientId, redirectUri) {
     try {
-      const path = '/client/updateRedirectUriByEmailIdAndClientId'
+      const path = '/client/updateRedirectUri'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -98,7 +136,7 @@ export class ClientAppClient extends Client {
 
   static async updateScopes(clientId, scopes) {
     try {
-      const path = '/client/updateScopesByEmailIdAndClientId'
+      const path = '/client/updateClientAppScopes'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -117,7 +155,7 @@ export class ClientAppClient extends Client {
 
   static async regenerateClientSecret(clientId) {
     try {
-      const path = '/client/regenerateClientSecretByEmailIdAndClientId'
+      const path = '/client/regenerateClientSecret'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -125,7 +163,6 @@ export class ClientAppClient extends Client {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ clientId })
-
       }
       const response = await fetch(url, options)
       return response.json()
@@ -134,9 +171,9 @@ export class ClientAppClient extends Client {
     }
   }
 
-  static async deleteClientApp(clientId) {
+  static async deleteMyClientApp(clientId) {
     try {
-      const path = '/client/deleteClientAppByEmailIdAndClientId'
+      const path = '/client/deleteMyClientApp'
       const url = ClientAppClient.host + path
       const options = {
         method: 'POST',
@@ -144,6 +181,23 @@ export class ClientAppClient extends Client {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ clientId })
+      }
+      const response = await fetch(url, options)
+      return response.json()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  static async deleteMyClientApps() {
+    try {
+      const path = '/client/deleteMyClientApps'
+      const url = ClientAppClient.host + path
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
       const response = await fetch(url, options)
       return response.json()
