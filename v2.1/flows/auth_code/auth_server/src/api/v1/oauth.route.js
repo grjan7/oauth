@@ -65,10 +65,16 @@ const router = new Router()
  * 
  */
 router.route('/auth')
-  .get(oauthCtrl.validateAuthorizeRequest, oauthCtrl.authorize)
+  .get(
+    oauthCtrl.validateAuthorizeRequest,
+    oauthCtrl.authorize
+  )
 
 router.route('/auth/grantStatus')
-  .post(accountCtrl.isSameOrigin, oauthCtrl.updateGrantStatus)
+  .post(
+    accountCtrl.isSameOrigin,
+    oauthCtrl.updateGrantStatus
+  )
 
 
 /**
@@ -108,7 +114,10 @@ router.route('/auth/grantStatus')
  * - respond with accessToken
  */
 router.route('/token')
-  .post(clientCtrl.validateClientCredentials, oauthCtrl.validateTokenRequest) // code exchange for token
+  .post(
+    clientCtrl.validateClientCredentials,
+    oauthCtrl.validateTokenRequest
+  ) // code exchange for token
   .delete() // revoke token
 
 export default router

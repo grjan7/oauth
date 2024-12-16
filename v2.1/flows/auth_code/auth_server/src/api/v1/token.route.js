@@ -6,7 +6,7 @@ import tokenCtrl from './token.controller.js'
 const router = new Router()
 
 router.route('/')
-  .get(tokenCtrl.listTokensByAccountId)
+  .get(tokenCtrl.listTokensByEmailId)
   .post(tokenCtrl.createTokensByAccountId)
   .delete(tokenCtrl.deleteTokensByAccountId)
 
