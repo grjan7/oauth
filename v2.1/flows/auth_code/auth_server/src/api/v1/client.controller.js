@@ -180,6 +180,10 @@ export default class ClientController {
 
 
   static async deleteClientAppByClientIdAndEmailId(req, res, next) {
+    // To delete a client app created by an email Id
+    // - need a valid active session of the resource owner
+    // - need to delete all the tokens acquired from users by this app 
+    // - need to delete the client app from the clientStore
     try {
       const { email } = req.body.session
       if (email) {
@@ -194,8 +198,11 @@ export default class ClientController {
     }
   }
 
-
   static async deleteAllClientAppsByEmailId(req, res, next) {
+    // To delete all client apps created by an email Id
+    // - need a valid active session of the resource owner
+    // - need to delete all the tokens acquired from users by this email Id 
+    // - need to delete all the client apps from the clientStore
     try {
       const { email } = req.body.session
       if (email) {
@@ -209,4 +216,5 @@ export default class ClientController {
       throw new Error(e)
     }
   }
+
 }

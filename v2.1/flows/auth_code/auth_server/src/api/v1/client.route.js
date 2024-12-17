@@ -78,21 +78,7 @@ router.route('/deleteMyClientApps')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    clientCtrl.deleteAllClientAppsByEmailId)
-/*
-router.route('/:clientId')
-  .get(
-    accountCtrl.isSameOrigin,
-    sessionCtrl.validateSession,
-    clientCtrl.getClientAppByEmailIdAndClientId)
-  .put(
-    accountCtrl.isSameOrigin,
-    sessionCtrl.validateSession,
-    clientCtrl.updateClientAppByEmailIdAndClientId)
-  .delete(
-    accountCtrl.isSameOrigin,
-    sessionCtrl.validateSession,
-    clientCtrl.deleteClientAppByEmailIdAndClientId)
+    clientCtrl.deleteAllClientAppsByEmailId
+  )
 
-*/
 export default router
