@@ -220,7 +220,7 @@ export class TokenStore {
   }
 
   // revoke one third-party access GRANTED by the account
-  static async revokeClientAppAccessByEmailId(email, clientId) {
+  static async revokeClientAppAccessGrantedByEmailId(email, clientId) {
     try {
       const query = {
         "user.email": email,
@@ -235,7 +235,7 @@ export class TokenStore {
 
   // revoke all third-party access GRANTED by the account
 
-  static async revokeAllClientAppsAccessByEmailId(email) {
+  static async revokeAllClientAppsAccessGrantedByEmailId(email) {
     try {
       const query = {
         "user.email": email
@@ -249,7 +249,7 @@ export class TokenStore {
 
   // deletes all client apps' tokens OWNED by the account
 
-  static async deleteAllTokensByEmailId(email) {
+  static async deleteAllTokensOwnedByEmailId(email) {
     try {
       const query = { email }
       await tokenStore.deleteMany(query)
@@ -260,7 +260,7 @@ export class TokenStore {
   }
 
   // delete one client app tokens OWNED by the account
-  static async deleteTokensByClientIdAndEmailId(email, clientId) {
+  static async deleteTokensOwnedByClientIdAndEmailId(email, clientId) {
     try {
       const query = { email, clientId }
       await tokenStore.deleteMany(query)

@@ -183,7 +183,7 @@ export default class ClientController {
     try {
       const { email } = req.body.session
       if (email) {
-        await TokenStore.deleteTokensByClientIdAndEmailId(email, clientId)
+        await TokenStore.deleteTokensOwnedByClientIdAndEmailId(email, clientId)
         await ClientStore.deleteClientAppByClientIdAndEmailId(email, clientId)
         res.status(200).json({ status: `Client app with Id ${clientId} owned by this account has been successfully deleted.` })
       } else {
@@ -199,9 +199,9 @@ export default class ClientController {
     try {
       const { email } = req.body.session
       if (email) {
-        await TokenStore.deleteAllTokensByEmailId(email)
+        await TokenStore.deleteAllTokensOwnedByEmailId(email)
         await ClientStore.deleteAllClientAppsByEmailId(email)
-        res.status(200).json({ status: `All client applications owned by this account has been successfully deleted.` })
+        res.status(200).json({ status: `All client applications owned by this account (${email}) has been successfully deleted.` })
       } else {
         res.status(400).json({ status: `Invalid session.` })
       }

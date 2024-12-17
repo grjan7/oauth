@@ -16,56 +16,54 @@ router.route('/')
   .get(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    accountCtrl.listAccounts)
+    accountCtrl.listAccounts
+  )
 
 // get account by email
 router.route('/getAccountById')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    accountCtrl.getAccountByEmailId)
+    accountCtrl.getAccountByEmailId
+  )
 
 // get account by email
 router.route('/getAccountInfo')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    accountCtrl.getAccountInfo)
+    accountCtrl.getAccountInfo
+  )
 
 // get account by email
 router.route('/getLastSessions')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    accountCtrl.getLastSessions)
+    accountCtrl.getLastSessions
+  )
 
 // update account by email
 router.route('/updateAccountById')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    accountCtrl.updateAccountByEmailId)
+    accountCtrl.updateAccountByEmailId
+  )
 
 // delete account by email
 router.route('/deleteAccountById')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    accountCtrl.deleteAccountByEmailId)
-
+    accountCtrl.deleteAccountByEmailId
+  )
 
 router.route('/settings/changePassword')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
     accountCtrl.changePasswordByEmailId
-  )
-
-router.route('/settings/updateEmailId')
-  .post(
-    accountCtrl.isSameOrigin,
-    sessionCtrl.validateSession,
-    accountCtrl.updateEmailByEmailId
   )
 
 router.route('/settings/updateFirstName')
@@ -86,20 +84,22 @@ router.route('/settings/security/listThirdPartyAccess')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    tokenCtrl.listClientAppsHasAccessByEmailId)
-
+    tokenCtrl.listClientAppsHasAccessByEmailId
+  )
 
 router.route('/settings/security/revokeAllClientAppsAccess')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    tokenCtrl.revokeAllClientAppsAccessByEmailId)
+    tokenCtrl.revokeAllClientAppsAccessByEmailId
+  )
 
 router.route('/settings/security/revokeClientAppAccess')
   .post(
     accountCtrl.isSameOrigin,
     sessionCtrl.validateSession,
-    tokenCtrl.revokeClientAppAccessByEmailId)
+    tokenCtrl.revokeClientAppAccessByEmailId
+  )
 
 //router.route('/settings/security/removeAllThirdPartyAccess')
 //router.route('/settings/security/removeThirdPartyAccessByClientId')

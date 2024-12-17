@@ -349,7 +349,7 @@ export default class AccountCtrl {
       const { email, accountId } = req.body.session
       if (email) {
         await TokenStore.deleteAllTokensOwnedAndGrantedByEmailId(email)
-        await ClientStore.deleteAllClientsByEmailId(email)
+        await ClientStore.deleteAllClientAppsByEmailId(email)
         await LogStore.deleteAllLogsByEmailId(email)
         await AccountStore.deleteAccountByEmailId(email)
         await SessionStore.deleteSessionByEmailId(email)
