@@ -17,8 +17,13 @@ export class Log {
 export class LogStore {
 
   static async init(db) {
-    if (!logStore) {
-      logStore = db.collection("logStore")
+    if (logStore) {
+      return
+    }
+    try {
+      logStore = await db.collection("logStore")
+    } catch (e) {
+      console.error(`Unable to establish collection handles in logStore: ${e}`)
     }
   }
 

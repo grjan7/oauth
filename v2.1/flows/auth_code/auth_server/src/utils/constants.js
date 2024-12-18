@@ -28,3 +28,8 @@ export const ERRORS = {
   'UNDEFINED_USERNAME': { error: 'Username cannot be undefined.' },
   'UNDEFINED_PASSWORD': { error: 'Password cannot be undefined.' }
 }
+
+export const DB_ERRORS = {
+
+
+}

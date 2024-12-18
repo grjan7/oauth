@@ -29,8 +29,13 @@ export class Token {
 export class TokenStore {
 
   static async init(db) {
-    if (!tokenStore) {
-      tokenStore = db.collection("tokenStore")
+    if (tokenStore) {
+      return
+    }
+    try {
+      tokenStore = await db.collection("tokenStore")
+    } catch (e) {
+      console.error(`Unable to establish collection handles in tokenStore: ${e}`)
     }
   }
 

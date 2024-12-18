@@ -15,8 +15,13 @@ export class Session {
 export class SessionStore {
 
   static async init(db) {
-    if (!sessionStore) {
-      sessionStore = db.collection("sessionStore")
+    if (sessionStore) {
+      return
+    }
+    try {
+      sessionStore = await db.collection("sessionStore")
+    } catch (e) {
+      console.error(`Unable to establish collection handles in sessionStore: ${e}`)
     }
   }
 

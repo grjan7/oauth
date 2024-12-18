@@ -17,8 +17,13 @@ export class Client {
 export class ClientStore {
 
   static async init(db) {
-    if (!clientStore) {
-      clientStore = db.collection("clientStore")
+    if (clientStore) {
+      return
+    }
+    try {
+      clientStore = await db.collection("clientStore")
+    } catch (e) {
+      console.error(`Unable to establish collection handles in clientStore: ${e}`)
     }
   }
 

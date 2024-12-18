@@ -14,8 +14,13 @@ export class Scope {
 export class ScopeStore {
 
   static async init(db) {
-    if (!scopeStore) {
-      scopeStore = db.collection("scopeStore")
+    if (scopeStore) {
+      return
+    }
+    try {
+      scopeStore = await db.collection("scopeStore")
+    } catch (e) {
+      console.error(`Unable to establish collection handles in scopeStore: ${e}`)
     }
   }
 
