@@ -9,11 +9,11 @@ import { TokenStore } from './tokenStore.js'
 import { LogStore } from './logStore.js'
 
 export const initDB = async () => {
-  const mongodbURL = process.env.AUTH_DB_URI
-  const client = new MongoClient(mongodbURL)
+  const client = new MongoClient(process.env.AUTH_DB_URI)
   try {
     const conn = await client.connect()
     console.log(`Successfully connected to db.`)
+
     const db = conn.db(process.env.AUTH_DB_NAME)
     // initialize collections
     await LogStore.init(db)
