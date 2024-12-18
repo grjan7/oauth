@@ -31,8 +31,6 @@ export const ERRORS = {
   'X_SITE_REQUEST': { error: `Request expected to be originated from same-site.` }
 }
 
-
-
 export const DB_ERRORS = {
 
 

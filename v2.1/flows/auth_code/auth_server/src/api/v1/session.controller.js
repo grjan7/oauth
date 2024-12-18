@@ -40,7 +40,7 @@ export default class SessionController {
             next()
           } else {
             res.status(400).json(
-              { status: `This session does not belong to this useragent ${userAgentFromHeader}` })
+              { status: `This session does not belong to this user-agent ${userAgentFromHeader}` })
             //redirect('/signin/flow/default')
             return
           }

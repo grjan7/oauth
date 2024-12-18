@@ -142,12 +142,14 @@ export default class AccountCtrl {
         if (isValidPassword) {
           const sessionId = await sessionCtrl.createSession(req, sessionOwner)
           //res.clearCookie('sessionId')          
-          res.cookie("sessionId", sessionId).status(200).json({ status: 'success' })
+          res.cookie("sessionId", sessionId)
+            .status(200)
+            .json({ status: 'success' })
         } else {
-          res.status(400).json({ status: `Incorrect password` })
+          res.status(400).json(ERRORS.INVALID_PASSWORD)
         }
       } else {
-        res.status(400).json({ status: `Username is not found` })
+        res.status(400).json(ERRORS.UNDEFINED_USERNAME)
       }
     } catch (e) {
       throw new Error(e)
