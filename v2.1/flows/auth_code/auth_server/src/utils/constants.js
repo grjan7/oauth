@@ -26,8 +26,12 @@ export const ERRORS = {
   'USERNAME_NOT_FOUND': { error: 'Username is not found.' },
   'INVALID_PASSWORD': { error: 'Invalid password.' },
   'UNDEFINED_USERNAME': { error: 'Username cannot be undefined.' },
-  'UNDEFINED_PASSWORD': { error: 'Password cannot be undefined.' }
+  'UNDEFINED_PASSWORD': { error: 'Password cannot be undefined.' },
+  'UNAUTHORIZED_USER_AGENT': { error: 'Use the browser for this request.' },
+  'X_SITE_REQUEST': { error: `Request expected to be originated from same-site.` }
 }
+
+
 
 export const DB_ERRORS = {
 

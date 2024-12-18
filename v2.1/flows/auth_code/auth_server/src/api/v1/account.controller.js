@@ -17,13 +17,13 @@ export default class AccountCtrl {
     if (host && origin) {
       const originHost = origin.split("://")[1]
       if (host != originHost) {
-        res.status(401).json({ status: `Request expected to be originated from same-site.` })
+        res.status(401).json(ERRORS.X_SITE_REQUEST)
         return
       } else {
         next()
       }
     } else {
-      res.status(400).json({ status: `Use the browser for this request.` })
+      res.status(400).json(ERRORS.UNAUTHORIZED_USER_AGENT)
       return
     }
   }
