@@ -5,6 +5,7 @@ import { initDB } from './dao/v1/dbConfig.js'
 import app from './server.js'
 
 dotenv.config()
+
 try {
   await initDB()
 } catch (e) {
