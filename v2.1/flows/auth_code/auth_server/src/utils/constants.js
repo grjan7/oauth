@@ -18,6 +18,7 @@ export const OAUTH_ERRORS = {
   'MISSING_CLIENT_CREDENTIALS': { error: 'Missing client credentials.' },
   'MISSING_CLIENT_ID': { error: 'Missing clientId.' },
   'MISSING_CLIENT_SECRET': { error: 'Missing clientSecret.' },
+  'MISSING_RESPONSE_TYPE': { error: 'Missing response type.' },
   'INVALID_CODE': { error: 'Invalid authorization code' }
 }
 

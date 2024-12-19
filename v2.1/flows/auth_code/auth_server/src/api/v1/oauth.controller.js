@@ -60,6 +60,7 @@ export default class OauthController {
     }
   }
 
+  // sid is _id of tokenStore
   static async authorize(req, res, next) {
     try {
       const clientInfo = req.query
@@ -243,7 +244,7 @@ export default class OauthController {
 
   static async validateTokenRequest(req, res, next) {
     try {
-      const { codeVerifier, grantType, code, redirectUri } = req.query
+      const { codeVerifier, grantType, code, redirectUri, responseType } = req.query
       if (!codeVerifier) {
         res.status(400).json(OAUTH_ERRORS.MISSING_CODE_VERIFIER)
         return
@@ -264,6 +265,11 @@ export default class OauthController {
         res.status(400).json(OAUTH_ERRORS.MISSING_REDIRECT_URI)
         return
       }
+      if (!responseType) {
+        res.status(400).json(OAUTH_ERRORS.MISSING_RESPONSE_TYPE)
+        return
+      }
+
       next()
     } catch (e) {
       throw new Error(e)
