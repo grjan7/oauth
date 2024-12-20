@@ -29,7 +29,9 @@ export const ERRORS = {
   'UNDEFINED_USERNAME': { error: 'Username cannot be undefined.' },
   'UNDEFINED_PASSWORD': { error: 'Password cannot be undefined.' },
   'UNAUTHORIZED_USER_AGENT': { error: 'Use the browser for this request.' },
-  'X_SITE_REQUEST': { error: `Request expected to be originated from same-site.` }
+  'X_SITE_REQUEST': { error: 'Request expected to be originated from same-site.' },
+  'UNAUTHORIZED_ACCESS': { error: 'Unauthorized access.' },
+  'INVALID_SESSION': { error: 'Invalid session.' }
 }
 
 export const DB_ERRORS = {

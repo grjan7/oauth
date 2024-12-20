@@ -4,6 +4,7 @@ import { randomBytes } from 'node:crypto'
 import { ClientStore } from '../../dao/v1/clientStore.js'
 import { TokenStore } from '../../dao/v1/tokenStore.js'
 import { hash } from '../../utils/utils.js'
+import { ERRORS, OAUTH_ERRORS } from '../../utils/constants.js'
 
 
 export default class ClientController {
@@ -53,11 +54,11 @@ export default class ClientController {
         if (clientSecret == client.clientSecret) {
           next()
         } else {
-          res.status(401).json({ error: `Invalid clientSecret` })
+          res.status(401).json(OAUTH_ERRORS.INVALID_CLIENT_SECRET)
           return
         }
       } else {
-        res.status(401).json({ error: `Invalid clientId.` })
+        res.status(401).json(OAUTH_ERRORS.INVALID_CLIENT_ID)
         return
       }
     } catch (e) {
@@ -108,7 +109,7 @@ export default class ClientController {
               const clientCredentials = { clientId: result.insertedId, clientSecret }
               res.status(200).json(clientCredentials)
             } else (
-              res.status(500).json({ status: `Internal server error.` })
+              res.status(500).json(ERRORS.INTERNAL_SERVER_ERROR)
             )
           } else {
             res.status(400).json({ status: `Your app quota is full.` })
@@ -131,7 +132,7 @@ export default class ClientController {
         const result = await ClientStore.listClientAppsByEmailId(email)
         res.status(200).json(result)
       } else {
-        res.status(401).json({ status: `Unauthorized access.` })
+        res.status(401).json(ERRORS.UNAUTHORIZED_ACCESS)
       }
     } catch (e) {
       throw new Error(e)
@@ -147,7 +148,7 @@ export default class ClientController {
         const result = await ClientStore.getClientAppByClientIdAndEmailId(email, clientId)
         res.status(200).json(result)
       } else {
-        res.status(400).json({ status: `Invalid session.` })
+        res.status(400).json(ERRORS.INVALID_SESSION)
       }
     } catch (e) {
       throw new Error(e)
@@ -191,7 +192,7 @@ export default class ClientController {
         await ClientStore.deleteClientAppByClientIdAndEmailId(email, clientId)
         res.status(200).json({ status: `Client app with Id ${clientId} owned by this account has been successfully deleted.` })
       } else {
-        res.status(400).json({ status: `Invalid session.` })
+        res.status(400).json(ERRORS.INVALID_SESSION)
       }
     } catch (e) {
       throw new Error(e)
@@ -211,7 +212,7 @@ export default class ClientController {
         await ClientStore.deleteAllClientAppsByEmailId(email)
         res.status(200).json({ status: `All client applications owned by this account (${email}) has been successfully deleted.` })
       } else {
-        res.status(400).json({ status: `Invalid session.` })
+        res.status(400).json(ERRORS.INVALID_SESSION)
       }
     } catch (e) {
       throw new Error(e)
