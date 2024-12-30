@@ -50,7 +50,7 @@ export class TokenStore {
 
   static async updateTokenWithAccessToken(tokenId, accessTokenInfo) {
     try {
-      const query = { _id: ObjectId(tokenId) }
+      const query = { _id: ObjectId.createFromHexString(tokenId) }
       const updateOperation = { $addFields: accessTokenInfo }
       const result = await tokenStore.updateOne(query, updateOperation)
       return { success: true }
@@ -88,7 +88,8 @@ export class TokenStore {
 
   static async deleteTokenByTokenId(tokenId) {
     try {
-      const result = await tokenStore.deleteOne({ _id: ObjectId(tokenId) })
+      const query = { _id: ObjectId.createFromHexString(tokenId) }
+      const result = await tokenStore.deleteOne(query)
       return { success: true }
     } catch (e) {
       throw new Error(e)
@@ -169,7 +170,9 @@ export class TokenStore {
 
   static async updateTokenWithUser(tokenId, user) {
     try {
-      const result = await tokenStore.updateOne({ _id: new ObjectId(tokenId) }, { $set: { user } })
+      const query = { _id: ObjectId.createFromHexString(tokenId) }
+      const updateOperation = { $set: { user } }
+      const result = await tokenStore.updateOne(query, updateOperation)
       return result
     } catch (e) {
       throw new Error(e)
@@ -178,9 +181,9 @@ export class TokenStore {
 
   static async updateTokenWithAuthorizationCode(tokenId, authorizationCode) {
     try {
-      const query = { _id: new ObjectId(tokenId) }
-      const action = { $set: { authorizationCode } }
-      const result = await tokenStore.updateOne(query, action)
+      const query = { _id: ObjectId.createFromHexString(tokenId) }
+      const updateOperation = { $set: { authorizationCode } }
+      const result = await tokenStore.updateOne(query, updateOperation)
       return result
     } catch (e) {
       throw new Error(e)
