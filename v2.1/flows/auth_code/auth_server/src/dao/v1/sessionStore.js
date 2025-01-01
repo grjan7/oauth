@@ -64,7 +64,9 @@ export class SessionStore {
 
   static async updateEmailByEmailId({ oldEmail, newEmail }) {
     try {
-      const result = await sessionStore.updateOne({ email: oldEmail }, { $set: { email: newEmail } })
+      const query = { email: oldEmail }
+      const updateOperation = { $set: { email: newEmail } }
+      const result = await sessionStore.updateOne(query, updateOperation)
       return result
     } catch (e) {
       throw new Error(e)
