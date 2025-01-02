@@ -36,8 +36,8 @@ export class SessionStore {
 
   static async getSessionBySessionId(sessionId) {
     try {
-      const _id = ObjectId.createFromHexString(sessionId)
-      const result = await sessionStore.findOne({ _id })
+      const query = { _id: ObjectId.createFromHexString(sessionId) }
+      const result = await sessionStore.findOne(query)
       return result
     } catch (e) {
       throw new Error(e)
@@ -75,8 +75,8 @@ export class SessionStore {
 
   static async deleteSessionBySessionId(sessionId) {
     try {
-      const _id = ObjectId.createFromHexString(sessionId)
-      const result = await sessionStore.deleteOne({ _id })
+      const query = { _id: ObjectId.createFromHexString(sessionId) }
+      const result = await sessionStore.deleteOne(query)
       return { success: true }
     } catch (e) {
       throw new Error(e)
@@ -85,7 +85,8 @@ export class SessionStore {
 
   static async deleteSessionByEmailId(email) {
     try {
-      const result = await sessionStore.deleteOne({ email })
+      const query = { email }
+      const result = await sessionStore.deleteOne(query)
       return { success: true }
     } catch (e) {
       throw new Error(e)
@@ -94,7 +95,8 @@ export class SessionStore {
 
   static async emptySessionStore() {
     try {
-      const result = await sessionStore.deleteMany({})
+      const query = {}
+      const result = await sessionStore.deleteMany(query)
       return { success: true }
     } catch (e) {
       throw new Error(e)
