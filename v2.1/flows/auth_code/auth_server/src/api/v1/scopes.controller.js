@@ -70,7 +70,7 @@ export default class ScopeController {
     try {
       const { scopeId } = req.params
       await ScopeStore.deleteScopeByScopeId(scopeId)
-      res.status(200).json({ status: `The scopeId ${scopeId} has been successfully deleted.` })
+      res.status(200).json({ status: `The scope ${scopeId} has been successfully deleted.` })
     } catch (e) {
       throw new Error(e)
     }
@@ -79,7 +79,7 @@ export default class ScopeController {
   static async deleteAllScopes(req, res, next) {
     try {
       const result = await ScopeStore.deleteAll()
-      res.status(200).json({ status: `The scopeId ${scopeId} has been successfully deleted.` })
+      res.status(200).json({ status: `All scopes have been successfully deleted.` })
     } catch (e) {
       throw new Error(e)
     }
