@@ -26,6 +26,7 @@ export class ScopeStore {
 
   static async addScope(scopeInfo) {
     try {
+      console.log('I was called.')
       const result = await scopeStore.insertOne(scopeInfo)
       return result
     } catch (e) {
@@ -45,7 +46,7 @@ export class ScopeStore {
   static async getScopeByResourceAndAction(resource, action) {
     try {
       const scope = await scopeStore.find({ resource, action })
-      return scope
+      return scope.toArray()
     } catch (e) {
       throw new Error(e)
     }
@@ -54,7 +55,7 @@ export class ScopeStore {
   static async getScopeByScopeId(scopeId) {
     try {
       const scope = await scopeStore.findOne({ _id: new ObjectId(scopeId) })
-      return scope
+      return scope.toArray()
     } catch (e) {
       throw new Error(e)
     }

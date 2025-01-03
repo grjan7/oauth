@@ -1,7 +1,7 @@
 'use strict'
 
 import { Router } from 'express'
-import scopeCtrl from './scopes.controller'
+import scopeCtrl from './scopes.controller.js'
 
 const router = new Router()
 

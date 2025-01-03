@@ -18,7 +18,7 @@ export default class ScopeController {
       const isScopeInfoValid = ScopeController.validateScopeInfo(scopeInfo)
       if (isScopeInfoValid) {
         const scope = await ScopeStore.getScopeByResourceAndAction(resource, action)
-        if (!scope) {
+        if (scope.length == 0) {
           const result = await ScopeStore.addScope(scopeInfo)
           res.status(200).json({ status: `Scope with Id (${result.insertedId}) has been successfully added.` })
         } else {
