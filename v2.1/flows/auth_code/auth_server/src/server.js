@@ -22,7 +22,6 @@ app.use(cookieparser())
 process.env.NODE_ENV != 'prod' && app.use(morgan('dev'))
 
 // routes
-
 app.use('/account', account)
 app.use('/client', client)
 app.use('/log', logger)

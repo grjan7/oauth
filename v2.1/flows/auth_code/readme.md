@@ -1,4 +1,4 @@
-# OAuth 2.11: Authorization Code Flow
+# OAuth 2.1.12: Authorization Code Flow
 
 ## Steps
 1. User registration (Create an account)
